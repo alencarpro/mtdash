@@ -272,16 +272,17 @@ const PanelSocial = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-      <Chart title="Radar Estadual (ICQV)">
+      <Chart title="ICQV — Médias Estaduais">
         <ResponsiveContainer width="100%" height="100%">
-          <RadarChart data={radarAvg}>
-            <PolarGrid stroke={C.grid} />
-            <PolarAngleAxis dataKey="subject" stroke={C.axis} fontSize={8} />
-            <PolarRadiusAxis stroke={C.grid} fontSize={7} domain={[0, 100]} />
-            <Radar dataKey="value" stroke={C.teal} fill={C.teal} fillOpacity={0.3}>
-              <LabelList dataKey="value" fontSize={8} fill={C.label} />
-            </Radar>
-          </RadarChart>
+          <BarChart data={radarAvg} layout="vertical" margin={{ top: 8, right: 30, bottom: 8, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" domain={[0, 100]} stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={60} />
+            <Bar dataKey="value" name="Índice" radius={[0, 4, 4, 0]}>
+              {radarAvg.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              <LabelList dataKey="value" position="right" fontSize={9} fill={C.label} />
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       </Chart>
     </div>
