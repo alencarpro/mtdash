@@ -73,8 +73,8 @@ const renderLegend = (props: any) => {
 
 /* ─── Compact KPI ─── */
 const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
-  <div className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)' }}>
-    <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color }} />
+  <div className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden animate-subtle-float" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)', animation: `subtleFloat 6s ease-in-out infinite, glowBorder 5s ease-in-out infinite` }}>
+    <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color, animation: 'softPulse 3s ease-in-out infinite' }} />
     <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
     <p className="text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
@@ -83,8 +83,8 @@ const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: stri
 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)' }}>
-    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)', animation: 'glowBorder 5s ease-in-out infinite' }}>
+    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)', animation: 'softPulse 4s ease-in-out infinite' }}>{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
