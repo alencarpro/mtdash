@@ -294,7 +294,56 @@ const Panel4 = () => (
   </div>
 );
 
-const panels = [Panel2, Panel3, Panel4];
+/* ─── Panel 5 (Visão Geral / Infraestrutura) ─── */
+const Panel5 = () => (
+  <div className="flex flex-col gap-2 h-full">
+    <div className="grid grid-cols-4 gap-2">
+      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} />
+      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} />
+      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} />
+      <KPI title="Municípios" value={overviewKPIs.municipios} sub="Total do estado" color={C.yellow} />
+    </div>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+      <Chart title="Evolução do PIB (R$ bi)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cpib" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.teal} stopOpacity={0.4} /><stop offset="95%" stopColor={C.teal} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={30} />
+            <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2}>
+              <LabelList dataKey="pib" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}`} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="PIB por Setor (%)">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={sectorPieData} cx="50%" cy="50%" innerRadius="30%" outerRadius="55%" paddingAngle={3} dataKey="value" label={renderPieLabel} labelLine={false}>
+              {sectorPieData.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    <Chart title="PIB Municipal (R$ bi)">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+          <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+          <YAxis hide />
+          <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]}>
+            <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </Chart>
+  </div>
+);
+
+const panels = [Panel2, Panel3, Panel4, Panel5];
+const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
