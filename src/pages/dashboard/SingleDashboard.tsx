@@ -94,6 +94,7 @@ const lastDesm = desmatamentoData[desmatamentoData.length - 1];
 
 /* ─── PANELS ─── */
 
+const Panel2 = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
       <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} />
