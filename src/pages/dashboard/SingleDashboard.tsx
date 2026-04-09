@@ -9,7 +9,13 @@ import {
   comercioExterior, principaisDestinos, mercadoTrabalho, producaoAgricola,
   educacaoData, saudeData, segurancaData, assistenciaSocial, icqvData,
   desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, obrasData, investimentoInfra,
+  overviewKPIs, pibEvolution, sectorPieData, populationData,
 } from "@/data/mockData";
+import tituloImg from "@/assets/titulo.png";
+import p1Img from "@/assets/p1.png";
+import p2Img from "@/assets/p2.png";
+import p3Img from "@/assets/p3.png";
+import p4Img from "@/assets/p4.png";
 
 /* ─── Paleta ─── */
 const C = {
@@ -288,16 +294,65 @@ const Panel4 = () => (
   </div>
 );
 
-const panels = [Panel2, Panel3, Panel4];
+/* ─── Panel 5 (Visão Geral / Infraestrutura) ─── */
+const Panel5 = () => (
+  <div className="flex flex-col gap-2 h-full">
+    <div className="grid grid-cols-4 gap-2">
+      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} />
+      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} />
+      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} />
+      <KPI title="Municípios" value={overviewKPIs.municipios} sub="Total do estado" color={C.yellow} />
+    </div>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+      <Chart title="Evolução do PIB (R$ bi)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cpib" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.teal} stopOpacity={0.4} /><stop offset="95%" stopColor={C.teal} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={30} />
+            <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2}>
+              <LabelList dataKey="pib" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}`} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="PIB por Setor (%)">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={sectorPieData} cx="50%" cy="50%" innerRadius="30%" outerRadius="55%" paddingAngle={3} dataKey="value" label={renderPieLabel} labelLine={false}>
+              {sectorPieData.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    <Chart title="PIB Municipal (R$ bi)">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+          <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+          <YAxis hide />
+          <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]}>
+            <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </Chart>
+  </div>
+);
+
+const panels = [Panel2, Panel3, Panel4, Panel5];
+const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 2)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
   return (
     <div
@@ -306,6 +361,11 @@ const SingleDashboard = () => {
         background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
       }}
     >
+      {/* Header */}
+      <header className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <img src={tituloImg} alt="Título" className="h-5 object-contain" />
+        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-5 object-contain" />
+      </header>
       {/* Panel */}
       <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
