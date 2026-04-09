@@ -456,6 +456,15 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
+  const [now, setNow] = useState(new Date());
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric" });
+  const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+
   return (
     <div
       className="h-dvh w-full flex flex-col overflow-hidden"
@@ -472,10 +481,13 @@ const SingleDashboard = () => {
       <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
       </div>
-      {/* Footer with source */}
+      {/* Footer with source + clock */}
       <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
         <span className="text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
           {panelTitles[active]} — Dados MT
+        </span>
+        <span className="text-[9px] font-semibold tabular-nums" style={{ color: '#8df3db' }}>
+          {formattedDate} — {formattedTime}
         </span>
         <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] transition-colors" style={{ color: '#8df3db' }}>
           Fonte: dados.mt.gov.br
