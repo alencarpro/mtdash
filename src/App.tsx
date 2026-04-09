@@ -16,8 +16,9 @@ const App = () => (
       <BrowserRouter>
         <div className="dark">
           <Routes>
-            <Route path="/" element={<SingleDashboard />} />
-            <Route path="/dashboard/*" element={<Navigate to="/" replace />} />
+            <Route path="/" element={<Navigate to="/1" replace />} />
+            <Route path="/:page" element={<SingleDashboard />} />
+            <Route path="/dashboard/*" element={<Navigate to="/1" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
@@ -322,8 +323,18 @@ const panels = [Panel1, Panel2, Panel3, Panel4];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
-  const [active, setActive] = useState(0);
+  const { page } = useParams<{ page: string }>();
+  const initialPage = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
+  const [active, setActive] = useState(isNaN(initialPage) ? 0 : initialPage);
   const ActivePanel = panels[active];
+
+  // Sync with URL param changes
+  useEffect(() => {
+    if (page) {
+      const idx = Math.max(0, Math.min(parseInt(page) - 1, 3));
+      if (!isNaN(idx)) setActive(idx);
+    }
+  }, [page]);
 
   // Auto-rotate every 15 seconds for "gestão à vista"
   useEffect(() => {
