@@ -153,14 +153,15 @@ const Panel2 = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="Comércio Exterior (US$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+          <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="trimestre" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
-            <Line type="monotone" dataKey="exportacao" stroke={C.teal} strokeWidth={2} dot={false}>
+            <Legend content={renderLegend} />
+            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false}>
               <LabelList dataKey="exportacao" position="top" fontSize={7} fill={C.teal} />
             </Line>
-            <Line type="monotone" dataKey="importacao" stroke={C.yellow} strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </Chart>
