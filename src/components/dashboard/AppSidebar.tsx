@@ -8,10 +8,10 @@ import {
 } from "lucide-react";
 
 const menuItems = [
-  { label: "Visão Geral", icon: LayoutDashboard, path: "/dashboard/overview" },
-  { label: "Economia", icon: TrendingUp, path: "/dashboard/economy" },
-  { label: "Social", icon: Users, path: "/dashboard/social" },
-  { label: "Ambiental", icon: Leaf, path: "/dashboard/environment" },
+  { label: "1", icon: LayoutDashboard, path: "/dashboard/overview" },
+  { label: "2", icon: TrendingUp, path: "/dashboard/economy" },
+  { label: "3", icon: Users, path: "/dashboard/social" },
+  { label: "4", icon: Leaf, path: "/dashboard/environment" },
 ];
 
 const AppSidebar = () => {
