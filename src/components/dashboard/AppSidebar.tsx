@@ -68,13 +68,6 @@ const AppSidebar = () => {
       {/* Footer */}
       <div className="px-3 pb-4 space-y-1">
         <button
-          onClick={() => navigate("/login")}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent hover:text-destructive transition-all"
-        >
-          <LogOut className="w-5 h-5 flex-shrink-0" />
-          {!collapsed && <span>Sair</span>}
-        </button>
-        <button
           onClick={() => setCollapsed(!collapsed)}
           className="w-full flex items-center justify-center py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-all"
         >
