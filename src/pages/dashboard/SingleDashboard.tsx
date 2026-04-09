@@ -48,6 +48,21 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
   );
 };
 
+/* ─── Custom legend ─── */
+const renderLegend = (props: any) => {
+  const { payload } = props;
+  return (
+    <div className="flex items-center justify-center gap-3 mt-0.5">
+      {payload?.map((entry: any, index: number) => (
+        <span key={index} className="flex items-center gap-1 text-[8px] text-muted-foreground">
+          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color }} />
+          {entry.value}
+        </span>
+      ))}
+    </div>
+  );
+};
+
 /* ─── Compact KPI ─── */
 const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
   <div className="bg-card rounded-lg border border-border px-3 py-2 flex flex-col justify-center relative overflow-hidden">
