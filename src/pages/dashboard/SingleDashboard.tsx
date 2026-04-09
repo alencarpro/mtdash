@@ -13,15 +13,15 @@ import {
 
 /* ─── Paleta ─── */
 const C = {
-  teal: "hsl(174 72% 50%)",
-  blue: "hsl(199 89% 48%)",
-  purple: "hsl(262 52% 47%)",
-  yellow: "hsl(43 96% 56%)",
-  red: "hsl(0 72% 51%)",
-  green: "hsl(142 71% 45%)",
-  grid: "hsl(220 20% 18%)",
-  axis: "hsl(220 10% 55%)",
-  label: "hsl(220 10% 85%)",
+  teal: "#8df3db",
+  blue: "#60a5fa",
+  purple: "#a78bfa",
+  yellow: "#fbbf24",
+  red: "#f87171",
+  green: "#86efac",
+  grid: "rgba(148, 163, 184, 0.18)",
+  axis: "rgba(226, 232, 240, 0.72)",
+  label: "#f8fafc",
 };
 const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
@@ -52,7 +52,7 @@ const renderLegend = (props: any) => {
   return (
     <div className="flex items-center justify-center gap-3 mt-0.5">
       {payload?.map((entry: any, index: number) => (
-        <span key={index} className="flex items-center gap-1 text-[8px] text-muted-foreground">
+        <span key={index} className="flex items-center gap-1 text-[8px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
           <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color }} />
           {entry.value}
         </span>
@@ -63,18 +63,18 @@ const renderLegend = (props: any) => {
 
 /* ─── Compact KPI ─── */
 const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
-  <div className="bg-card rounded-lg border border-border px-3 py-2 flex flex-col justify-center relative overflow-hidden">
+  <div className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)' }}>
     <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color }} />
-    <p className="text-[9px] uppercase tracking-wider text-muted-foreground font-medium truncate">{title}</p>
-    <p className="text-base font-extrabold text-card-foreground leading-tight mt-0.5">{value}</p>
-    <p className="text-[9px] text-muted-foreground truncate mt-0.5">{sub}</p>
+    <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
+    <p className="text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="bg-card rounded-lg border border-border p-2 flex flex-col min-h-0 flex-1">
-    <p className="text-[9px] uppercase tracking-wider font-semibold text-muted-foreground mb-1 truncate">{title}</p>
+  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)' }}>
+    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
@@ -300,17 +300,22 @@ const SingleDashboard = () => {
   const panelTitles = ["Economia", "Social", "Ambiental"];
 
   return (
-    <div className="h-dvh w-full flex flex-col overflow-hidden bg-background">
+    <div
+      className="h-dvh w-full flex flex-col overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
+      }}
+    >
       {/* Panel */}
       <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
       </div>
       {/* Footer with source */}
-      <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5 border-t border-border/30 bg-card/50">
-        <span className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider">
+      <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <span className="text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
           {panelTitles[active]} — Dados MT
         </span>
-        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] text-primary/70 hover:text-primary transition-colors">
+        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] transition-colors" style={{ color: '#8df3db' }}>
           Fonte: dados.mt.gov.br
         </a>
       </footer>
