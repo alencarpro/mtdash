@@ -9,7 +9,13 @@ import {
   comercioExterior, principaisDestinos, mercadoTrabalho, producaoAgricola,
   educacaoData, saudeData, segurancaData, assistenciaSocial, icqvData,
   desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, obrasData, investimentoInfra,
+  overviewKPIs, pibEvolution, sectorPieData, populationData,
 } from "@/data/mockData";
+import tituloImg from "@/assets/titulo.png";
+import p1Img from "@/assets/p1.png";
+import p2Img from "@/assets/p2.png";
+import p3Img from "@/assets/p3.png";
+import p4Img from "@/assets/p4.png";
 
 /* ─── Paleta ─── */
 const C = {
