@@ -18,7 +18,7 @@ const KPICard = ({ title, value, trend, trendValue, icon: CardIcon }: KPICardPro
   const { Icon: TrendIcon, color, bg } = trendConfig[trend];
 
   return (
-    <div className="bg-card rounded-xl border border-border p-5 kpi-shadow hover:border-primary/30 transition-all duration-300 animate-slide-up">
+    <div className="bg-card rounded-xl border border-border p-4 sm:p-5 kpi-shadow hover:border-primary/30 transition-all duration-300 animate-slide-up">
       <div className="flex items-start justify-between mb-3">
         <p className="text-sm font-medium text-muted-foreground">{title}</p>
         {CardIcon && (
