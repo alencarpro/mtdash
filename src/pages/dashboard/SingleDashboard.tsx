@@ -227,14 +227,15 @@ const Panel3 = () => (
       </Chart>
       <Chart title="Segurança Pública">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Bar dataKey="ocorrencias" fill={C.blue} radius={[3, 3, 0, 0]}>
+            <Legend content={renderLegend} />
+            <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="ocorrencias" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
-            <Bar dataKey="homicidios" fill={C.red} radius={[3, 3, 0, 0]}>
+            <Bar dataKey="homicidios" name="Homicídios" fill={C.red} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="homicidios" position="top" fontSize={7} fill={C.label} />
             </Bar>
           </BarChart>
