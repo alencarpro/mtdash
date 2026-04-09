@@ -77,22 +77,17 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
     className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0"
     style={{
       background: 'rgba(10,17,30,0.78)',
-      border: '1px solid rgba(148,163,184,0.18)',
-      animation: `cascadeIn 0.6s ease-out ${delay}ms forwards, subtleFloat 6s ease-in-out ${delay + 600}ms infinite, glowBorder 5s ease-in-out infinite`,
+      border: '1px solid rgba(148,163,184,0.15)',
+      animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
   >
-    <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color, animation: 'softPulse 3s ease-in-out infinite' }} />
+    <div
+      className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg"
+      style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
+    />
     <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
     <p className="text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
-  </div>
-);
-
-/* ─── Chart wrapper ─── */
-const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)', animation: 'glowBorder 5s ease-in-out infinite' }}>
-    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)', animation: 'softPulse 4s ease-in-out infinite' }}>{title}</p>
-    <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
 
