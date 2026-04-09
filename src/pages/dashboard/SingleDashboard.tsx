@@ -73,8 +73,8 @@ const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: stri
 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="bg-card rounded-lg border border-border p-2 flex flex-col min-h-0 flex-1">
-    <p className="text-[9px] uppercase tracking-wider font-semibold text-muted-foreground mb-1 truncate">{title}</p>
+  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)' }}>
+    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
