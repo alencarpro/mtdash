@@ -13,15 +13,15 @@ import {
 
 /* ─── Paleta ─── */
 const C = {
-  teal: "hsl(174 72% 50%)",
-  blue: "hsl(199 89% 48%)",
-  purple: "hsl(262 52% 47%)",
-  yellow: "hsl(43 96% 56%)",
-  red: "hsl(0 72% 51%)",
-  green: "hsl(142 71% 45%)",
-  grid: "hsl(220 20% 18%)",
-  axis: "hsl(220 10% 55%)",
-  label: "hsl(220 10% 85%)",
+  teal: "#8df3db",
+  blue: "#60a5fa",
+  purple: "#a78bfa",
+  yellow: "#fbbf24",
+  red: "#f87171",
+  green: "#86efac",
+  grid: "rgba(148, 163, 184, 0.18)",
+  axis: "rgba(226, 232, 240, 0.72)",
+  label: "#f8fafc",
 };
 const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
