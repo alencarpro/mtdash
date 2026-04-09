@@ -4,9 +4,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import OverviewPage from "./pages/dashboard/OverviewPage";
-import DemographicsPage from "./pages/dashboard/DemographicsPage";
 import EconomyPage from "./pages/dashboard/EconomyPage";
-import InfrastructurePage from "./pages/dashboard/InfrastructurePage";
+import SocialPage from "./pages/dashboard/SocialPage";
+import EnvironmentPage from "./pages/dashboard/EnvironmentPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,9 +21,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Navigate to="/dashboard/overview" replace />} />
             <Route path="/dashboard/overview" element={<OverviewPage />} />
-            <Route path="/dashboard/demographics" element={<DemographicsPage />} />
             <Route path="/dashboard/economy" element={<EconomyPage />} />
-            <Route path="/dashboard/infrastructure" element={<InfrastructurePage />} />
+            <Route path="/dashboard/social" element={<SocialPage />} />
+            <Route path="/dashboard/environment" element={<EnvironmentPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
