@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
 import {
