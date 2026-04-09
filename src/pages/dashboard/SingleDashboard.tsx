@@ -348,11 +348,11 @@ const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 2)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
   return (
     <div
@@ -361,6 +361,11 @@ const SingleDashboard = () => {
         background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
       }}
     >
+      {/* Header */}
+      <header className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <img src={tituloImg} alt="Título" className="h-5 object-contain" />
+        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-5 object-contain" />
+      </header>
       {/* Panel */}
       <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
