@@ -289,16 +289,16 @@ const Panel4 = () => (
   </div>
 );
 
-const panels = [Panel1, Panel2, Panel3, Panel4];
+const panels = [Panel2, Panel3, Panel4];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 2)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Visão Geral", "Economia", "Social", "Ambiental"];
+  const panelTitles = ["Economia", "Social", "Ambiental"];
 
   return (
     <div className="h-dvh w-full flex flex-col overflow-hidden bg-background">
