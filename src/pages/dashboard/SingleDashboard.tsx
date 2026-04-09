@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf } from "lucide-react";
+import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
