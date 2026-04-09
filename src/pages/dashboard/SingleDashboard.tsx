@@ -72,8 +72,15 @@ const renderLegend = (props: any) => {
 };
 
 /* ─── Compact KPI ─── */
-const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
-  <div className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden animate-subtle-float" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)', animation: `subtleFloat 6s ease-in-out infinite, glowBorder 5s ease-in-out infinite` }}>
+const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
+  <div
+    className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0"
+    style={{
+      background: 'rgba(10,17,30,0.78)',
+      border: '1px solid rgba(148,163,184,0.18)',
+      animation: `cascadeIn 0.6s ease-out ${delay}ms forwards, subtleFloat 6s ease-in-out ${delay + 600}ms infinite, glowBorder 5s ease-in-out infinite`,
+    }}
+  >
     <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color, animation: 'softPulse 3s ease-in-out infinite' }} />
     <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
