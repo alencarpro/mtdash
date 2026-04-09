@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
 import {
@@ -324,32 +323,27 @@ const panels = [Panel1, Panel2, Panel3, Panel4];
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
-  const initialPage = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
-  const [active, setActive] = useState(isNaN(initialPage) ? 0 : initialPage);
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
+  const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  // Sync with URL param changes
-  useEffect(() => {
-    if (page) {
-      const idx = Math.max(0, Math.min(parseInt(page) - 1, 3));
-      if (!isNaN(idx)) setActive(idx);
-    }
-  }, [page]);
-
-  // Auto-rotate every 15 seconds for "gestão à vista"
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActive((prev) => (prev + 1) % panels.length);
-    }, 15000);
-    return () => clearInterval(timer);
-  }, []);
+  const panelTitles = ["Visão Geral", "Economia", "Social", "Ambiental"];
 
   return (
     <div className="h-dvh w-full flex flex-col overflow-hidden bg-background">
       {/* Panel */}
-      <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in" key={active}>
+      <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
       </div>
+      {/* Footer with source */}
+      <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5 border-t border-border/30 bg-card/50">
+        <span className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider">
+          {panelTitles[active]} — Dados MT
+        </span>
+        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] text-primary/70 hover:text-primary transition-colors">
+          Fonte: dados.mt.gov.br
+        </a>
+      </footer>
     </div>
   );
 };
