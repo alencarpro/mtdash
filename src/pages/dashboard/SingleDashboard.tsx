@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf } from "lucide-react";
+import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
@@ -341,6 +341,18 @@ const SingleDashboard = () => {
           <BarChart3 className="w-3.5 h-3.5 text-sidebar-primary-foreground" />
         </div>
         <h1 className="text-sm font-bold text-sidebar-accent-foreground tracking-tight">Dados MT</h1>
+        
+        {/* Static filter status */}
+        <div className="flex items-center gap-2 ml-2">
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-sidebar-accent text-[10px] font-medium text-sidebar-accent-foreground">
+            <MapPin className="w-3 h-3 text-primary" />
+            Todas as Cidades
+          </span>
+          <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-sidebar-accent text-[10px] font-medium text-sidebar-accent-foreground">
+            <Calendar className="w-3 h-3 text-primary" />
+            Série Histórica
+          </span>
+        </div>
 
         <nav className="flex items-center gap-1 ml-auto">
           {tabs.map((tab, i) => (
