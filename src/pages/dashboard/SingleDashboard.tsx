@@ -52,7 +52,7 @@ const renderLegend = (props: any) => {
   return (
     <div className="flex items-center justify-center gap-3 mt-0.5">
       {payload?.map((entry: any, index: number) => (
-        <span key={index} className="flex items-center gap-1 text-[8px] text-muted-foreground">
+        <span key={index} className="flex items-center gap-1 text-[8px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
           <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color }} />
           {entry.value}
         </span>
