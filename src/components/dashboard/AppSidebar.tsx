@@ -4,18 +4,18 @@ import {
   BarChart3,
   Users,
   TrendingUp,
-  MapPin,
-  LogOut,
+  Leaf,
   ChevronLeft,
   ChevronRight,
   LayoutDashboard,
+  Building2,
 } from "lucide-react";
 
 const menuItems = [
   { label: "Visão Geral", icon: LayoutDashboard, path: "/dashboard/overview" },
-  { label: "Demografia", icon: Users, path: "/dashboard/demographics" },
   { label: "Economia", icon: TrendingUp, path: "/dashboard/economy" },
-  { label: "Infraestrutura", icon: MapPin, path: "/dashboard/infrastructure" },
+  { label: "Social", icon: Users, path: "/dashboard/social" },
+  { label: "Ambiental & Infra", icon: Leaf, path: "/dashboard/environment" },
 ];
 
 const AppSidebar = () => {
@@ -29,7 +29,6 @@ const AppSidebar = () => {
         collapsed ? "w-[72px]" : "w-[260px]"
       }`}
     >
-      {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-6 border-b border-sidebar-border">
         <div className="w-9 h-9 rounded-lg gradient-primary flex items-center justify-center flex-shrink-0">
           <BarChart3 className="w-5 h-5 text-sidebar-primary-foreground" />
@@ -37,14 +36,13 @@ const AppSidebar = () => {
         {!collapsed && (
           <div className="animate-fade-in">
             <h1 className="text-sm font-bold text-sidebar-accent-foreground tracking-tight">
-              MT Dashboard
+              Dados MT
             </h1>
-            <p className="text-[10px] text-sidebar-foreground">Indicadores & KPIs</p>
+            <p className="text-[10px] text-sidebar-foreground">Portal de Indicadores</p>
           </div>
         )}
       </div>
 
-      {/* Nav */}
       <nav className="flex-1 py-4 px-3 space-y-1">
         {menuItems.map((item) => {
           const isActive = location.pathname === item.path;
@@ -65,8 +63,12 @@ const AppSidebar = () => {
         })}
       </nav>
 
-      {/* Footer */}
-      <div className="px-3 pb-4 space-y-1">
+      <div className="px-3 py-3 border-t border-sidebar-border">
+        {!collapsed && (
+          <p className="text-[9px] text-sidebar-foreground px-3 mb-2 animate-fade-in">
+            Fonte: dados.mt.gov.br
+          </p>
+        )}
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="w-full flex items-center justify-center py-2 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent transition-all"
