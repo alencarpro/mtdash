@@ -6,7 +6,6 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend,
 } from "recharts";
 import {
-  overviewKPIs, pibEvolution, sectorPieData, populationData,
   comercioExterior, principaisDestinos, mercadoTrabalho, producaoAgricola,
   educacaoData, saudeData, segurancaData, assistenciaSocial, icqvData,
   desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, obrasData, investimentoInfra,
