@@ -27,7 +27,6 @@ const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
 
 const tabs = [
-  { label: "Visão Geral", icon: LayoutDashboard },
   { label: "Economia", icon: TrendingUp },
   { label: "Social", icon: Users },
   { label: "Ambiental", icon: Leaf },
