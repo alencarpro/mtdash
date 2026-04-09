@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, DollarSign, Building2, Ship, Briefcase, GraduationCap, HeartPulse, Shield, TreePine, Wind, Construction } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf } from "lucide-react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, Legend, AreaChart, Area, LineChart, Line,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
+  PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
 } from "recharts";
 import {
@@ -12,280 +12,326 @@ import {
   desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, obrasData, investimentoInfra,
 } from "@/data/mockData";
 
-const COLORS = ["hsl(174 72% 40%)", "hsl(199 89% 48%)", "hsl(262 52% 47%)", "hsl(43 96% 56%)", "hsl(0 72% 51%)", "hsl(142 71% 45%)"];
-const BIOMA_COLORS = ["hsl(142 71% 45%)", "hsl(43 96% 56%)", "hsl(199 89% 48%)"];
-const tooltipStyle = { backgroundColor: "hsl(220 25% 12%)", border: "1px solid hsl(220 20% 18%)", borderRadius: 8, color: "hsl(220 10% 92%)" };
+/* ─── Paleta ─── */
+const C = {
+  teal: "hsl(174 72% 50%)",
+  blue: "hsl(199 89% 48%)",
+  purple: "hsl(262 52% 47%)",
+  yellow: "hsl(43 96% 56%)",
+  red: "hsl(0 72% 51%)",
+  green: "hsl(142 71% 45%)",
+  grid: "hsl(220 20% 18%)",
+  axis: "hsl(220 10% 55%)",
+  label: "hsl(220 10% 85%)",
+};
+const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
+const BIOMA_COLORS = [C.green, C.yellow, C.blue];
 
 const tabs = [
-  { label: "1", icon: LayoutDashboard },
-  { label: "2", icon: TrendingUp },
-  { label: "3", icon: Users },
-  { label: "4", icon: Leaf },
+  { label: "Visão Geral", icon: LayoutDashboard },
+  { label: "Economia", icon: TrendingUp },
+  { label: "Social", icon: Users },
+  { label: "Ambiental", icon: Leaf },
 ];
 
-const MiniKPI = ({ title, value, sub }: { title: string; value: string; sub: string }) => (
-  <div className="bg-card rounded-lg border border-border p-2 flex flex-col justify-center">
-    <p className="text-[10px] text-muted-foreground truncate">{title}</p>
-    <p className="text-sm font-bold text-card-foreground leading-tight">{value}</p>
-    <p className="text-[9px] text-muted-foreground truncate">{sub}</p>
+/* ─── Custom pie label ─── */
+const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value, percent }: any) => {
+  const RADIAN = Math.PI / 180;
+  const radius = outerRadius + 14;
+  const x = cx + radius * Math.cos(-midAngle * RADIAN);
+  const y = cy + radius * Math.sin(-midAngle * RADIAN);
+  if ((percent || value / 100) < 0.05) return null;
+  return (
+    <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={8} fontWeight={600}>
+      {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
+    </text>
+  );
+};
+
+/* ─── Compact KPI ─── */
+const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
+  <div className="bg-card rounded-lg border border-border px-3 py-2 flex flex-col justify-center relative overflow-hidden">
+    <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color }} />
+    <p className="text-[9px] uppercase tracking-wider text-muted-foreground font-medium truncate">{title}</p>
+    <p className="text-base font-extrabold text-card-foreground leading-tight mt-0.5">{value}</p>
+    <p className="text-[9px] text-muted-foreground truncate mt-0.5">{sub}</p>
   </div>
 );
 
-const MiniChart = ({ title, children }: { title: string; children: React.ReactNode }) => (
+/* ─── Chart wrapper ─── */
+const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div className="bg-card rounded-lg border border-border p-2 flex flex-col min-h-0 flex-1">
-    <p className="text-[10px] font-semibold text-card-foreground mb-1 truncate">{title}</p>
+    <p className="text-[9px] uppercase tracking-wider font-semibold text-muted-foreground mb-1 truncate">{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
 
+/* ─── Pre-computed data ─── */
 const radarAvg = [
   { subject: "Saúde", value: Math.round(icqvData.reduce((a, b) => a + b.saude, 0) / icqvData.length * 100) },
   { subject: "Educação", value: Math.round(icqvData.reduce((a, b) => a + b.educacao, 0) / icqvData.length * 100) },
   { subject: "Economia", value: Math.round(icqvData.reduce((a, b) => a + b.economia, 0) / icqvData.length * 100) },
   { subject: "ICQV", value: Math.round(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length * 100) },
 ];
-
 const lastTrade = comercioExterior[comercioExterior.length - 1];
 const lastWork = mercadoTrabalho[mercadoTrabalho.length - 1];
 const lastEdu = educacaoData[educacaoData.length - 1];
 const lastDesm = desmatamentoData[desmatamentoData.length - 1];
 
-/* ─── Tab panels ─── */
+/* ─── PANELS ─── */
 
 const Panel1 = () => (
   <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-2 gap-2">
-      <MiniKPI title="PIB Estadual (2023)" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} />
-      <MiniKPI title="Crescimento PIB" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} />
-      <MiniKPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} />
-      <MiniKPI title="Municípios" value={overviewKPIs.municipios} sub="Total do estado" />
+    <div className="grid grid-cols-4 gap-2">
+      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} />
+      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} />
+      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} />
+      <KPI title="Municípios" value={overviewKPIs.municipios} sub="Total do estado" color={C.yellow} />
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="Evolução do PIB (R$ bi)">
+      <Chart title="Evolução do PIB (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={pibEvolution}>
-            <defs><linearGradient id="cpib" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="hsl(174 72% 40%)" stopOpacity={0.3} /><stop offset="95%" stopColor="hsl(174 72% 40%)" stopOpacity={0} /></linearGradient></defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="year" stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={30} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Area type="monotone" dataKey="pib" stroke="hsl(174 72% 40%)" fill="url(#cpib)" strokeWidth={1.5} />
+          <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cpib" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.teal} stopOpacity={0.4} /><stop offset="95%" stopColor={C.teal} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={30} />
+            <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2}>
+              <LabelList dataKey="pib" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}`} />
+            </Area>
           </AreaChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="PIB por Setor">
+      </Chart>
+      <Chart title="PIB por Setor (%)">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={sectorPieData} cx="50%" cy="50%" innerRadius="35%" outerRadius="60%" paddingAngle={3} dataKey="value">
+            <Pie data={sectorPieData} cx="50%" cy="50%" innerRadius="30%" outerRadius="55%" paddingAngle={3} dataKey="value" label={renderPieLabel} labelLine={false}>
               {sectorPieData.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
             </Pie>
-            <Legend wrapperStyle={{ fontSize: 9 }} />
-            <Tooltip contentStyle={tooltipStyle} />
           </PieChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
-    <MiniChart title="PIB Municipal (R$ bi)">
+    <Chart title="PIB Municipal (R$ bi)">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={populationData}>
-          <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-          <XAxis dataKey="city" stroke="hsl(220 10% 46%)" fontSize={8} tickLine={false} />
-          <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} />
-          <Tooltip contentStyle={tooltipStyle} />
-          <Bar dataKey="pibMunicipal" fill="hsl(199 89% 48%)" radius={[3, 3, 0, 0]} />
+        <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+          <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+          <YAxis hide />
+          <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]}>
+            <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
+          </Bar>
         </BarChart>
       </ResponsiveContainer>
-    </MiniChart>
+    </Chart>
   </div>
 );
 
 const Panel2 = () => (
   <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-2 gap-2">
-      <MiniKPI title="Superávit Comercial" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" />
-      <MiniKPI title="Principal Export." value="Soja — 31%" sub="do total" />
-      <MiniKPI title="Taxa Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} />
-      <MiniKPI title="Cresc. PIB" value="+12,9%" sub="2022 → 2023" />
+    <div className="grid grid-cols-4 gap-2">
+      <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} />
+      <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} />
+      <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} />
+      <KPI title="Cresc. PIB" value="+12,9%" sub="2022 → 2023" color={C.yellow} />
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="Comércio Exterior (US$ bi)">
+      <Chart title="Comércio Exterior (US$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={comercioExterior}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="trimestre" stroke="hsl(220 10% 46%)" fontSize={7} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Line type="monotone" dataKey="exportacao" stroke="hsl(174 72% 40%)" strokeWidth={1.5} dot={false} />
-            <Line type="monotone" dataKey="importacao" stroke="hsl(43 96% 56%)" strokeWidth={1.5} dot={false} />
+          <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="trimestre" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
+            <Line type="monotone" dataKey="exportacao" stroke={C.teal} strokeWidth={2} dot={false}>
+              <LabelList dataKey="exportacao" position="top" fontSize={7} fill={C.teal} />
+            </Line>
+            <Line type="monotone" dataKey="importacao" stroke={C.yellow} strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="Destinos Exportações">
+      </Chart>
+      <Chart title="Destinos Exportações">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={principaisDestinos} cx="50%" cy="50%" innerRadius="30%" outerRadius="55%" paddingAngle={2} dataKey="percentual" nameKey="pais">
+            <Pie data={principaisDestinos} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={2} dataKey="percentual" nameKey="pais" label={renderPieLabel} labelLine={false}>
               {principaisDestinos.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
             </Pie>
-            <Legend wrapperStyle={{ fontSize: 8 }} />
-            <Tooltip contentStyle={tooltipStyle} />
           </PieChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="Mercado de Trabalho">
+      <Chart title="Emprego (%)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={mercadoTrabalho}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="trimestre" stroke="hsl(220 10% 46%)" fontSize={7} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} domain={[70, 85]} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="emprego" fill="hsl(262 52% 47%)" radius={[3, 3, 0, 0]} />
+          <BarChart data={mercadoTrabalho} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
+            <YAxis hide domain={[70, 85]} />
+            <Bar dataKey="emprego" fill={C.purple} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="emprego" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${v}%`} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="Produção Agrícola (M ton)">
+      </Chart>
+      <Chart title="Produção Agrícola (M ton)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={producaoAgricola} layout="vertical">
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis type="number" stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} />
-            <YAxis type="category" dataKey="cultura" stroke="hsl(220 10% 46%)" fontSize={8} tickLine={false} width={40} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="producao" fill="hsl(174 72% 40%)" radius={[0, 3, 3, 0]} />
+          <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} width={42} />
+            <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]}>
+              <LabelList dataKey="producao" position="right" fontSize={8} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
   </div>
 );
 
 const Panel3 = () => (
   <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-2 gap-2">
-      <MiniKPI title="IDEB (2023)" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} />
-      <MiniKPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI`} />
-      <MiniKPI title="Segurança" value={segurancaData[segurancaData.length - 1].ocorrencias.toLocaleString()} sub="Ocorrências 2023" />
-      <MiniKPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`Desc. BF: ${assistenciaSocial.descobertura}`} />
+    <div className="grid grid-cols-4 gap-2">
+      <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} />
+      <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI — ${saudeData.coberturaSUS} SUS`} color={C.red} />
+      <KPI title="Ocorrências" value={segurancaData[segurancaData.length - 1].ocorrencias.toLocaleString()} sub="2023 — queda 3,4%" color={C.blue} />
+      <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`Desc. BF ${assistenciaSocial.descobertura}`} color={C.purple} />
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="Evolução IDEB">
+      <Chart title="Evolução IDEB">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={educacaoData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="year" stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} domain={[4, 6]} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Line type="monotone" dataKey="ideb" stroke="hsl(174 72% 40%)" strokeWidth={2} dot={{ r: 3 }} />
+          <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} domain={[4, 6]} />
+            <Line type="monotone" dataKey="ideb" stroke={C.teal} strokeWidth={2} dot={{ r: 3, fill: C.teal }}>
+              <LabelList dataKey="ideb" position="top" fontSize={8} fill={C.label} />
+            </Line>
           </LineChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="Segurança Pública">
+      </Chart>
+      <Chart title="Segurança Pública">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={segurancaData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="year" stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={30} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="ocorrencias" fill="hsl(199 89% 48%)" radius={[3, 3, 0, 0]} />
-            <Bar dataKey="homicidios" fill="hsl(0 72% 51%)" radius={[3, 3, 0, 0]} />
+          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Bar dataKey="ocorrencias" fill={C.blue} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="ocorrencias" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            </Bar>
+            <Bar dataKey="homicidios" fill={C.red} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="homicidios" position="top" fontSize={7} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="ICQV por Município">
+      <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={icqvData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="city" stroke="hsl(220 10% 46%)" fontSize={7} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} domain={[0, 1]} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="saude" fill="hsl(0 72% 51%)" radius={[2, 2, 0, 0]} />
-            <Bar dataKey="educacao" fill="hsl(199 89% 48%)" radius={[2, 2, 0, 0]} />
-            <Bar dataKey="economia" fill="hsl(174 72% 40%)" radius={[2, 2, 0, 0]} />
+          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="city" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <YAxis hide domain={[0, 1]} />
+            <Bar dataKey="saude" fill={C.red} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="educacao" fill={C.blue} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="economia" fill={C.teal} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="Radar Estadual">
+      </Chart>
+      <Chart title="Radar Estadual (ICQV)">
         <ResponsiveContainer width="100%" height="100%">
           <RadarChart data={radarAvg}>
-            <PolarGrid stroke="hsl(220 20% 18%)" />
-            <PolarAngleAxis dataKey="subject" stroke="hsl(220 10% 46%)" fontSize={8} />
-            <PolarRadiusAxis stroke="hsl(220 10% 46%)" fontSize={8} domain={[0, 100]} />
-            <Radar dataKey="value" stroke="hsl(174 72% 40%)" fill="hsl(174 72% 40%)" fillOpacity={0.3} />
+            <PolarGrid stroke={C.grid} />
+            <PolarAngleAxis dataKey="subject" stroke={C.axis} fontSize={8} />
+            <PolarRadiusAxis stroke={C.grid} fontSize={7} domain={[0, 100]} />
+            <Radar dataKey="value" stroke={C.teal} fill={C.teal} fillOpacity={0.3}>
+              <LabelList dataKey="value" fontSize={8} fill={C.label} />
+            </Radar>
           </RadarChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
   </div>
 );
 
 const Panel4 = () => (
   <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-2 gap-2">
-      <MiniKPI title="Vegetação Preservada" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km²`} />
-      <MiniKPI title="Desmatamento 2023" value={`${lastDesm.area} km²`} sub="-10,2% vs 2022" />
-      <MiniKPI title="Qualidade do Ar" value="IQA variável" sub="Crítico Jul–Set" />
-      <MiniKPI title="Obras Andamento" value={obrasData.reduce((a, b) => a + b.emAndamento, 0).toString()} sub={`${obrasData.reduce((a, b) => a + b.concluidas, 0)} concluídas`} />
+    <div className="grid grid-cols-4 gap-2">
+      <KPI title="Vegetação" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km²`} color={C.green} />
+      <KPI title="Desmatamento" value={`${lastDesm.area} km²`} sub="-10,2% vs 2022" color={C.red} />
+      <KPI title="Qual. do Ar" value="IQA variável" sub="Crítico Jul–Set" color={C.yellow} />
+      <KPI title="Obras" value={obrasData.reduce((a, b) => a + b.emAndamento, 0).toString()} sub={`${obrasData.reduce((a, b) => a + b.concluidas, 0)} concluídas`} color={C.blue} />
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="Desmatamento Anual">
+      <Chart title="Desmatamento Anual (km²)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={desmatamentoData}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="year" stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={30} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="area" fill="hsl(0 72% 51%)" radius={[3, 3, 0, 0]} />
-            <Bar dataKey="alertas" fill="hsl(43 96% 56%)" radius={[3, 3, 0, 0]} />
+          <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Bar dataKey="area" fill={C.red} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
+            </Bar>
+            <Bar dataKey="alertas" fill={C.yellow} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="alertas" position="top" fontSize={7} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="Biomas de MT">
+      </Chart>
+      <Chart title="Biomas de MT">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={biomaData} cx="50%" cy="50%" innerRadius="30%" outerRadius="55%" paddingAngle={3} dataKey="percentual" nameKey="name">
+            <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false}>
               {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
             </Pie>
-            <Legend wrapperStyle={{ fontSize: 8 }} />
-            <Tooltip contentStyle={tooltipStyle} />
           </PieChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <MiniChart title="Qualidade do Ar (IQA)">
+      <Chart title="Qualidade do Ar (IQA mensal)">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={qualidadeArData}>
-            <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="hsl(43 96% 56%)" stopOpacity={0.3} /><stop offset="95%" stopColor="hsl(43 96% 56%)" stopOpacity={0} /></linearGradient></defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="mes" stroke="hsl(220 10% 46%)" fontSize={8} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Area type="monotone" dataKey="iqa" stroke="hsl(43 96% 56%)" fill="url(#ciqa)" strokeWidth={1.5} />
+          <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2}>
+              <LabelList dataKey="iqa" position="top" fontSize={7} fill={C.label} />
+            </Area>
           </AreaChart>
         </ResponsiveContainer>
-      </MiniChart>
-      <MiniChart title="Investimento Infra (R$ bi)">
+      </Chart>
+      <Chart title="Investimento Infra (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={investimentoInfra}>
-            <CartesianGrid strokeDasharray="3 3" stroke="hsl(220 20% 18%)" />
-            <XAxis dataKey="year" stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} />
-            <YAxis stroke="hsl(220 10% 46%)" fontSize={9} tickLine={false} width={25} />
-            <Tooltip contentStyle={tooltipStyle} />
-            <Bar dataKey="investimento" fill="hsl(174 72% 40%)" radius={[3, 3, 0, 0]} />
+          <BarChart data={investimentoInfra} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="investimento" position="top" fontSize={8} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
-      </MiniChart>
+      </Chart>
     </div>
   </div>
 );
 
 const panels = [Panel1, Panel2, Panel3, Panel4];
 
+/* ─── Main ─── */
 const SingleDashboard = () => {
   const [active, setActive] = useState(0);
   const ActivePanel = panels[active];
+
+  // Auto-rotate every 15 seconds for "gestão à vista"
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActive((prev) => (prev + 1) % panels.length);
+    }, 15000);
+    return () => clearInterval(timer);
+  }, []);
 
   return (
     <div className="h-dvh w-full flex flex-col overflow-hidden bg-background">
@@ -294,8 +340,8 @@ const SingleDashboard = () => {
         <div className="w-7 h-7 rounded-lg gradient-primary flex items-center justify-center flex-shrink-0">
           <BarChart3 className="w-3.5 h-3.5 text-sidebar-primary-foreground" />
         </div>
-        <h1 className="text-sm font-bold text-sidebar-accent-foreground">Dados MT</h1>
-        {/* Tab buttons */}
+        <h1 className="text-sm font-bold text-sidebar-accent-foreground tracking-tight">Dados MT</h1>
+
         <nav className="flex items-center gap-1 ml-auto">
           {tabs.map((tab, i) => (
             <button
@@ -303,19 +349,32 @@ const SingleDashboard = () => {
               onClick={() => setActive(i)}
               className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
                 active === i
-                  ? "bg-sidebar-accent text-sidebar-primary"
+                  ? "bg-primary/20 text-primary"
                   : "text-sidebar-foreground hover:bg-sidebar-accent/50"
               }`}
             >
               <tab.icon className="w-3.5 h-3.5" />
-              <span>{tab.label}</span>
+              <span className="hidden sm:inline">{tab.label}</span>
+              <span className="sm:hidden">{i + 1}</span>
             </button>
           ))}
         </nav>
+
+        {/* Progress indicator */}
+        <div className="flex gap-1 ml-2">
+          {tabs.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1 rounded-full transition-all duration-500 ${
+                active === i ? "w-4 bg-primary" : "w-1.5 bg-muted-foreground/30"
+              }`}
+            />
+          ))}
+        </div>
       </header>
 
-      {/* Panel content — fills remaining height */}
-      <div className="flex-1 min-h-0 p-2 overflow-hidden">
+      {/* Panel */}
+      <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in" key={active}>
         <ActivePanel />
       </div>
     </div>
