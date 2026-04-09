@@ -193,6 +193,138 @@ export const vegetacaoNativa = {
   areaProtegida: 185000, // km²
 };
 
+// ===== ECONOMIA - NOVOS INDICADORES =====
+
+// Valor Adicionado Bruto por setor (R$ bilhões) - Fonte: SEPLAG/IBGE
+export const vabSetorial = [
+  { year: "2019", agropecuaria: 48.2, industria: 22.1, servicos: 62.8 },
+  { year: "2020", agropecuaria: 55.3, industria: 24.5, servicos: 65.1 },
+  { year: "2021", agropecuaria: 68.7, industria: 28.3, servicos: 74.2 },
+  { year: "2022", agropecuaria: 82.1, industria: 32.6, servicos: 85.4 },
+  { year: "2023", agropecuaria: 78.5, industria: 35.2, servicos: 92.8 },
+];
+
+// Renda média por categoria (R$) - Fonte: SEPLAG 4T 2025
+export const rendaPorCategoria = [
+  { categoria: "Empregado", valor: 3200 },
+  { categoria: "Autônomo", valor: 2850 },
+  { categoria: "Empregador", valor: 8750 },
+  { categoria: "Total", valor: 3480 },
+];
+
+// Consumo de Energia por classe (GWh) - Fonte: SEDEC
+export const consumoEnergia = [
+  { year: "2020", residencial: 2850, comercial: 1420, industrial: 3180, rural: 1950 },
+  { year: "2021", residencial: 3020, comercial: 1580, industrial: 3450, rural: 2100 },
+  { year: "2022", residencial: 3180, comercial: 1720, industrial: 3680, rural: 2280 },
+  { year: "2023", residencial: 3350, comercial: 1850, industrial: 3920, rural: 2450 },
+  { year: "2024", residencial: 3480, comercial: 1980, industrial: 4150, rural: 2580 },
+];
+
+// Produção Industrial Mensal - variação % acumulada - Fonte: SEDEC/IBGE
+export const producaoIndustrial = [
+  { mes: "Jan", variacao: 2.1 },
+  { mes: "Fev", variacao: 3.4 },
+  { mes: "Mar", variacao: 1.8 },
+  { mes: "Abr", variacao: 4.2 },
+  { mes: "Mai", variacao: 3.9 },
+  { mes: "Jun", variacao: 5.1 },
+  { mes: "Jul", variacao: 4.7 },
+  { mes: "Ago", variacao: 3.5 },
+  { mes: "Set", variacao: 2.8 },
+  { mes: "Out", variacao: 4.1 },
+  { mes: "Nov", variacao: 3.6 },
+  { mes: "Dez", variacao: 4.8 },
+];
+
+// Produção de Carne (mil toneladas) - Fonte: SEDEC
+export const producaoCarne = [
+  { year: "2020", bovino: 1280, suino: 185, aves: 420 },
+  { year: "2021", bovino: 1350, suino: 198, aves: 455 },
+  { year: "2022", bovino: 1420, suino: 212, aves: 490 },
+  { year: "2023", bovino: 1510, suino: 225, aves: 528 },
+  { year: "2024", bovino: 1580, suino: 240, aves: 560 },
+];
+
+// Turismo - Municípios no Mapa do Turismo Brasileiro - Fonte: SEDEC
+export const turismoData = {
+  municipiosTuristicos: 85,
+  regioesTuristicas: 12,
+  visitantesAnuais: "3,2 mi",
+  receitaTurismo: "R$ 4,8 bi",
+};
+
+// ===== SOCIAL - NOVOS INDICADORES =====
+
+// Mortalidade (por 1000 habitantes) - Fonte: SES
+export const mortalidadeData = [
+  { year: "2019", infantil: 13.8, materna: 58.2, geral: 5.2 },
+  { year: "2020", infantil: 14.2, materna: 72.5, geral: 6.8 },
+  { year: "2021", infantil: 13.5, materna: 65.1, geral: 7.1 },
+  { year: "2022", infantil: 12.8, materna: 52.3, geral: 5.5 },
+  { year: "2023", infantil: 12.1, materna: 48.7, geral: 5.1 },
+];
+
+// Violência contra a mulher - Fonte: SESP
+export const violenciaMulher = [
+  { year: "2019", registros: 28500, medidas: 12400 },
+  { year: "2020", registros: 31200, medidas: 14100 },
+  { year: "2021", registros: 29800, medidas: 13500 },
+  { year: "2022", registros: 30500, medidas: 14800 },
+  { year: "2023", registros: 29100, medidas: 15200 },
+];
+
+// Déficit Habitacional - Fonte: SETASC
+export const deficitHabitacional = {
+  totalFamilias: 125000,
+  percentualEstadual: "8,2%",
+  domiciliosPrecarios: 42000,
+  coabitacao: 58000,
+};
+
+// Trânsito - Fonte: DETRAN
+export const transitoData = [
+  { year: "2019", acidentes: 18500, vitimas: 1250, frota: 2180000 },
+  { year: "2020", acidentes: 15800, vitimas: 1080, frota: 2250000 },
+  { year: "2021", acidentes: 16900, vitimas: 1120, frota: 2340000 },
+  { year: "2022", acidentes: 17200, vitimas: 1150, frota: 2450000 },
+  { year: "2023", acidentes: 17800, vitimas: 1180, frota: 2580000 },
+];
+
+// ===== AMBIENTAL - NOVOS INDICADORES =====
+
+// Focos de incêndio por mês - Fonte: SEMA
+export const focosIncendio = [
+  { mes: "Jan", focos: 180 },
+  { mes: "Fev", focos: 145 },
+  { mes: "Mar", focos: 120 },
+  { mes: "Abr", focos: 95 },
+  { mes: "Mai", focos: 250 },
+  { mes: "Jun", focos: 580 },
+  { mes: "Jul", focos: 1850 },
+  { mes: "Ago", focos: 4200 },
+  { mes: "Set", focos: 5800 },
+  { mes: "Out", focos: 2100 },
+  { mes: "Nov", focos: 650 },
+  { mes: "Dez", focos: 220 },
+];
+
+// Áreas protegidas por tipo (km²) - Fonte: SEMA
+export const areasProtegidas = [
+  { tipo: "Unid. Conservação", area: 52000 },
+  { tipo: "Terras Indígenas", area: 78000 },
+  { tipo: "Reserva Legal", area: 35000 },
+  { tipo: "APP", area: 20000 },
+];
+
+// Mineração - Fonte: SEDEC
+export const mineracaoData = {
+  substancias: 42,
+  areasAtivas: 1850,
+  producaoOuro: "18,5 ton",
+  faturamento: "R$ 8,2 bi",
+};
+
 // ===== INFRAESTRUTURA =====
 export const obrasData = [
   { tipo: "Rodovias", concluidas: 45, emAndamento: 28, planejadas: 15 },

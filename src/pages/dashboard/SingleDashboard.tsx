@@ -10,6 +10,9 @@ import {
   educacaoData, saudeData, segurancaData, assistenciaSocial, icqvData,
   desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, obrasData, investimentoInfra,
   overviewKPIs, pibEvolution, sectorPieData, populationData,
+  vabSetorial, rendaPorCategoria, consumoEnergia, producaoIndustrial, producaoCarne, turismoData,
+  mortalidadeData, violenciaMulher, deficitHabitacional, transitoData,
+  focosIncendio, areasProtegidas, mineracaoData,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
 import p1Img from "@/assets/p1.png";
@@ -97,27 +100,26 @@ const lastWork = mercadoTrabalho[mercadoTrabalho.length - 1];
 const lastEdu = educacaoData[educacaoData.length - 1];
 const lastDesm = desmatamentoData[desmatamentoData.length - 1];
 
-/* ─── PANELS ─── */
-
-const Panel2 = () => (
+/* ═══════════════════════════════════════════════════════════
+   PANEL 1 — ECONOMIA
+   ═══════════════════════════════════════════════════════════ */
+const PanelEconomia = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
       <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} />
       <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} />
       <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} />
-      <KPI title="Cresc. PIB" value="+12,9%" sub="2022 → 2023" color={C.yellow} />
+      <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} />
     </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Comércio Exterior (US$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="trimestre" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
             <Legend content={renderLegend} />
-            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false}>
-              <LabelList dataKey="exportacao" position="top" fontSize={7} fill={C.teal} />
-            </Line>
+            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} />
             <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
@@ -131,20 +133,21 @@ const Panel2 = () => (
           </PieChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <Chart title="Emprego (%)">
+      <Chart title="VAB Setorial (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={mercadoTrabalho} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
-            <YAxis hide domain={[70, 85]} />
-            <Bar dataKey="emprego" fill={C.purple} radius={[3, 3, 0, 0]}>
-              <LabelList dataKey="emprego" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${v}%`} />
-            </Bar>
+            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Bar dataKey="agropecuaria" name="Agro" fill={C.green} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="industria" name="Indústria" fill={C.blue} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="servicos" name="Serviços" fill={C.purple} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+    </div>
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Produção Agrícola (M ton)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
@@ -157,19 +160,48 @@ const Panel2 = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+      <Chart title="Produção de Carne (mil ton)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={producaoCarne} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Bar dataKey="bovino" name="Bovino" fill={C.red} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="suino" name="Suíno" fill={C.yellow} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="aves" name="Aves" fill={C.blue} radius={[2, 2, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Produção Industrial (% var.)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={producaoIndustrial} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cind" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.purple} stopOpacity={0.4} /><stop offset="95%" stopColor={C.purple} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Area type="monotone" dataKey="variacao" stroke={C.purple} fill="url(#cind)" strokeWidth={2}>
+              <LabelList dataKey="variacao" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${v}%`} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
     </div>
   </div>
 );
 
-const Panel3 = () => (
+/* ═══════════════════════════════════════════════════════════
+   PANEL 2 — SOCIAL
+   ═══════════════════════════════════════════════════════════ */
+const PanelSocial = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
       <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} />
       <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI — ${saudeData.coberturaSUS} SUS`} color={C.red} />
-      <KPI title="Ocorrências" value={segurancaData[segurancaData.length - 1].ocorrencias.toLocaleString()} sub="2023 — queda 3,4%" color={C.blue} />
-      <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`Desc. BF ${assistenciaSocial.descobertura}`} color={C.purple} />
+      <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual} do estado`} color={C.yellow} />
+      <KPI title="Frota Veicular" value={`${(transitoData[transitoData.length - 1].frota / 1e6).toFixed(1)} mi`} sub={`${transitoData[transitoData.length - 1].acidentes.toLocaleString()} acidentes`} color={C.blue} />
     </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Evolução IDEB">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -198,8 +230,20 @@ const Panel3 = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+      <Chart title="Mortalidade (por 1000 hab.)">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={mortalidadeData} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 2 }} />
+            <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 2 }} />
+          </LineChart>
+        </ResponsiveContainer>
+      </Chart>
     </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
@@ -210,6 +254,20 @@ const Panel3 = () => (
             <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} />
             <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} />
             <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Violência contra a Mulher">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={violenciaMulher} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Bar dataKey="registros" name="Registros" fill={C.red} radius={[2, 2, 0, 0]}>
+              <LabelList dataKey="registros" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            </Bar>
+            <Bar dataKey="medidas" name="Medidas Prot." fill={C.teal} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Chart>
@@ -229,15 +287,18 @@ const Panel3 = () => (
   </div>
 );
 
-const Panel4 = () => (
+/* ═══════════════════════════════════════════════════════════
+   PANEL 3 — AMBIENTAL
+   ═══════════════════════════════════════════════════════════ */
+const PanelAmbiental = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
       <KPI title="Vegetação" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km²`} color={C.green} />
       <KPI title="Desmatamento" value={`${lastDesm.area} km²`} sub="-10,2% vs 2022" color={C.red} />
-      <KPI title="Qual. do Ar" value="IQA variável" sub="Crítico Jul–Set" color={C.yellow} />
-      <KPI title="Obras" value={obrasData.reduce((a, b) => a + b.emAndamento, 0).toString()} sub={`${obrasData.reduce((a, b) => a + b.concluidas, 0)} concluídas`} color={C.blue} />
+      <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} />
+      <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} />
     </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Desmatamento Anual (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
@@ -248,9 +309,7 @@ const Panel4 = () => (
             <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
             </Bar>
-            <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]}>
-              <LabelList dataKey="alertas" position="top" fontSize={7} fill={C.label} />
-            </Bar>
+            <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Chart>
@@ -263,30 +322,56 @@ const Panel4 = () => (
           </PieChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
-      <Chart title="Qualidade do Ar (IQA mensal)">
+      <Chart title="Focos de Incêndio (mensal)">
         <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
-            <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
+          <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cfogo" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.red} stopOpacity={0.4} /><stop offset="95%" stopColor={C.red} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="mes" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2}>
-              <LabelList dataKey="iqa" position="top" fontSize={7} fill={C.label} />
+            <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2}>
+              <LabelList dataKey="focos" position="top" fontSize={6} fill={C.label} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
       </Chart>
-      <Chart title="Investimento Infra (R$ bi)">
+    </div>
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+      <Chart title="Qualidade do Ar (IQA)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={investimentoInfra} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]}>
-              <LabelList dataKey="investimento" position="top" fontSize={8} fill={C.label} />
+            <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2}>
+              <LabelList dataKey="iqa" position="top" fontSize={6} fill={C.label} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Áreas Protegidas (km²)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={areasProtegidas} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: -5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} width={65} />
+            <Bar dataKey="area" fill={C.green} radius={[0, 3, 3, 0]}>
+              <LabelList dataKey="area" position="right" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
             </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Consumo Energia (GWh)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={consumoEnergia} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Bar dataKey="residencial" name="Resid." fill={C.blue} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="industrial" name="Indust." fill={C.purple} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="rural" name="Rural" fill={C.green} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Chart>
@@ -294,14 +379,16 @@ const Panel4 = () => (
   </div>
 );
 
-/* ─── Panel 5 (Visão Geral / Infraestrutura) ─── */
-const Panel5 = () => (
+/* ═══════════════════════════════════════════════════════════
+   PANEL 4 — VISÃO GERAL
+   ═══════════════════════════════════════════════════════════ */
+const PanelVisaoGeral = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
       <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} />
       <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} />
       <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} />
-      <KPI title="Municípios" value={overviewKPIs.municipios} sub="Total do estado" color={C.yellow} />
+      <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`BF desc. ${assistenciaSocial.descobertura}`} color={C.yellow} />
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="Evolução do PIB (R$ bi)">
@@ -327,22 +414,36 @@ const Panel5 = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    <Chart title="PIB Municipal (R$ bi)">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-          <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
-          <YAxis hide />
-          <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]}>
-            <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
-          </Bar>
-        </BarChart>
-      </ResponsiveContainer>
-    </Chart>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+      <Chart title="PIB Municipal (R$ bi)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Investimento Infra (R$ bi)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={investimentoInfra} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]}>
+              <LabelList dataKey="investimento" position="top" fontSize={8} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
   </div>
 );
 
-const panels = [Panel2, Panel3, Panel4, Panel5];
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral];
 const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 
 /* ─── Main ─── */
