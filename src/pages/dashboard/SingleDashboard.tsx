@@ -3,7 +3,7 @@ import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar }
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
-  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend,
 } from "recharts";
 import {
   overviewKPIs, pibEvolution, sectorPieData, populationData,
@@ -45,6 +45,21 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={8} fontWeight={600}>
       {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
     </text>
+  );
+};
+
+/* ─── Custom legend ─── */
+const renderLegend = (props: any) => {
+  const { payload } = props;
+  return (
+    <div className="flex items-center justify-center gap-3 mt-0.5">
+      {payload?.map((entry: any, index: number) => (
+        <span key={index} className="flex items-center gap-1 text-[8px] text-muted-foreground">
+          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color }} />
+          {entry.value}
+        </span>
+      ))}
+    </div>
   );
 };
 
@@ -138,14 +153,15 @@ const Panel2 = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="Comércio Exterior (US$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+          <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="trimestre" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
-            <Line type="monotone" dataKey="exportacao" stroke={C.teal} strokeWidth={2} dot={false}>
+            <Legend content={renderLegend} />
+            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false}>
               <LabelList dataKey="exportacao" position="top" fontSize={7} fill={C.teal} />
             </Line>
-            <Line type="monotone" dataKey="importacao" stroke={C.yellow} strokeWidth={2} dot={false} />
+            <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} />
           </LineChart>
         </ResponsiveContainer>
       </Chart>
@@ -211,14 +227,15 @@ const Panel3 = () => (
       </Chart>
       <Chart title="Segurança Pública">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Bar dataKey="ocorrencias" fill={C.blue} radius={[3, 3, 0, 0]}>
+            <Legend content={renderLegend} />
+            <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="ocorrencias" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
-            <Bar dataKey="homicidios" fill={C.red} radius={[3, 3, 0, 0]}>
+            <Bar dataKey="homicidios" name="Homicídios" fill={C.red} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="homicidios" position="top" fontSize={7} fill={C.label} />
             </Bar>
           </BarChart>
@@ -228,13 +245,14 @@ const Panel3 = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="city" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide domain={[0, 1]} />
-            <Bar dataKey="saude" fill={C.red} radius={[2, 2, 0, 0]} />
-            <Bar dataKey="educacao" fill={C.blue} radius={[2, 2, 0, 0]} />
-            <Bar dataKey="economia" fill={C.teal} radius={[2, 2, 0, 0]} />
+            <Legend content={renderLegend} />
+            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Chart>
@@ -265,14 +283,15 @@ const Panel4 = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="Desmatamento Anual (km²)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Bar dataKey="area" fill={C.red} radius={[3, 3, 0, 0]}>
+            <Legend content={renderLegend} />
+            <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
             </Bar>
-            <Bar dataKey="alertas" fill={C.yellow} radius={[3, 3, 0, 0]}>
+            <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]}>
               <LabelList dataKey="alertas" position="top" fontSize={7} fill={C.label} />
             </Bar>
           </BarChart>
