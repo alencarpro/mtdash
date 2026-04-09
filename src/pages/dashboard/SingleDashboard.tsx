@@ -3,7 +3,7 @@ import { BarChart3, LayoutDashboard, TrendingUp, Users, Leaf, MapPin, Calendar }
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
-  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend,
 } from "recharts";
 import {
   overviewKPIs, pibEvolution, sectorPieData, populationData,
