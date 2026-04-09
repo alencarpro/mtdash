@@ -72,8 +72,15 @@ const renderLegend = (props: any) => {
 };
 
 /* ─── Compact KPI ─── */
-const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
-  <div className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden animate-subtle-float" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)', animation: `subtleFloat 6s ease-in-out infinite, glowBorder 5s ease-in-out infinite` }}>
+const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
+  <div
+    className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0"
+    style={{
+      background: 'rgba(10,17,30,0.78)',
+      border: '1px solid rgba(148,163,184,0.18)',
+      animation: `cascadeIn 0.6s ease-out ${delay}ms forwards, subtleFloat 6s ease-in-out ${delay + 600}ms infinite, glowBorder 5s ease-in-out infinite`,
+    }}
+  >
     <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color, animation: 'softPulse 3s ease-in-out infinite' }} />
     <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
@@ -107,10 +114,10 @@ const lastDesm = desmatamentoData[desmatamentoData.length - 1];
 const PanelEconomia = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
-      <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} />
-      <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} />
-      <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} />
-      <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} />
+      <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} delay={0} />
+      <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} delay={120} />
+      <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} delay={240} />
+      <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} delay={360} />
     </div>
     <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Comércio Exterior (US$ bi)">
@@ -197,10 +204,10 @@ const PanelEconomia = () => (
 const PanelSocial = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
-      <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} />
-      <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI — ${saudeData.coberturaSUS} SUS`} color={C.red} />
-      <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual} do estado`} color={C.yellow} />
-      <KPI title="Frota Veicular" value={`${(transitoData[transitoData.length - 1].frota / 1e6).toFixed(1)} mi`} sub={`${transitoData[transitoData.length - 1].acidentes.toLocaleString()} acidentes`} color={C.blue} />
+      <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} />
+      <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI — ${saudeData.coberturaSUS} SUS`} color={C.red} delay={120} />
+      <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual} do estado`} color={C.yellow} delay={240} />
+      <KPI title="Frota Veicular" value={`${(transitoData[transitoData.length - 1].frota / 1e6).toFixed(1)} mi`} sub={`${transitoData[transitoData.length - 1].acidentes.toLocaleString()} acidentes`} color={C.blue} delay={360} />
     </div>
     <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Evolução IDEB">
@@ -295,10 +302,10 @@ const PanelSocial = () => (
 const PanelAmbiental = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
-      <KPI title="Vegetação" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km²`} color={C.green} />
-      <KPI title="Desmatamento" value={`${lastDesm.area} km²`} sub="-10,2% vs 2022" color={C.red} />
-      <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} />
-      <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} />
+      <KPI title="Vegetação" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km²`} color={C.green} delay={0} />
+      <KPI title="Desmatamento" value={`${lastDesm.area} km²`} sub="-10,2% vs 2022" color={C.red} delay={120} />
+      <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} />
+      <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
     </div>
     <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Desmatamento Anual (km²)">
@@ -387,10 +394,10 @@ const PanelAmbiental = () => (
 const PanelVisaoGeral = () => (
   <div className="flex flex-col gap-2 h-full">
     <div className="grid grid-cols-4 gap-2">
-      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} />
-      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} />
-      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} />
-      <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`BF desc. ${assistenciaSocial.descobertura}`} color={C.yellow} />
+      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} delay={0} />
+      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={120} />
+      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={240} />
+      <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`BF desc. ${assistenciaSocial.descobertura}`} color={C.yellow} delay={360} />
     </div>
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="Evolução do PIB (R$ bi)">
