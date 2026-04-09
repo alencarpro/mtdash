@@ -91,6 +91,14 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
   </div>
 );
 
+/* ─── Chart wrapper ─── */
+const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
+  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}>
+    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <div className="flex-1 min-h-0">{children}</div>
+  </div>
+);
+
 /* ─── Pre-computed data ─── */
 const radarAvg = [
   { subject: "Saúde", value: Math.round(icqvData.reduce((a, b) => a + b.saude, 0) / icqvData.length * 100) },
