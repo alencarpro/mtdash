@@ -245,13 +245,14 @@ const Panel3 = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="city" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide domain={[0, 1]} />
-            <Bar dataKey="saude" fill={C.red} radius={[2, 2, 0, 0]} />
-            <Bar dataKey="educacao" fill={C.blue} radius={[2, 2, 0, 0]} />
-            <Bar dataKey="economia" fill={C.teal} radius={[2, 2, 0, 0]} />
+            <Legend content={renderLegend} />
+            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} />
+            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Chart>
