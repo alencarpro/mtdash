@@ -488,8 +488,8 @@ const SingleDashboard = () => {
           {panelTitles[active]} — Dados MT
         </span>
         <span className="text-[9px] font-semibold tabular-nums">
-          <span style={{ color: '#fbbf24' }}>{formattedDate}</span>
-          <span style={{ color: '#8df3db' }}> — {formattedTime}</span>
+          <span style={{ color: '#60a5fa' }}>{formattedDate}</span>
+          <span style={{ color: '#93c5fd' }}> — {formattedTime}</span>
         </span>
         <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] transition-colors" style={{ color: '#8df3db' }}>
           Fonte: dados.mt.gov.br
