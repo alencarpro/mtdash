@@ -63,11 +63,11 @@ const renderLegend = (props: any) => {
 
 /* ─── Compact KPI ─── */
 const KPI = ({ title, value, sub, color = C.teal }: { title: string; value: string; sub: string; color?: string }) => (
-  <div className="bg-card rounded-lg border border-border px-3 py-2 flex flex-col justify-center relative overflow-hidden">
+  <div className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.18)' }}>
     <div className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg" style={{ backgroundColor: color }} />
-    <p className="text-[9px] uppercase tracking-wider text-muted-foreground font-medium truncate">{title}</p>
-    <p className="text-base font-extrabold text-card-foreground leading-tight mt-0.5">{value}</p>
-    <p className="text-[9px] text-muted-foreground truncate mt-0.5">{sub}</p>
+    <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
+    <p className="text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
