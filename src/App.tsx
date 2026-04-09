@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import LoginPage from "./pages/LoginPage";
 import OverviewPage from "./pages/dashboard/OverviewPage";
 import DemographicsPage from "./pages/dashboard/DemographicsPage";
 import EconomyPage from "./pages/dashboard/EconomyPage";
@@ -20,8 +19,7 @@ const App = () => (
       <BrowserRouter>
         <div className="dark">
           <Routes>
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<Navigate to="/dashboard/overview" replace />} />
             <Route path="/dashboard/overview" element={<OverviewPage />} />
             <Route path="/dashboard/demographics" element={<DemographicsPage />} />
             <Route path="/dashboard/economy" element={<EconomyPage />} />
