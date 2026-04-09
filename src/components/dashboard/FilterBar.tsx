@@ -29,9 +29,9 @@ const FilterBar = ({
   onPeriodChange,
 }: FilterBarProps) => {
   return (
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-col sm:flex-row gap-3">
       <Select value={selectedCity} onValueChange={onCityChange}>
-        <SelectTrigger className="w-[200px] bg-card border-border">
+        <SelectTrigger className="w-full sm:w-[200px] bg-card border-border">
           <SelectValue placeholder="Cidade" />
         </SelectTrigger>
         <SelectContent>
@@ -44,7 +44,7 @@ const FilterBar = ({
       </Select>
 
       <Select value={selectedPeriod} onValueChange={onPeriodChange}>
-        <SelectTrigger className="w-[180px] bg-card border-border">
+        <SelectTrigger className="w-full sm:w-[180px] bg-card border-border">
           <SelectValue placeholder="Período" />
         </SelectTrigger>
         <SelectContent>
