@@ -300,17 +300,22 @@ const SingleDashboard = () => {
   const panelTitles = ["Economia", "Social", "Ambiental"];
 
   return (
-    <div className="h-dvh w-full flex flex-col overflow-hidden bg-background">
+    <div
+      className="h-dvh w-full flex flex-col overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
+      }}
+    >
       {/* Panel */}
       <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
       </div>
       {/* Footer with source */}
-      <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5 border-t border-border/30 bg-card/50">
-        <span className="text-[9px] text-muted-foreground font-medium uppercase tracking-wider">
+      <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <span className="text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
           {panelTitles[active]} — Dados MT
         </span>
-        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] text-primary/70 hover:text-primary transition-colors">
+        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] transition-colors" style={{ color: '#8df3db' }}>
           Fonte: dados.mt.gov.br
         </a>
       </footer>
