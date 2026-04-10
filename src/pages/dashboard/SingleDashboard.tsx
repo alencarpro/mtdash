@@ -74,15 +74,25 @@ const renderLegend = (props: any) => {
 /* ─── Compact KPI ─── */
 const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
   <div
-    className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0"
+    className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
       background: 'rgba(10,17,30,0.78)',
       border: '1px solid rgba(148,163,184,0.15)',
       animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
+    onMouseEnter={e => {
+      const el = e.currentTarget;
+      el.style.boxShadow = `0 0 18px -2px ${color}44, 0 0 6px -1px ${color}33`;
+      el.style.borderColor = `${color}55`;
+    }}
+    onMouseLeave={e => {
+      const el = e.currentTarget;
+      el.style.boxShadow = '';
+      el.style.borderColor = 'rgba(148,163,184,0.15)';
+    }}
   >
     <div
-      className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg"
+      className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
     <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
