@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
+import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, Camera, Video } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
@@ -14,13 +14,14 @@ import {
   overviewKPIs, pibEvolution, sectorPieData, populationData,
   vabSetorial, rendaPorCategoria, consumoEnergia, producaoIndustrial, producaoCarne, turismoData,
   mortalidadeData, violenciaMulher, deficitHabitacional, transitoData,
-  focosIncendio, areasProtegidas, mineracaoData,
+  focosIncendio, areasProtegidas, mineracaoData, obrasEstrategicas,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
 import p1Img from "@/assets/p1.png";
 import p2Img from "@/assets/p2.png";
 import p3Img from "@/assets/p3.png";
 import p4Img from "@/assets/p4.png";
+import p5Img from "@/assets/p5.png";
 
 /* ─── Paleta ─── */
 const C = {
@@ -545,17 +546,145 @@ const PanelVisaoGeral = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral];
-const panelIcons = [p1Img, p2Img, p3Img, p4Img];
+/* ═══════════════════════════════════════════════════════════
+   PANEL 5 — OBRAS ESTRATÉGICAS (Monitoramento)
+   ═══════════════════════════════════════════════════════════ */
+
+const ProgressRing = ({ percent, size = 100 }: { percent: number; size?: number }) => {
+  const stroke = 8;
+  const radius = (size - stroke) / 2;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (percent / 100) * circumference;
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
+      <svg width={size} height={size} className="-rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(148,163,184,0.15)" strokeWidth={stroke} />
+        <circle
+          cx={size / 2} cy={size / 2} r={radius} fill="none"
+          stroke={C.teal} strokeWidth={stroke} strokeLinecap="round"
+          strokeDasharray={circumference} strokeDashoffset={offset}
+          style={{ transition: 'stroke-dashoffset 1.5s ease-out' }}
+        />
+      </svg>
+      <div className="absolute flex flex-col items-center">
+        <span className="text-lg font-extrabold" style={{ color: '#f8fafc' }}>{percent.toFixed(2)}%</span>
+        <span className="text-[8px] uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>Executado</span>
+      </div>
+    </div>
+  );
+};
+
+const CameraCard = ({ camera }: { camera: typeof obrasEstrategicas.cameras[0] }) => (
+  <div
+    className="rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-default"
+    style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+  >
+    <div className="relative w-full" style={{ paddingBottom: '56.25%', background: 'linear-gradient(135deg, rgba(10,17,30,0.95), rgba(20,30,50,0.95))' }}>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-1">
+          <Camera size={20} style={{ color: 'rgba(226,232,240,0.4)' }} />
+          <span className="text-[7px]" style={{ color: 'rgba(226,232,240,0.4)' }}>Feed de câmera</span>
+        </div>
+      </div>
+      <div className="absolute top-1 right-1 flex items-center gap-1 px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.6)' }}>
+        <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+        <span className="text-[7px] font-semibold" style={{ color: '#f8fafc' }}>LIVE</span>
+      </div>
+    </div>
+    <div className="px-2 py-1.5">
+      <div className="flex items-center justify-between mb-0.5">
+        <span className="text-[8px] font-medium" style={{ color: C.teal }}>{camera.cidade}</span>
+      </div>
+      <p className="text-[9px] font-bold truncate" style={{ color: '#f8fafc' }}>{camera.nome}</p>
+      <p className="text-[7px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.6)' }}>{camera.local}</p>
+      <div className="flex items-center justify-between mt-1">
+        <span className="text-[7px]" style={{ color: 'rgba(226,232,240,0.5)' }}>{camera.tipo}</span>
+        <span className="text-[7px]" style={{ color: 'rgba(226,232,240,0.5)' }}>Placa {camera.placa}</span>
+      </div>
+    </div>
+  </div>
+);
+
+const PanelObras = () => {
+  const d = obrasEstrategicas;
+  return (
+    <div className="flex flex-col gap-2 h-full overflow-auto">
+      {/* Hero section: title + progress ring */}
+      <div className="rounded-lg p-3 flex items-start justify-between" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}>
+        <div className="flex-1 min-w-0 mr-3">
+          <div className="flex items-center gap-2 mb-1">
+            <span className="text-[8px] uppercase tracking-widest font-bold px-2 py-0.5 rounded" style={{ color: C.teal, background: 'rgba(141,243,219,0.1)', border: '1px solid rgba(141,243,219,0.2)' }}>
+              Painel de Monitoramento
+            </span>
+            <span className="text-[8px] uppercase tracking-widest font-semibold px-2 py-0.5 rounded" style={{ color: C.blue, background: 'rgba(96,165,250,0.1)', border: '1px solid rgba(96,165,250,0.2)' }}>
+              Percentual Executado
+            </span>
+          </div>
+          <h2 className="text-lg font-extrabold mt-1" style={{ color: '#f8fafc' }}>{d.titulo}</h2>
+          <p className="text-[9px] mt-0.5 leading-relaxed" style={{ color: 'rgba(226,232,240,0.72)' }}>{d.descricao}</p>
+          <div className="flex items-center gap-2 mt-1.5">
+            <span className="text-[8px] px-2 py-0.5 rounded font-semibold" style={{ background: 'rgba(141,243,219,0.1)', color: C.teal, border: '1px solid rgba(141,243,219,0.2)' }}>{d.contrato.numero}</span>
+            <span className="text-[8px] px-2 py-0.5 rounded font-semibold" style={{ background: 'rgba(96,165,250,0.1)', color: C.blue, border: '1px solid rgba(96,165,250,0.2)' }}>{d.contrato.status}</span>
+            <span className="text-[8px]" style={{ color: 'rgba(226,232,240,0.5)' }}>{d.cameras.length} câmeras</span>
+          </div>
+        </div>
+        <ProgressRing percent={d.percentualExecutado} size={90} />
+      </div>
+
+      {/* Contract info cards */}
+      <div className="grid grid-cols-4 gap-2">
+        <KPI title="Contrato" value={d.contrato.numero} sub={`início ${d.contrato.inicio}\n${d.contrato.diasAtuais} dias atuais`} color={C.teal} delay={0} />
+        <KPI title="Término Previsto" value={d.terminoPrevisto} sub={`${d.contrato.diasAtuais} dias atuais`} color={C.blue} delay={120} />
+        <KPI title="Valor Total" value={d.valorTotal} sub={`${d.percentualPago} pago`} color={C.purple} delay={240} />
+        <KPI title="Execução Física" value={d.execucaoFisica.area} sub={d.execucaoFisica.status} color={C.green} delay={360} />
+      </div>
+
+      {/* Objeto */}
+      <div className="rounded-lg p-2" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}>
+        <div className="flex items-center justify-between mb-1">
+          <div>
+            <span className="text-[8px] uppercase tracking-wider font-bold" style={{ color: C.yellow }}>Objeto</span>
+            <span className="text-[9px] ml-2 font-semibold" style={{ color: '#f8fafc' }}>Detalhes do contrato</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.1)', color: C.teal }}>{d.objeto.totalBRT} BRT</span>
+            <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(134,239,172,0.1)', color: C.green }}>{d.objeto.online} online</span>
+            <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(248,113,113,0.1)', color: C.red }}>{d.objeto.offline} offline</span>
+          </div>
+        </div>
+        <p className="text-[8px] leading-relaxed" style={{ color: 'rgba(226,232,240,0.6)' }}>{d.objeto.detalhes}</p>
+      </div>
+
+      {/* Cameras section */}
+      <div>
+        <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center gap-2">
+            <span className="text-[8px] uppercase tracking-wider font-bold" style={{ color: C.yellow }}>Monitoramento</span>
+            <span className="text-[10px] font-semibold" style={{ color: '#f8fafc' }}>Câmeras de obras</span>
+          </div>
+          <span className="text-[8px] font-medium" style={{ color: 'rgba(226,232,240,0.5)' }}>{d.cameras.length} cards</span>
+        </div>
+        <div className="grid grid-cols-2 gap-2">
+          {d.cameras.map(cam => (
+            <CameraCard key={cam.id} camera={cam} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelObras];
+const panelIcons = [p1Img, p2Img, p3Img, p4Img, p5Img];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 4)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral", "Obras"];
 
   const [now, setNow] = useState(new Date());
   useEffect(() => {
@@ -571,7 +700,6 @@ const SingleDashboard = () => {
       className="h-dvh w-full flex flex-col overflow-hidden"
       style={{
         background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
-        zoom: 2,
       }}
     >
       {/* Header */}

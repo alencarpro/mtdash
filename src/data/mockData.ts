@@ -333,6 +333,42 @@ export const obrasData = [
   { tipo: "Saneamento", concluidas: 22, emAndamento: 15, planejadas: 10 },
 ];
 
+// ===== OBRAS ESTRATÉGICAS (BRT) =====
+export const obrasEstrategicas = {
+  titulo: "Obras Estratégicas",
+  descricao: "Implantação do corredor de transporte público integrado por meio do BRT nas cidades de Cuiabá e Várzea Grande",
+  contrato: {
+    numero: "Contrato 052/2022",
+    inicio: "25/10/2022",
+    diasAtuais: 1111,
+    status: "Vigente",
+  },
+  terminoPrevisto: "2° semestre de 2025",
+  valorTotal: "R$ 485.886.236,59",
+  percentualPago: "22,35%",
+  valorPago: "R$ 108.557.059,28",
+  valorExecutado: "R$ 132.400.909,29",
+  execucaoFisica: {
+    area: "586.000.000 m²",
+    status: "obra concluída",
+  },
+  percentualExecutado: 27.26,
+  cameras: [
+    { id: 1, nome: "Obra BRT – Femina", cidade: "Cuiabá", local: "Canteiro próximo ao hospital Femina (Av. CPA)", tipo: "BRT", placa: "934,000" },
+    { id: 2, nome: "Obra BRT – Shopping Pantanal", cidade: "Cuiabá", local: "Av. Ulisses Canteiro em frente ao Shop. Pantanal (Av. CPA)", tipo: "Obra estratégica", placa: "934,000" },
+    { id: 3, nome: "Obra BRT – Ganha Tempo", cidade: "Cuiabá", local: "Av. Historiador Rubens de Mendonça", tipo: "Obra estratégica", placa: "934,000" },
+    { id: 4, nome: "Obra BRT – Av. XV Novembro", cidade: "Cuiabá", local: "Av. Historiador Rubens de Mendonça", tipo: "Obra estratégica", placa: "934,000" },
+    { id: 5, nome: "Obra BRT – Porto", cidade: "Cuiabá", local: "Porto", tipo: "Obra estratégica", placa: "934,000" },
+    { id: 6, nome: "Obra BRT – Morro da Luz", cidade: "Cuiabá", local: "Av. Historiador Rubens de Mendonça", tipo: "Obra estratégica", placa: "934,000" },
+  ],
+  objeto: {
+    totalBRT: 8,
+    online: 1,
+    offline: 0,
+    detalhes: "Contratação integrada de empresa para execução dos serviços de elaboração de projetos básicos e executivos de engenharia, desapropriação, obtenção de licenças, outorgas, aprovações e execução das obras de infraestrutura urbana para implantação do corredor BRT em Cuiabá e Várzea Grande.",
+  },
+};
+
 export const investimentoInfra = [
   { year: "2020", investimento: 1.8 },
   { year: "2021", investimento: 2.3 },
