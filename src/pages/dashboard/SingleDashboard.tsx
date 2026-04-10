@@ -676,6 +676,17 @@ const SingleDashboard = () => {
         <img src={tituloImg} alt="Título" className="h-4 sm:h-5 object-contain" />
         <img src={panelIcons[active]} alt={panelTitles[active]} className="h-4 sm:h-5 object-contain" />
       </header>
+      {/* Reload progress bar */}
+      <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
+        <div
+          className="h-full transition-all duration-1000 ease-linear"
+          style={{
+            width: `${progress}%`,
+            background: 'linear-gradient(90deg, #8df3db, #60a5fa)',
+            boxShadow: '0 0 6px rgba(141,243,219,0.4)',
+          }}
+        />
+      </div>
       {/* Panel */}
       <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
