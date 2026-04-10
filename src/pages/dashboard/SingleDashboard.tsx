@@ -557,13 +557,13 @@ const PanelVisaoGeral = () => (
       </Chart>
       <Chart title="Renda por Categoria (R$)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={rendaPorCategoria} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: 0 }}>
+          <BarChart data={[...rendaPorCategoria].sort((a, b) => b.valor - a.valor)} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="categoria" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} width={110} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valor" fill={C.purple} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
-              {rendaPorCategoria.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              {[...rendaPorCategoria].sort((a, b) => b.valor - a.valor).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
               <LabelList dataKey="valor" position="right" fontSize={16} fill={C.label} formatter={(v: number) => `R$ ${v.toLocaleString()}`} />
             </Bar>
           </BarChart>
