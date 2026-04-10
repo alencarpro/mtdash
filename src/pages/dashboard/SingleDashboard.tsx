@@ -62,11 +62,15 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
 const renderLegend = (props: any) => {
   const { payload } = props;
   return (
-     <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-0.5">
+     <div className="mt-1 flex w-full flex-wrap items-start justify-center gap-x-3 gap-y-2 px-1 text-center">
        {payload?.map((entry: any, index: number) => (
-         <span key={index} className="flex items-center gap-1.5 text-[11px] sm:text-[13px] md:text-[14px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+         <span
+           key={index}
+           className="flex min-w-0 max-w-full items-start justify-center gap-1.5 text-[11px] leading-tight sm:text-[13px] md:text-[14px]"
+           style={{ color: 'rgba(226,232,240,0.72)' }}
+         >
             <span className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: entry.color }} />
-            <span className="break-words">{entry.value}</span>
+             <span className="max-w-[6.5rem] whitespace-normal break-words sm:max-w-none">{entry.value}</span>
           </span>
         ))}
     </div>
@@ -151,7 +155,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
-    className="rounded-lg p-2 flex flex-col h-full overflow-visible transition-all duration-300 ease-out hover:scale-[1.04] hover:z-10 cursor-default group/chart"
+    className="group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 transition-all duration-300 ease-out md:hover:z-10 md:hover:scale-[1.02] cursor-default"
     style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
@@ -165,7 +169,7 @@ const Chart = ({ title, children }: { title: string; children: React.ReactNode }
     }}
   >
     <p className="text-[12px] sm:text-[14px] md:text-[16px] uppercase tracking-wider font-semibold mb-1 break-words leading-snug transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
-    <div className="flex-1" style={{ minHeight: 0 }}>{children}</div>
+    <div className="flex-1 min-w-0" style={{ minHeight: 0 }}>{children}</div>
   </div>
 );
 
@@ -240,14 +244,14 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* VAB Setorial */}
-    <div className="flex-shrink-0" style={{ height: 280 }}>
+    <div className="h-[320px] flex-shrink-0 sm:h-[280px]">
       <Chart title="VAB Setorial (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+          <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 10, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} tickMargin={8} />
             <YAxis hide />
-            <Legend content={renderLegend} />
+            <Legend content={renderLegend} height={56} />
             <Tooltip content={<CustomTooltip unit="R$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="agropecuaria" name="Agro" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="agropecuaria" position="top" fontSize={8} fill={C.label} />
