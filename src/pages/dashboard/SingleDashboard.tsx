@@ -906,8 +906,9 @@ const SingleDashboard = () => {
         if (!hasNavigated) {
           hasNavigated = true;
           const nextPage = (active % panels.length) + 1;
-          // Full page reload para o próximo painel
-          window.location.href = `/${nextPage}`;
+          // Navega para o próximo painel e faz reload completo
+          navigate(`/${nextPage}`, { replace: true });
+          setTimeout(() => window.location.reload(), 100);
         }
       } else {
         hasNavigated = false;
