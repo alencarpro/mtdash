@@ -120,7 +120,7 @@ const PieTooltip = ({ active, payload }: any) => {
 
 const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
   <div
-    className="rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
+    className="rounded-lg px-3 sm:px-4 py-3 sm:py-4 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
       background: 'rgba(10,17,30,0.78)',
       border: '1px solid rgba(148,163,184,0.15)',
@@ -141,9 +141,9 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
-     <p className="text-[16px] sm:text-[18px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
-     <p className="text-2xl sm:text-3xl font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
-     <p className="text-[16px] sm:text-[18px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
+     <p className="text-lg sm:text-xl uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+     <p className="text-3xl sm:text-4xl font-extrabold leading-tight mt-1" style={{ color: '#f8fafc' }}>{value}</p>
+     <p className="text-lg sm:text-xl truncate mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
@@ -297,7 +297,7 @@ const PanelEconomia = () => (
 const PanelSocial = () => (
   <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
     {/* KPIs: 6 in a row */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
       <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} />
       <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI`} color={C.red} delay={80} />
       <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual}`} color={C.yellow} delay={160} />
