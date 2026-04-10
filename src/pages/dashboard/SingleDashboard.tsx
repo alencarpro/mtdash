@@ -185,26 +185,30 @@ const lastDesm = desmatamentoData[desmatamentoData.length - 1];
    ═══════════════════════════════════════════════════════════ */
 const PanelEconomia = () => (
   <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
+    {/* KPIs */}
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
       <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} delay={0} />
       <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} delay={120} />
       <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} delay={240} />
       <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} delay={360} />
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
-      <Chart title="Comércio Exterior (US$ bi)">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
-            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
-            <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out" />
-            <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} animationDuration={2000} animationBegin={300} animationEasing="ease-out" />
-          </LineChart>
-        </ResponsiveContainer>
-      </Chart>
+    {/* Row 1: 1 wide (span 2) + 1 narrow */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
+      <div className="sm:col-span-2 flex flex-col min-h-0">
+        <Chart title="Comércio Exterior (US$ bi)">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+              <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
+              <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
+              <Legend content={renderLegend} />
+              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+              <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out" />
+              <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} animationDuration={2000} animationBegin={300} animationEasing="ease-out" />
+            </LineChart>
+          </ResponsiveContainer>
+        </Chart>
+      </div>
       <Chart title="Destinos Exportações">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -215,6 +219,9 @@ const PanelEconomia = () => (
           </PieChart>
         </ResponsiveContainer>
       </Chart>
+    </div>
+    {/* Row 2: 4 equal columns */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 flex-1 min-h-0">
       <Chart title="VAB Setorial (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
@@ -229,8 +236,6 @@ const PanelEconomia = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Produção Agrícola (M ton)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
