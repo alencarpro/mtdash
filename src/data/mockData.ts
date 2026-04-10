@@ -106,10 +106,10 @@ export const mercadoTrabalho = [
 ];
 
 export const producaoAgricola = [
-  { cultura: "Soja", producao: 43.8, area: 12.1 },
   { cultura: "Milho", producao: 46.2, area: 7.3 },
-  { cultura: "Algodão", producao: 5.8, area: 1.5 },
+  { cultura: "Soja", producao: 43.8, area: 12.1 },
   { cultura: "Cana", producao: 18.5, area: 0.28 },
+  { cultura: "Algodão", producao: 5.8, area: 1.5 },
   { cultura: "Arroz", producao: 0.35, area: 0.05 },
 ];
 
