@@ -604,7 +604,7 @@ const PanelVisaoGeral = () => (
 );
 
 const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral];
-const panelIcons = [p1Img, p2Img, p3Img, p4Img];
+const panelLabels = ["P1", "P2", "P3", "P4"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
