@@ -876,7 +876,7 @@ const SingleDashboard = () => {
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
   // Nível 1 = azul claro, Nível 3 = azul intenso (fundo do header)
-  const panelHeaderBgs = ["#0f2040", "#0f2040", "#0f2040", "#0f2040", "#1e3a5f", "#1e3a5f"];
+  const panelHeaderBgs = ["#102041", "#102041", "#102041", "#102041", "#1e3a5f", "#1e3a5f"];
 
   const ROTATE_INTERVAL = 30; // seconds per panel
   const [now, setNow] = useState(new Date());
