@@ -883,10 +883,10 @@ const SingleDashboard = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    // Calculate seconds into the current 30s window (0-29 aligned to :01/:31)
+    let hasNavigated = false;
+
     const getElapsedInWindow = () => {
       const s = new Date().getSeconds();
-      // Windows: 1-30 and 31-60(0). Offset by 1 so windows start at :01 and :31
       return ((s - 1 + 60) % 60) % 30;
     };
 
@@ -896,16 +896,21 @@ const SingleDashboard = () => {
       setProgress((elapsed / ROTATE_INTERVAL) * 100);
     };
 
-    tick(); // initial
+    tick();
 
     const timer = setInterval(tick, 1000);
 
-    // Wait for the next :01 or :31 to trigger navigation
     const checkRotate = setInterval(() => {
       const s = new Date().getSeconds();
       if (s === 1 || s === 31) {
-        const nextPage = active < panels.length - 1 ? active + 2 : 1;
-        navigate(`/${nextPage}`, { replace: true });
+        if (!hasNavigated) {
+          hasNavigated = true;
+          // Ordem sequencial: 1 → 2 → 3 → 4 → 5 → 6 → 1
+          const nextPage = (active % panels.length) + 1;
+          navigate(`/${nextPage}`, { replace: true });
+        }
+      } else {
+        hasNavigated = false;
       }
     }, 500);
 
