@@ -874,7 +874,7 @@ const SingleDashboard = () => {
   const ActivePanel = panels[active];
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade"];
-  const panelTitleColors = ["#bfdbfe", "#bfdbfe", "#bfdbfe", "#bfdbfe", "#2563eb", "#2563eb"];
+  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
 
   const ROTATE_INTERVAL = 30; // seconds per panel
   const [now, setNow] = useState(new Date());
