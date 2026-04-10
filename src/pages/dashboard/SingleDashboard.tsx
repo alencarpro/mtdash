@@ -146,7 +146,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
-    className="rounded-lg p-2 flex flex-col h-full transition-all duration-300 ease-out hover:scale-[1.04] hover:z-10 cursor-default group/chart"
+    className="rounded-lg p-2 flex flex-col h-full overflow-visible transition-all duration-300 ease-out hover:scale-[1.04] hover:z-10 cursor-default group/chart"
     style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
@@ -576,9 +576,9 @@ const PanelVisaoGeral = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="PIB Municipal (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 60, left: -10 }}>
+          <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 80, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="city" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} angle={-45} textAnchor="end" interval={0} height={60} />
+            <XAxis dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} angle={-55} textAnchor="end" interval={0} height={80} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
