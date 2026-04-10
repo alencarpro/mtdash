@@ -350,19 +350,22 @@ const PanelSocial = () => (
     </div>
     {/* Row 2: Segurança + ICQV Médias */}
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
-      <Chart title="Segurança Pública">
+      <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
-            <YAxis hide />
+          <BarChart data={[...icqvData].sort((a, b) => b.icqv - a.icqv)} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" domain={[0, 1]} hide />
+            <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip unit="ocorrências" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="ocorrencias" position="top" fontSize={14} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            <Tooltip content={<CustomTooltip unit="índice" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="saude" position="right" fontSize={8} fill={C.label} />
             </Bar>
-            <Bar dataKey="homicidios" name="Homicídios" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out">
-              <LabelList dataKey="homicidios" position="top" fontSize={14} fill={C.label} />
+            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out">
+              <LabelList dataKey="educacao" position="right" fontSize={8} fill={C.label} />
+            </Bar>
+            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out">
+              <LabelList dataKey="economia" position="right" fontSize={8} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -382,24 +385,21 @@ const PanelSocial = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Row 3: ICQV Município + Violência Mulher + Trânsito */}
+    {/* Row 3: Segurança + Violência Mulher + Trânsito */}
     <div className="grid grid-cols-3 gap-2 flex-1 min-h-[200px]">
-      <Chart title="ICQV por Município">
+      <Chart title="Segurança Pública">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={[...icqvData].sort((a, b) => b.icqv - a.icqv)} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
-            <XAxis type="number" domain={[0, 1]} hide />
-            <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
+          <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
+            <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip unit="índice" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="saude" position="right" fontSize={8} fill={C.label} />
+            <Tooltip content={<CustomTooltip unit="ocorrências" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="ocorrencias" position="top" fontSize={14} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
-            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out">
-              <LabelList dataKey="educacao" position="right" fontSize={8} fill={C.label} />
-            </Bar>
-            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out">
-              <LabelList dataKey="economia" position="right" fontSize={8} fill={C.label} />
+            <Bar dataKey="homicidios" name="Homicídios" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out">
+              <LabelList dataKey="homicidios" position="top" fontSize={14} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
