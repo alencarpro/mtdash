@@ -905,9 +905,9 @@ const SingleDashboard = () => {
       if (s === 1 || s === 31) {
         if (!hasNavigated) {
           hasNavigated = true;
-          // Ordem sequencial: 1 → 2 → 3 → 4 → 5 → 6 → 1
           const nextPage = (active % panels.length) + 1;
-          navigate(`/${nextPage}`, { replace: true });
+          // Full page reload para o próximo painel
+          window.location.href = `/${nextPage}`;
         }
       } else {
         hasNavigated = false;
