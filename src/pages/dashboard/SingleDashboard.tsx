@@ -481,22 +481,8 @@ const PanelAmbiental = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Row 2: Focos + Qualidade Ar — full width, half height each */}
+    {/* Row 2: Qualidade do Ar + Focos de Incêndio — full width, half height each */}
     <div className="grid grid-cols-1 gap-2 flex-1 min-h-[200px]">
-      <Chart title="Focos de Incêndio (mensal)">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
-            <defs><linearGradient id="cfogo" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.red} stopOpacity={0.4} /><stop offset="95%" stopColor={C.red} stopOpacity={0} /></linearGradient></defs>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
-            <YAxis hide />
-            <Tooltip content={<CustomTooltip unit="focos" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="focos" position="top" fontSize={12} fill={C.label} />
-            </Area>
-          </AreaChart>
-        </ResponsiveContainer>
-      </Chart>
       <Chart title="Qualidade do Ar (IQA)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -507,6 +493,20 @@ const PanelAmbiental = () => (
             <Tooltip content={<CustomTooltip unit="IQA" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="iqa" position="top" fontSize={12} fill={C.label} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Focos de Incêndio (mensal)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cfogo" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.red} stopOpacity={0.4} /><stop offset="95%" stopColor={C.red} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip unit="focos" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="focos" position="top" fontSize={12} fill={C.label} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
