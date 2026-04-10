@@ -875,7 +875,7 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade"];
 
-  const RELOAD_INTERVAL = 30; // seconds
+  const ROTATE_INTERVAL = 30; // seconds per panel
   const [now, setNow] = useState(new Date());
   const [progress, setProgress] = useState(0);
 
@@ -884,14 +884,15 @@ const SingleDashboard = () => {
     const timer = setInterval(() => {
       setNow(new Date());
       const elapsed = (Date.now() - start) / 1000;
-      const pct = Math.min((elapsed / RELOAD_INTERVAL) * 100, 100);
+      const pct = Math.min((elapsed / ROTATE_INTERVAL) * 100, 100);
       setProgress(pct);
-      if (elapsed >= RELOAD_INTERVAL) {
-        window.location.reload();
+      if (elapsed >= ROTATE_INTERVAL) {
+        const nextPage = active < panels.length - 1 ? active + 2 : 1;
+        navigate(`/${nextPage}`, { replace: true });
       }
     }, 1000);
     return () => clearInterval(timer);
-  }, []);
+  }, [active, navigate]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
