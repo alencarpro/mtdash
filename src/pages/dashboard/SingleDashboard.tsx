@@ -443,7 +443,7 @@ const PanelAmbiental = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="km²" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="area" position="top" fontSize={14} fill={C.label} />
             </Bar>
@@ -473,7 +473,7 @@ const PanelAmbiental = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="focos" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="focos" position="top" fontSize={12} fill={C.label} />
             </Area>
@@ -487,7 +487,7 @@ const PanelAmbiental = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="IQA" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="iqa" position="top" fontSize={12} fill={C.label} />
             </Area>
@@ -503,7 +503,7 @@ const PanelAmbiental = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={110} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="km²" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="area" fill={C.green} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
               <LabelList dataKey="area" position="right" fontSize={14} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
             </Bar>
@@ -517,7 +517,7 @@ const PanelAmbiental = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="GWh" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="residencial" name="Resid." fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="residencial" position="top" fontSize={8} fill={C.label} />
             </Bar>
@@ -556,7 +556,7 @@ const PanelVisaoGeral = () => (
               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
               <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} interval={0} />
               <YAxis stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={40} />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+              <Tooltip content={<CustomTooltip unit="R$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
               <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
                 <LabelList dataKey="pib" position="top" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y - 4} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text> : null} />
               </Area>
@@ -571,7 +571,7 @@ const PanelVisaoGeral = () => (
               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
               <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} interval={0} />
               <YAxis hide />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+              <Tooltip content={<CustomTooltip unit="%" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
               <Line type="monotone" dataKey="crescimento" stroke={C.yellow} strokeWidth={2} dot={{ r: 3, fill: C.yellow }} animationDuration={2000} animationEasing="ease-out">
                 <LabelList dataKey="crescimento" position="top" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y - 4} textAnchor="middle" fontSize={9} fill={C.label}>{value}%</text> : null} />
               </Line>
@@ -598,7 +598,7 @@ const PanelVisaoGeral = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="categoria" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} width={110} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="R$" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valor" fill={C.purple} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
               {[...rendaPorCategoria].sort((a, b) => b.valor - a.valor).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
               <LabelList dataKey="valor" position="right" fontSize={16} fill={C.label} formatter={(v: number) => `R$ ${v.toLocaleString()}`} />
@@ -615,7 +615,7 @@ const PanelVisaoGeral = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} angle={-55} textAnchor="end" interval={0} height={80} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="R$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="pibMunicipal" position="top" fontSize={16} fill={C.label} />
             </Bar>
@@ -628,7 +628,7 @@ const PanelVisaoGeral = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="R$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="investimento" position="top" fontSize={16} fill={C.label} />
             </Bar>
