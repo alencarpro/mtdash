@@ -906,11 +906,7 @@ const SingleDashboard = () => {
         if (!hasNavigated) {
           hasNavigated = true;
           const nextPage = (active % panels.length) + 1;
-          // Força reload real alterando o search param para evitar cache
-          const url = new URL(window.location.href);
-          url.pathname = `/${nextPage}`;
-          url.searchParams.set('_t', Date.now().toString());
-          window.location.assign(url.toString());
+          navigate(`/${nextPage}`, { replace: true });
         }
       } else {
         hasNavigated = false;
