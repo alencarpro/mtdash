@@ -659,8 +659,211 @@ const PanelVisaoGeral = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral];
-const panelLabels = ["P1", "P2", "P3", "P4"];
+/* ═══════════════════════════════════════════════════════════
+   PANEL 5 — CONTROLE & EFICIÊNCIA (CGE)
+   ═══════════════════════════════════════════════════════════ */
+const OUVIDORIA_COLORS = [C.blue, C.yellow, C.red, C.teal, C.green, C.purple];
+
+const PanelControle = () => (
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
+    {/* KPIs */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
+      <KPI title="Benefício Financeiro" value="R$ 940,7 mi" sub="214 benefícios validados" color={C.teal} delay={0} />
+      <KPI title="Produtos Auditoria" value="703" sub="622 controle + 81 auditoria" color={C.blue} delay={80} />
+      <KPI title="Aderência Recom." value="86,11%" sub="779 trabalhos monitorados" color={C.green} delay={160} />
+      <KPI title="Ouvidoria" value="21.472" sub="manifestações | 94% no prazo" color={C.yellow} delay={240} />
+      <KPI title="CGE Alerta" value="147.397" sub="alertas gerados em 12 categ." color={C.red} delay={320} />
+      <KPI title="Meta Superada" value="300%" sub="benef. financeiro vs meta" color={C.purple} delay={400} />
+    </div>
+    {/* Row 1: Benefícios Financeiros + Aderência Recomendações */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+      <Chart title="Benefícios Financeiros por Área (R$ mi)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={beneficiosFinanceiros} layout="vertical" margin={{ top: 4, right: 40, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="area" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={120} />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" fill={C.teal} radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+              <LabelList dataKey="valor" position="right" fontSize={14} fill={C.label} formatter={(v: number) => `R$ ${v}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Aderência às Recomendações (%)">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={aderenciaRecomendacoes} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} domain={[0, 100]} />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip unit="%" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Line type="monotone" dataKey="aderencia" name="Aderência" stroke={C.teal} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000}>
+              <LabelList dataKey="aderencia" position="top" fontSize={11} fill={C.label} />
+            </Line>
+            <Line type="monotone" dataKey="implementacao" name="Implementação" stroke={C.blue} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationBegin={300}>
+              <LabelList dataKey="implementacao" position="bottom" fontSize={11} fill={C.label} />
+            </Line>
+          </LineChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 2: Áreas Auditadas + Ouvidoria */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+      <Chart title="Ranking Áreas Auditadas">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={areasAuditadas} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="area" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={100} />
+            <Tooltip content={<CustomTooltip unit="auditorias" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="qtd" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+              {areasAuditadas.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              <LabelList dataKey="qtd" position="right" fontSize={14} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Ouvidoria — Manifestações por Natureza">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={ouvidoriaManifestacoes} layout="vertical" margin={{ top: 4, right: 40, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
+            <Tooltip content={<CustomTooltip unit="manif." />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="qtd" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+              {ouvidoriaManifestacoes.map((_, i) => <Cell key={i} fill={OUVIDORIA_COLORS[i % OUVIDORIA_COLORS.length]} />)}
+              <LabelList dataKey="qtd" position="right" fontSize={12} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 3: CGE Alerta */}
+    <div className="grid grid-cols-1 gap-2 flex-1 min-h-[140px]">
+      <Chart title="CGE Alerta — Redução de Alertas Sensíveis">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={cgeAlerta} margin={{ top: 14, right: 20, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="tipo" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip unit="alertas" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="inicial" name="Inicial" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500}>
+              <LabelList dataKey="inicial" position="top" fontSize={14} fill={C.label} />
+            </Bar>
+            <Bar dataKey="final" name="Final" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300}>
+              <LabelList dataKey="final" position="top" fontSize={14} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════════
+   PANEL 6 — INTEGRIDADE & TRANSPARÊNCIA
+   ═══════════════════════════════════════════════════════════ */
+const PanelIntegridade = () => (
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
+    {/* KPIs */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
+      <KPI title="Planos Integridade" value="31" sub="órgãos com planos publicados" color={C.teal} delay={0} />
+      <KPI title="Ações Monitoradas" value="491" sub="25 órgãos acompanhados" color={C.blue} delay={80} />
+      <KPI title="Capacitações" value="64" sub="3.094 participações" color={C.green} delay={160} />
+      <KPI title="TCACs Firmados" value="224" sub="acordos de ajustamento" color={C.yellow} delay={240} />
+      <KPI title="Selo Transparência" value="Diamante" sub="95,28% — 3º ano consecutivo" color={C.purple} delay={320} />
+      <KPI title="Acesso Informação" value="1.011" sub="pedidos | 74% concedidos" color={C.red} delay={400} />
+    </div>
+    {/* Row 1: Dosimetria + Capacitações */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+      <Chart title="Dosimetria das Penas (%) — Evolução 2023-2025">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={dosimetriaPenas} margin={{ top: 14, right: 4, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="opiniao" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip unit="%" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="y2023" name="2023" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500}>
+              <LabelList dataKey="y2023" position="top" fontSize={9} fill={C.label} />
+            </Bar>
+            <Bar dataKey="y2024" name="2024" fill={C.yellow} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200}>
+              <LabelList dataKey="y2024" position="top" fontSize={9} fill={C.label} />
+            </Bar>
+            <Bar dataKey="y2025" name="2025" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400}>
+              <LabelList dataKey="y2025" position="top" fontSize={9} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Capacitações por Área (participações)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={capacitacoesCGE} layout="vertical" margin={{ top: 4, right: 40, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="area" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={110} />
+            <Tooltip content={<CustomTooltip unit="participações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="participacoes" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+              {capacitacoesCGE.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              <LabelList dataKey="participacoes" position="right" fontSize={14} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 2: TCACs + Custos dos Serviços */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+      <Chart title="TCACs por Órgão (acordos)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={tcacs} margin={{ top: 14, right: 4, bottom: 4, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="orgao" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip unit="acordos" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="acordos" fill={C.blue} radius={[4, 4, 0, 0]} animationDuration={1500}>
+              <LabelList dataKey="acordos" position="top" fontSize={16} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Custos dos Serviços CGE (%)">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={custosServicos} cx="50%" cy="50%" innerRadius={40} outerRadius={80} paddingAngle={4} dataKey="percentual" nameKey="area" label={renderPieLabel} animationDuration={2000}>
+              {custosServicos.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 3: Planejamento Estratégico — Previsto vs Realizado */}
+    <div className="grid grid-cols-1 gap-2 flex-1 min-h-[140px]">
+      <Chart title="Planejamento Estratégico 2025 — Previsto vs Realizado">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={planejamentoEstrategico} margin={{ top: 14, right: 20, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="indicador" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="previsto" name="Previsto" fill={C.yellow} radius={[3, 3, 0, 0]} animationDuration={1500}>
+              <LabelList dataKey="previsto" position="top" fontSize={12} fill={C.label} />
+            </Bar>
+            <Bar dataKey="realizado" name="Realizado" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300}>
+              <LabelList dataKey="realizado" position="top" fontSize={12} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+  </div>
+);
+
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade];
+const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
