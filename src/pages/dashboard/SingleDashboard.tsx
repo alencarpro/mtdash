@@ -643,18 +643,22 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
+  const RELOAD_INTERVAL = 60; // seconds
   const [now, setNow] = useState(new Date());
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const [progress, setProgress] = useState(0);
 
-  // Auto-reload current panel every 60 seconds
   useEffect(() => {
-    const reload = setInterval(() => {
-      window.location.reload();
-    }, 60000);
-    return () => clearInterval(reload);
+    const start = Date.now();
+    const timer = setInterval(() => {
+      setNow(new Date());
+      const elapsed = (Date.now() - start) / 1000;
+      const pct = Math.min((elapsed / RELOAD_INTERVAL) * 100, 100);
+      setProgress(pct);
+      if (elapsed >= RELOAD_INTERVAL) {
+        window.location.reload();
+      }
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
