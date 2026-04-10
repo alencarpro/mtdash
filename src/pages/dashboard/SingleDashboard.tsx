@@ -120,7 +120,7 @@ const PieTooltip = ({ active, payload }: any) => {
 
 const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
   <div
-    className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
+    className="rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
       background: 'rgba(10,17,30,0.78)',
       border: '1px solid rgba(148,163,184,0.15)',
@@ -141,9 +141,9 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
-    <p className="text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
-    <p className="text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
-    <p className="text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
+    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <p className="text-sm sm:text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
+    <p className="text-[8px] sm:text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
