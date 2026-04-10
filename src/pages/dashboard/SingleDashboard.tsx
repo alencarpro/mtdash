@@ -521,13 +521,14 @@ const PanelAmbiental = () => (
    ═══════════════════════════════════════════════════════════ */
 const PanelVisaoGeral = () => (
   <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} delay={0} />
-      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={120} />
-      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={240} />
-      <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`BF desc. ${assistenciaSocial.descobertura}`} color={C.yellow} delay={360} />
+    {/* KPIs: 3 wide */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={`${overviewKPIs.pibRanking} — ${overviewKPIs.pibParticipacao} do Brasil`} color={C.teal} delay={0} />
+      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={120} />
+      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={240} />
     </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
+    {/* Hero: full-width PIB evolution */}
+    <div className="flex-1 min-h-0">
       <Chart title="Evolução do PIB (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -542,6 +543,9 @@ const PanelVisaoGeral = () => (
           </AreaChart>
         </ResponsiveContainer>
       </Chart>
+    </div>
+    {/* Bottom: 3 columns */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="PIB por Setor (%)">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -552,8 +556,6 @@ const PanelVisaoGeral = () => (
           </PieChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="PIB Municipal (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
