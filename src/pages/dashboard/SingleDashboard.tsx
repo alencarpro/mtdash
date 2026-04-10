@@ -150,7 +150,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
-    className="rounded-lg p-2 flex flex-col min-h-[160px] sm:min-h-0 flex-1 transition-all duration-300 ease-out hover:scale-[1.025] hover:z-10 cursor-default group/chart"
+    className="rounded-lg p-2 flex flex-col min-h-[160px] sm:min-h-0 flex-1 transition-all duration-300 ease-out hover:scale-[1.04] hover:z-10 cursor-default group/chart"
     style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
