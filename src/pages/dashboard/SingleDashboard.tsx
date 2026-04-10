@@ -905,8 +905,7 @@ const SingleDashboard = () => {
       if (s === 1 || s === 31) {
         if (!hasNavigated) {
           hasNavigated = true;
-          const nextPage = (active % panels.length) + 1;
-          navigate(`/${nextPage}`, { replace: true });
+          const nextPage = ((active + 1) % panels.length) + 1;
         }
       } else {
         hasNavigated = false;
