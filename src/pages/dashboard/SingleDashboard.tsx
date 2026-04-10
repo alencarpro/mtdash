@@ -385,9 +385,9 @@ const PanelSocial = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Row 3: Mortalidade + Violência + Trânsito */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
-      <Chart title="Mortalidade / Violência Mulher (por mil hab.)">
+    {/* Row 3: Mortalidade + Violência Mulher + Trânsito */}
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-[200px]">
+      <Chart title="Mortalidade (por mil hab.)">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mortalidadeData} margin={{ top: 18, right: 16, bottom: 14, left: 16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
@@ -402,6 +402,23 @@ const PanelSocial = () => (
               <LabelList dataKey="geral" position="bottom" offset={8} fontSize={10} fill={C.label} />
             </Line>
           </LineChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Violência contra a Mulher">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={violenciaMulher} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip unit="registros" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="registros" name="Registros" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="registros" position="top" fontSize={9} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            </Bar>
+            <Bar dataKey="medidas" name="Medidas Protetivas" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out">
+              <LabelList dataKey="medidas" position="top" fontSize={9} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       </Chart>
       <Chart title="Trânsito — Acidentes">
