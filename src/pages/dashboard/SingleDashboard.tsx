@@ -77,6 +77,49 @@ const renderLegend = (props: any) => {
   );
 };
 
+const wrapAxisLabel = (value: string, maxCharsPerLine = 11) => {
+  const words = value.split(/\s+/).filter(Boolean);
+  const lines: string[] = [];
+
+  words.forEach((word) => {
+    const currentLine = lines[lines.length - 1];
+
+    if (!currentLine) {
+      lines.push(word);
+      return;
+    }
+
+    if (`${currentLine} ${word}`.length <= maxCharsPerLine) {
+      lines[lines.length - 1] = `${currentLine} ${word}`;
+      return;
+    }
+
+    lines.push(word);
+  });
+
+  const visibleLines = lines.slice(0, 2);
+
+  if (lines.length > 2) {
+    visibleLines[visibleLines.length - 1] = `${visibleLines[visibleLines.length - 1]}…`;
+  }
+
+  return visibleLines;
+};
+
+const WrappedYAxisTick = ({ x, y, payload }: any) => {
+  const lines = wrapAxisLabel(String(payload?.value ?? ""));
+
+  return (
+    <text x={x - 6} y={y} fill={C.axis} textAnchor="end" fontSize={10} dominantBaseline="middle">
+      {lines.map((line, index) => (
+        <tspan key={`${payload?.value}-${index}`} x={x - 6} dy={index === 0 ? -(lines.length - 1) * 6 : 12}>
+          {line}
+        </tspan>
+      ))}
+    </text>
+  );
+};
+
 /* ─── Custom tooltip ─── */
 const CustomTooltip = ({ active, payload, label, unit }: any) => {
   if (!active || !payload?.length) return null;
@@ -714,31 +757,31 @@ const PanelControle = () => (
       </Chart>
     </div>
     {/* Row 2: Áreas Auditadas + Ouvidoria */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+    <div className="grid min-w-0 grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Ranking Áreas Auditadas">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={areasAuditadas} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
+          <BarChart data={areasAuditadas} layout="vertical" margin={{ top: 4, right: 26, bottom: 4, left: 2 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="area" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={100} />
+            <YAxis type="category" dataKey="area" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={88} interval={0} tick={<WrappedYAxisTick />} />
             <Tooltip content={<CustomTooltip unit="auditorias" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="qtd" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
               {areasAuditadas.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-              <LabelList dataKey="qtd" position="right" fontSize={14} fill={C.label} />
+              <LabelList dataKey="qtd" position="right" fontSize={11} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
       <Chart title="Ouvidoria — Manifestações por Natureza">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={ouvidoriaManifestacoes} layout="vertical" margin={{ top: 4, right: 40, bottom: 4, left: 10 }}>
+          <BarChart data={ouvidoriaManifestacoes} layout="vertical" margin={{ top: 4, right: 32, bottom: 4, left: 2 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
+            <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={78} interval={0} tick={<WrappedYAxisTick />} />
             <Tooltip content={<CustomTooltip unit="manif." />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="qtd" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
               {ouvidoriaManifestacoes.map((_, i) => <Cell key={i} fill={OUVIDORIA_COLORS[i % OUVIDORIA_COLORS.length]} />)}
-              <LabelList dataKey="qtd" position="right" fontSize={12} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
+              <LabelList dataKey="qtd" position="right" fontSize={10} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
