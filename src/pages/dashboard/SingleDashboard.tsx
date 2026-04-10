@@ -315,8 +315,8 @@ const PanelSocial = () => (
       <KPI title="Cobertura SUS" value={saudeData.coberturaSUS} sub="pop. coberta" color={C.green} delay={320} />
       <KPI title="ICQV Médio" value={(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length).toFixed(2)} sub="índice estadual" color={C.purple} delay={400} />
     </div>
-    {/* Row 1: IDEB + Segurança */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+    {/* Row 1: IDEB + Mortalidade — full width, half height each */}
+    <div className="grid grid-cols-1 gap-2 flex-1 min-h-[200px]">
       <Chart title="Evolução IDEB">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -330,6 +330,26 @@ const PanelSocial = () => (
           </LineChart>
         </ResponsiveContainer>
       </Chart>
+      <Chart title="Mortalidade (Infantil e Geral)">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={mortalidadeData} margin={{ top: 18, right: 16, bottom: 14, left: 16 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={0} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip unit="por mil hab." />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="infantil" position="top" offset={8} fontSize={10} fill={C.label} />
+            </Line>
+            <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out">
+              <LabelList dataKey="geral" position="bottom" offset={8} fontSize={10} fill={C.label} />
+            </Line>
+          </LineChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 2: Segurança + ICQV Médias */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Segurança Pública">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
@@ -347,9 +367,6 @@ const PanelSocial = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-    {/* Row 2: ICQV Médias + ICQV Município */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="ICQV — Médias Estaduais">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={[...radarAvg].sort((a, b) => b.value - a.value)} layout="vertical" margin={{ top: 8, right: 30, bottom: 8, left: 10 }}>
@@ -364,6 +381,9 @@ const PanelSocial = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+    </div>
+    {/* Row 3: ICQV Município + Violência Mulher + Trânsito */}
+    <div className="grid grid-cols-3 gap-2 flex-1 min-h-[200px]">
       <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={[...icqvData].sort((a, b) => b.icqv - a.icqv)} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
@@ -382,26 +402,6 @@ const PanelSocial = () => (
               <LabelList dataKey="economia" position="right" fontSize={8} fill={C.label} />
             </Bar>
           </BarChart>
-        </ResponsiveContainer>
-      </Chart>
-    </div>
-    {/* Row 3: Mortalidade + Violência Mulher + Trânsito */}
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-[200px]">
-      <Chart title="Mortalidade (Infantil e Geral)">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={mortalidadeData} margin={{ top: 18, right: 16, bottom: 14, left: 16 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={0} />
-            <YAxis hide />
-            <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip unit="por mil hab." />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="infantil" position="top" offset={8} fontSize={10} fill={C.label} />
-            </Line>
-            <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out">
-              <LabelList dataKey="geral" position="bottom" offset={8} fontSize={10} fill={C.label} />
-            </Line>
-          </LineChart>
         </ResponsiveContainer>
       </Chart>
       <Chart title="Violência contra a Mulher">
