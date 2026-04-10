@@ -377,10 +377,10 @@ const PanelSocial = () => (
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="infantil" position="top" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y - 6} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text> : null} />
+              <LabelList dataKey="infantil" position="top" fontSize={9} fill={C.label} content={({ x, y, value }: any) => <text x={x} y={y - 6} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text>} />
             </Line>
             <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out">
-              <LabelList dataKey="geral" position="bottom" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y + 14} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text> : null} />
+              <LabelList dataKey="geral" position="bottom" fontSize={9} fill={C.label} content={({ x, y, value }: any) => <text x={x} y={y + 14} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text>} />
             </Line>
           </LineChart>
         </ResponsiveContainer>
