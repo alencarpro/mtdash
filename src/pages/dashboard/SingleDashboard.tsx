@@ -306,7 +306,7 @@ const PanelSocial = () => (
       <KPI title="ICQV Médio" value={(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length).toFixed(2)} sub="índice estadual" color={C.purple} delay={400} />
     </div>
     {/* Row 1: IDEB + Segurança */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Evolução IDEB">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -339,7 +339,7 @@ const PanelSocial = () => (
       </Chart>
     </div>
     {/* Row 2: ICQV Médias + ICQV Município */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="ICQV — Médias Estaduais">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={[...radarAvg].sort((a, b) => b.value - a.value)} layout="vertical" margin={{ top: 8, right: 30, bottom: 8, left: 10 }}>
@@ -370,7 +370,7 @@ const PanelSocial = () => (
       </Chart>
     </div>
     {/* Row 3: Mortalidade + Violência + Trânsito */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Mortalidade / Violência Mulher">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mortalidadeData} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
@@ -415,7 +415,7 @@ const PanelAmbiental = () => (
       <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
     </div>
     {/* Row 1: Desmatamento (wide) + Biomas */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Desmatamento Anual (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
@@ -443,7 +443,7 @@ const PanelAmbiental = () => (
       </Chart>
     </div>
     {/* Row 2: Focos + Qualidade Ar */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Focos de Incêndio (mensal)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
@@ -474,7 +474,7 @@ const PanelAmbiental = () => (
       </Chart>
     </div>
     {/* Row 3: Áreas Protegidas + Consumo Energia */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Áreas Protegidas (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={areasProtegidas} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: -5 }}>
@@ -519,7 +519,7 @@ const PanelVisaoGeral = () => (
       <KPI title="População" value="3,7 mi" sub="Censo 2022" color={C.green} delay={360} />
     </div>
     {/* Row 1: PIB Evolução (wide) + PIB por Setor */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Evolução do PIB (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -546,7 +546,7 @@ const PanelVisaoGeral = () => (
       </Chart>
     </div>
     {/* Row 2: PIB Municipal + Investimento Infra */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="PIB Municipal (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
@@ -575,7 +575,7 @@ const PanelVisaoGeral = () => (
       </Chart>
     </div>
     {/* Row 3: Renda + Crescimento PIB */}
-    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="Renda por Categoria (R$)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={rendaPorCategoria} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: 0 }}>
