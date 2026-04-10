@@ -189,7 +189,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
-     {Icon && <Icon className="absolute right-3 top-3 opacity-[0.13] group-hover:opacity-[0.22] transition-opacity duration-300" size={38} color="#ffffff" strokeWidth={1.2} />}
+     {Icon && <Icon className="absolute right-3 top-3 opacity-[0.35] group-hover:opacity-[0.5] transition-opacity duration-300" size={38} color="#ffffff" strokeWidth={1.5} />}
      <p className="text-base sm:text-lg md:text-xl uppercase tracking-wider font-medium break-words leading-snug" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
      <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight mt-1" style={{ color: '#f8fafc' }}>{value}</p>
      <p className="text-sm sm:text-base md:text-lg break-words leading-snug mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
