@@ -646,8 +646,8 @@ const SingleDashboard = () => {
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-        <img src={tituloImg} alt="Título" className="h-8 sm:h-10 object-contain" />
+      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
         <span className="text-[16px] sm:text-[18px] font-bold uppercase tracking-wider" style={{ color: '#60a5fa' }}>{panelTitles[active]}</span>
       </header>
       {/* Reload progress bar */}
