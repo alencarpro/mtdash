@@ -311,8 +311,8 @@ export const focosIncendio = [
 
 // Áreas protegidas por tipo (km²) - Fonte: SEMA
 export const areasProtegidas = [
-  { tipo: "Unid. Conservação", area: 52000 },
   { tipo: "Terras Indígenas", area: 78000 },
+  { tipo: "Unid. Conservação", area: 52000 },
   { tipo: "Reserva Legal", area: 35000 },
   { tipo: "APP", area: 20000 },
 ];
