@@ -70,7 +70,7 @@ const renderLegend = (props: any) => {
 };
 
 /* ─── Custom tooltip ─── */
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload, label, unit }: any) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{
@@ -88,6 +88,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
            <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
            <span style={{ color: '#f8fafc', fontWeight: 700 }}>
              {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
+             {unit ? ` ${unit}` : ''}
            </span>
         </div>
       ))}
