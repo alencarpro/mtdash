@@ -221,7 +221,7 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* Row 2: 4 equal columns */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-1 min-h-0">
       <Chart title="VAB Setorial (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
