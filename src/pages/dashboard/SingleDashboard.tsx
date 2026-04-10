@@ -61,13 +61,13 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
 const renderLegend = (props: any) => {
   const { payload } = props;
   return (
-     <div className="flex items-center justify-center gap-3 mt-0.5">
+     <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-0.5">
        {payload?.map((entry: any, index: number) => (
-         <span key={index} className="flex items-center gap-1.5 text-[16px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
-           <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: entry.color }} />
-           {entry.value}
-         </span>
-       ))}
+         <span key={index} className="flex items-center gap-1.5 text-[11px] sm:text-[13px] md:text-[14px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+            <span className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: entry.color }} />
+            <span className="break-words">{entry.value}</span>
+          </span>
+        ))}
     </div>
   );
 };
@@ -141,9 +141,9 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
-     <p className="text-xl sm:text-2xl uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
-     <p className="text-4xl sm:text-5xl font-extrabold leading-tight mt-1" style={{ color: '#f8fafc' }}>{value}</p>
-     <p className="text-xl sm:text-2xl truncate mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
+     <p className="text-base sm:text-lg md:text-xl uppercase tracking-wider font-medium break-words leading-snug" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+     <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight mt-1" style={{ color: '#f8fafc' }}>{value}</p>
+     <p className="text-sm sm:text-base md:text-lg break-words leading-snug mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
@@ -163,7 +163,7 @@ const Chart = ({ title, children }: { title: string; children: React.ReactNode }
       e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
     }}
   >
-    <p className="text-[16px] sm:text-[18px] uppercase tracking-wider font-semibold mb-1 truncate transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <p className="text-[12px] sm:text-[14px] md:text-[16px] uppercase tracking-wider font-semibold mb-1 break-words leading-snug transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1" style={{ minHeight: 0 }}>{children}</div>
   </div>
 );
