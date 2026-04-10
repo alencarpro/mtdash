@@ -414,74 +414,68 @@ const PanelSocial = () => (
    ═══════════════════════════════════════════════════════════ */
 const PanelAmbiental = () => (
   <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
-    {/* KPIs: 2 wide cards */}
-    <div className="grid grid-cols-2 gap-2">
+    {/* KPIs: all 4 on top */}
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
       <KPI title="Vegetação Preservada" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km² protegidos`} color={C.green} delay={0} />
       <KPI title="Desmatamento Anual" value={`${lastDesm.area} km²`} sub={`-10,2% vs 2022 — ${lastDesm.alertas} alertas`} color={C.red} delay={120} />
+      <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} />
+      <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
     </div>
-    {/* Main area: sidebar (pie + KPIs stacked) + wide chart */}
+    {/* Row 1: Biomas + Desmatamento + Focos + Qualidade Ar */}
     <div className="grid grid-cols-1 sm:grid-cols-4 gap-2 flex-1 min-h-0">
-      {/* Sidebar: pie on top, 2 mini KPIs below */}
-      <div className="flex flex-col gap-2 min-h-0">
-        <Chart title="Biomas de MT">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
-                {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
-              </Pie>
-              <Tooltip content={<PieTooltip />} />
-            </PieChart>
-          </ResponsiveContainer>
-        </Chart>
-        <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} />
-        <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
-      </div>
-      {/* Main: 3 charts stacked in 3 cols */}
-      <div className="sm:col-span-3 grid grid-cols-1 sm:grid-cols-3 gap-2 min-h-0">
-        <Chart title="Desmatamento Anual (km²)">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
-              <YAxis hide />
-              <Legend content={renderLegend} />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-              <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-                <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
-              </Bar>
-              <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
-            </BarChart>
-          </ResponsiveContainer>
-        </Chart>
-        <Chart title="Focos de Incêndio (mensal)">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
-              <defs><linearGradient id="cfogo" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.red} stopOpacity={0.4} /><stop offset="95%" stopColor={C.red} stopOpacity={0} /></linearGradient></defs>
-              <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
-              <YAxis hide />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-              <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-                <LabelList dataKey="focos" position="top" fontSize={6} fill={C.label} />
-              </Area>
-            </AreaChart>
-          </ResponsiveContainer>
-        </Chart>
-        <Chart title="Qualidade do Ar (IQA)">
-          <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
-              <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
-              <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
-              <YAxis hide />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-              <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-                <LabelList dataKey="iqa" position="top" fontSize={6} fill={C.label} />
-              </Area>
-            </AreaChart>
-          </ResponsiveContainer>
-        </Chart>
-      </div>
+      <Chart title="Biomas de MT">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
+              {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Desmatamento Anual (km²)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
+            </Bar>
+            <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Focos de Incêndio (mensal)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cfogo" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.red} stopOpacity={0.4} /><stop offset="95%" stopColor={C.red} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="focos" position="top" fontSize={6} fill={C.label} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Qualidade do Ar (IQA)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="iqa" position="top" fontSize={6} fill={C.label} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
     </div>
     {/* Bottom row: 2 charts */}
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
