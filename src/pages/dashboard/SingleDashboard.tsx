@@ -204,16 +204,29 @@ const PanelEconomia = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Destinos Exportações */}
-    <div className="flex-shrink-0" style={{ height: 280 }}>
+    {/* Destinos Exportações + Produção Agrícola */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 280 }}>
       <Chart title="Destinos Exportações">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={principaisDestinos} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={2} dataKey="percentual" nameKey="pais" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
+            <Pie data={principaisDestinos} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={2} dataKey="percentual" nameKey="pais" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
               {principaisDestinos.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
             </Pie>
             <Tooltip content={<PieTooltip />} />
           </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Produção Agrícola (M ton)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={70} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
+              <LabelList dataKey="producao" position="right" fontSize={14} fill={C.label} />
+            </Bar>
+          </BarChart>
         </ResponsiveContainer>
       </Chart>
     </div>
@@ -230,22 +243,6 @@ const PanelEconomia = () => (
             <Bar dataKey="agropecuaria" name="Agro" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
             <Bar dataKey="industria" name="Indústria" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
             <Bar dataKey="servicos" name="Serviços" fill={C.purple} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
-          </BarChart>
-        </ResponsiveContainer>
-      </Chart>
-    </div>
-    {/* Produção Agrícola */}
-    <div className="flex-shrink-0" style={{ height: 280 }}>
-      <Chart title="Produção Agrícola (M ton)">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
-            <XAxis type="number" hide />
-            <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} width={80} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
-              <LabelList dataKey="producao" position="right" fontSize={16} fill={C.label} />
-            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
