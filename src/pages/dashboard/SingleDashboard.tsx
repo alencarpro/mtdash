@@ -545,9 +545,9 @@ const PanelVisaoGeral = () => (
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
       <Chart title="PIB Municipal (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
+          <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 60, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="city" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
+            <XAxis dataKey="city" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} angle={-45} textAnchor="end" interval={0} height={60} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
