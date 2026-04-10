@@ -649,7 +649,7 @@ const SingleDashboard = () => {
         <img src={tituloImg} alt="Título" className="h-8 sm:h-10 object-contain" />
         <div className="flex items-center gap-2">
           <span className="text-[16px] sm:text-[18px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>{panelTitles[active]}</span>
-          <img src={panelIcons[active]} alt={panelTitles[active]} className="h-8 sm:h-10 object-contain" />
+          <span className="text-[16px] sm:text-[18px] font-bold px-2 py-0.5 rounded" style={{ color: '#8df3db', border: '1px solid rgba(141,243,219,0.3)' }}>{panelLabels[active]}</span>
         </div>
       </header>
       {/* Reload progress bar */}
