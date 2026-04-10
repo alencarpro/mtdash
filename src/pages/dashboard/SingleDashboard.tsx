@@ -72,7 +72,51 @@ const renderLegend = (props: any) => {
   );
 };
 
-/* ─── Compact KPI ─── */
+/* ─── Custom tooltip ─── */
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div style={{
+      background: 'rgba(10,17,30,0.95)',
+      border: '1px solid rgba(141,243,219,0.3)',
+      borderRadius: 8,
+      padding: '8px 12px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+      backdropFilter: 'blur(8px)',
+    }}>
+      {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 10, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
+      {payload.map((entry: any, i: number) => (
+        <div key={i} className="flex items-center gap-2" style={{ fontSize: 10, marginTop: 2 }}>
+          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
+          <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
+          <span style={{ color: '#f8fafc', fontWeight: 700 }}>
+            {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const PieTooltip = ({ active, payload }: any) => {
+  if (!active || !payload?.length) return null;
+  const d = payload[0];
+  return (
+    <div style={{
+      background: 'rgba(10,17,30,0.95)',
+      border: '1px solid rgba(141,243,219,0.3)',
+      borderRadius: 8,
+      padding: '8px 12px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+    }}>
+      <div className="flex items-center gap-2" style={{ fontSize: 10 }}>
+        <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
+        <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
+      </div>
+    </div>
+  );
+};
+
 const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
   <div
     className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
