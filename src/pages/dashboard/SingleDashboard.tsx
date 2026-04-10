@@ -46,13 +46,14 @@ const tabs = [
 /* ─── Custom pie label ─── */
 const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value, percent }: any) => {
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 14;
+  const radius = outerRadius + 10;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   if ((percent || value / 100) < 0.05) return null;
+  const displayName = name.length > 12 ? name.substring(0, 12) + '…' : name;
   return (
-     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={16} fontWeight={600}>
-       {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
+     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={11} fontWeight={600}>
+       {displayName} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
      </text>
   );
 };
@@ -831,7 +832,7 @@ const PanelIntegridade = () => (
       <Chart title="Custos dos Serviços CGE (%)">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={custosServicos} cx="50%" cy="50%" innerRadius={40} outerRadius={80} paddingAngle={4} dataKey="percentual" nameKey="area" label={renderPieLabel} animationDuration={2000}>
+            <Pie data={custosServicos} cx="50%" cy="50%" innerRadius="20%" outerRadius="40%" paddingAngle={4} dataKey="percentual" nameKey="area" label={renderPieLabel} labelLine={false} animationDuration={2000}>
               {custosServicos.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
             </Pie>
             <Tooltip content={<PieTooltip />} />
