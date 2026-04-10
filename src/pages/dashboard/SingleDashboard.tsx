@@ -103,8 +103,21 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
 
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
-  <div className="rounded-lg p-2 flex flex-col min-h-0 flex-1" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}>
-    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+  <div
+    className="rounded-lg p-2 flex flex-col min-h-0 flex-1 transition-all duration-300 ease-out hover:scale-[1.025] hover:z-10 cursor-default group/chart"
+    style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
+    onMouseEnter={e => {
+      e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
+      e.currentTarget.style.borderColor = 'rgba(96,165,250,0.4)';
+      e.currentTarget.style.background = 'rgba(10,17,30,0.92)';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.boxShadow = '';
+      e.currentTarget.style.borderColor = 'rgba(148,163,184,0.15)';
+      e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
+    }}
+  >
+    <p className="text-[9px] uppercase tracking-wider font-semibold mb-1 truncate transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
