@@ -33,11 +33,27 @@ export const overviewKPIs = {
 };
 
 export const pibEvolution = [
-  { year: "2018", pib: 142.5, crescimento: 6.8 },
+  { year: "2002", pib: 19.2, crescimento: 0 },
+  { year: "2003", pib: 24.0, crescimento: 25.0 },
+  { year: "2004", pib: 30.0, crescimento: 25.0 },
+  { year: "2005", pib: 28.7, crescimento: -4.3 },
+  { year: "2006", pib: 35.2, crescimento: 22.6 },
+  { year: "2007", pib: 42.7, crescimento: 21.3 },
+  { year: "2008", pib: 53.4, crescimento: 25.1 },
+  { year: "2009", pib: 51.9, crescimento: -2.8 },
+  { year: "2010", pib: 59.6, crescimento: 14.8 },
+  { year: "2011", pib: 71.4, crescimento: 19.8 },
+  { year: "2012", pib: 80.8, crescimento: 13.2 },
+  { year: "2013", pib: 89.1, crescimento: 10.3 },
+  { year: "2014", pib: 101.2, crescimento: 13.6 },
+  { year: "2015", pib: 107.4, crescimento: 6.1 },
+  { year: "2016", pib: 115.4, crescimento: 7.4 },
+  { year: "2017", pib: 123.8, crescimento: 7.3 },
+  { year: "2018", pib: 142.5, crescimento: 15.1 },
   { year: "2019", pib: 155.0, crescimento: 8.8 },
   { year: "2020", pib: 170.3, crescimento: 9.9 },
-  { year: "2021", pib: 206.5, crescimento: 21.3 },
-  { year: "2022", pib: 255.5, crescimento: 23.7 },
+  { year: "2021", pib: 233.4, crescimento: 37.1 },
+  { year: "2022", pib: 255.5, crescimento: 9.5 },
   { year: "2023", pib: 273.0, crescimento: 6.8 },
 ];
 
