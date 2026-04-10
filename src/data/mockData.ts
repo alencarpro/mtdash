@@ -393,3 +393,112 @@ export const investimentoInfra = [
   { year: "2024", investimento: 4.2 },
   { year: "2025", investimento: 4.5 },
 ];
+
+// ===== PAINEL 5 — CONTROLE & EFICIÊNCIA (CGE) =====
+
+export const beneficiosFinanceiros = [
+  { area: "Executiva e Ações Estratégicas", qtd: 5, valor: 814.26, percentual: 87 },
+  { area: "Auditoria e Controle", qtd: 45, valor: 117.68, percentual: 12.5 },
+  { area: "Corregedoria (PARs)", qtd: 16, valor: 8.8, percentual: 0.9 },
+];
+
+export const aderenciaRecomendacoes = [
+  { year: "2019", aderencia: 65, implementacao: 35 },
+  { year: "2020", aderencia: 75, implementacao: 50 },
+  { year: "2021", aderencia: 85, implementacao: 65 },
+  { year: "2022", aderencia: 90, implementacao: 75 },
+  { year: "2023", aderencia: 95, implementacao: 85 },
+  { year: "2024", aderencia: 95, implementacao: 85 },
+  { year: "2025", aderencia: 94, implementacao: 82 },
+];
+
+export const auditoriaControle = {
+  totalProdutos: 703,
+  controlePrevio: 622,
+  auditoria: 81,
+  mixAtividades: [
+    { tipo: "Previdenciários", qtd: 519 },
+    { tipo: "Concurso Público", qtd: 45 },
+    { tipo: "Tomada Contas", qtd: 38 },
+    { tipo: "Seleção/Temp.", qtd: 20 },
+  ],
+  auditoriaCategoria: [
+    { tipo: "Especial", qtd: 30 },
+    { tipo: "Avaliação", qtd: 25 },
+    { tipo: "Consultoria", qtd: 7 },
+    { tipo: "Controle Interno", qtd: 4 },
+  ],
+};
+
+export const ouvidoriaManifestacoes = [
+  { tipo: "Solicitação", qtd: 7728, percentual: 41.09 },
+  { tipo: "Reclamação", qtd: 5392, percentual: 28.67 },
+  { tipo: "Denúncia", qtd: 3473, percentual: 18.47 },
+  { tipo: "Informação", qtd: 1011, percentual: 5.38 },
+  { tipo: "Elogio", qtd: 981, percentual: 5.22 },
+  { tipo: "Sugestão", qtd: 201, percentual: 1.07 },
+];
+
+export const cgeAlerta = [
+  { tipo: "Inassiduidade", inicial: 34, final: 2, variacao: -94.1 },
+  { tipo: "Abandono Cargo", inicial: 26, final: 7, variacao: -73.1 },
+  { tipo: "Juros/Multa Atraso", inicial: 15, final: 9, variacao: -40.0 },
+  { tipo: "Licença >24m", inicial: 229, final: 193, variacao: -15.7 },
+];
+
+export const areasAuditadas = [
+  { area: "Infraestrutura", qtd: 12 },
+  { area: "Saúde", qtd: 12 },
+  { area: "Educação", qtd: 8 },
+  { area: "Gestão Pessoas", qtd: 8 },
+  { area: "Economia", qtd: 4 },
+  { area: "Meio Ambiente", qtd: 4 },
+  { area: "Receita", qtd: 4 },
+];
+
+// ===== PAINEL 6 — INTEGRIDADE & TRANSPARÊNCIA =====
+
+export const integridadeNumeros = {
+  orgaosPlanos: 31,
+  acompanhamentoCGE: 25,
+  acoesMonitoradas: 491,
+  capacitacoes: 23,
+  certificados: 1000,
+};
+
+export const dosimetriaPenas = [
+  { opiniao: "Demissão", y2023: 47.41, y2024: 34.44, y2025: 31.09 },
+  { opiniao: "Absolvição", y2023: 20.0, y2024: 21.19, y2025: 23.53 },
+  { opiniao: "Suspensão >30d", y2023: 2.22, y2024: 7.95, y2025: 15.13 },
+  { opiniao: "Repreensão", y2023: 2.22, y2024: 7.95, y2025: 13.45 },
+  { opiniao: "Prescrição", y2023: 7.41, y2024: 17.22, y2025: 4.20 },
+  { opiniao: "Arquivamento", y2023: 17.78, y2024: 7.28, y2025: 4.20 },
+];
+
+export const capacitacoesCGE = [
+  { area: "Integridade", eventos: 23, participacoes: 1000 },
+  { area: "Auditoria e Controle", eventos: 21, participacoes: 996 },
+  { area: "Corregedoria", eventos: 12, participacoes: 544 },
+  { area: "Eventos Externos", eventos: 8, participacoes: 520 },
+  { area: "Ouvidoria e Transp.", eventos: 5, participacoes: 235 },
+];
+
+export const tcacs = [
+  { orgao: "SESP", acordos: 78 },
+  { orgao: "SEDUC", acordos: 56 },
+  { orgao: "SEPLAG", acordos: 52 },
+  { orgao: "Outros", acordos: 38 },
+];
+
+export const planejamentoEstrategico = [
+  { indicador: "Benef. Financeiro", previsto: 250, realizado: 940.7, unidade: "R$ mi" },
+  { indicador: "Planos Integridade", previsto: 25, realizado: 88, unidade: "órgãos" },
+  { indicador: "Satisfação Cidadão", previsto: 52, realizado: 47.63, unidade: "%" },
+  { indicador: "Transparência", previsto: 96, realizado: 95.28, unidade: "%" },
+];
+
+export const custosServicos = [
+  { area: "Auditoria e Controle", percentual: 75 },
+  { area: "Corregedoria e Integridade", percentual: 19 },
+  { area: "Ouvidoria e Transparência", percentual: 6 },
+];
