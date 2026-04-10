@@ -516,14 +516,14 @@ const PanelVisaoGeral = () => (
       <div className="flex-1 min-h-0">
         <Chart title="Evolução do PIB (R$ bi)">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <AreaChart data={pibEvolution} margin={{ top: 16, right: 12, bottom: 0, left: -10 }}>
               <defs><linearGradient id="cpib" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.teal} stopOpacity={0.4} /><stop offset="95%" stopColor={C.teal} stopOpacity={0} /></linearGradient></defs>
               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
-              <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
-              <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={55} />
+              <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={1} />
+              <YAxis stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={40} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
               <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-                <LabelList dataKey="pib" position="top" fontSize={16} fill={C.label} formatter={(v: number) => `${v}`} />
+                <LabelList dataKey="pib" position="top" fontSize={10} fill={C.label} formatter={(v: number) => `${v}`} />
               </Area>
             </AreaChart>
           </ResponsiveContainer>
@@ -532,13 +532,13 @@ const PanelVisaoGeral = () => (
       <div className="flex-1 min-h-0">
         <Chart title="Crescimento PIB (%)">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <LineChart data={pibEvolution} margin={{ top: 16, right: 12, bottom: 0, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
+              <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={1} />
               <YAxis hide />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
               <Line type="monotone" dataKey="crescimento" stroke={C.yellow} strokeWidth={2} dot={{ r: 3, fill: C.yellow }} animationDuration={2000} animationEasing="ease-out">
-                <LabelList dataKey="crescimento" position="top" fontSize={16} fill={C.label} formatter={(v: number) => `${v}%`} />
+                <LabelList dataKey="crescimento" position="top" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
               </Line>
             </LineChart>
           </ResponsiveContainer>
