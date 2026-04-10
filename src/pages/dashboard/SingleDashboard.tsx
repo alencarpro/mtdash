@@ -198,7 +198,7 @@ const PanelEconomia = () => (
             <XAxis dataKey="trimestre" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={50} />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="US$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="exportacao" position="top" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y - 6} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text> : null} />
             </Line>
@@ -227,7 +227,7 @@ const PanelEconomia = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={70} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="M ton" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
               <LabelList dataKey="producao" position="right" fontSize={14} fill={C.label} />
             </Bar>
@@ -244,7 +244,7 @@ const PanelEconomia = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="R$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="agropecuaria" name="Agro" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="agropecuaria" position="top" fontSize={8} fill={C.label} />
             </Bar>
@@ -267,7 +267,7 @@ const PanelEconomia = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="mil ton" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="bovino" name="Bovino" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="bovino" position="top" fontSize={8} fill={C.label} />
             </Bar>
@@ -290,7 +290,7 @@ const PanelEconomia = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="%" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="variacao" stroke={C.purple} fill="url(#cind)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="variacao" position="top" fontSize={14} fill={C.label} formatter={(v: number) => `${v}%`} />
             </Area>
