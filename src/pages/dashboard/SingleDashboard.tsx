@@ -404,6 +404,20 @@ const PanelSocial = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+      <Chart title="Trânsito — Acidentes">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={transitoData} margin={{ top: 18, right: 24, bottom: 8, left: 24 }}>
+            <defs><linearGradient id="cfrota" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} tickMargin={8} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip unit="acidentes" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Area type="monotone" dataKey="acidentes" stroke={C.yellow} fill="url(#cfrota)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="acidentes" position="top" offset={8} fontSize={10} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
       <Chart title="Violência contra a Mulher">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={violenciaMulher} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
@@ -419,20 +433,6 @@ const PanelSocial = () => (
               <LabelList dataKey="medidas" position="top" fontSize={9} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
           </BarChart>
-        </ResponsiveContainer>
-      </Chart>
-      <Chart title="Trânsito — Acidentes">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={transitoData} margin={{ top: 18, right: 24, bottom: 8, left: 24 }}>
-            <defs><linearGradient id="cfrota" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} tickMargin={8} />
-            <YAxis hide />
-            <Tooltip content={<CustomTooltip unit="acidentes" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Area type="monotone" dataKey="acidentes" stroke={C.yellow} fill="url(#cfrota)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="acidentes" position="top" offset={8} fontSize={10} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
-            </Area>
-          </AreaChart>
         </ResponsiveContainer>
       </Chart>
     </div>
