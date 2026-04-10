@@ -198,8 +198,12 @@ const PanelEconomia = () => (
             <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={50} />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out" />
-            <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} animationDuration={2000} animationBegin={300} animationEasing="ease-out" />
+            <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="exportacao" position="top" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y - 6} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text> : null} />
+            </Line>
+            <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} animationDuration={2000} animationBegin={300} animationEasing="ease-out">
+              <LabelList dataKey="importacao" position="top" fontSize={9} fill={C.label} content={({ x, y, value, index }: any) => index % 2 === 0 ? <text x={x} y={y - 6} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text> : null} />
+            </Line>
           </LineChart>
         </ResponsiveContainer>
       </Chart>
