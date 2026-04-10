@@ -923,7 +923,7 @@ const SingleDashboard = () => {
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: '#0a1628' }}>
+      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
         <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>{panelTitles[active]}</span>
       </header>
