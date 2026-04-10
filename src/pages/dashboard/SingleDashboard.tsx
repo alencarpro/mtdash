@@ -695,11 +695,11 @@ const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 4)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral", "Obras"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
   const [now, setNow] = useState(new Date());
   useEffect(() => {
