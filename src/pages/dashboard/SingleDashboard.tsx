@@ -184,14 +184,14 @@ const lastDesm = desmatamentoData[desmatamentoData.length - 1];
    PANEL 1 — ECONOMIA
    ═══════════════════════════════════════════════════════════ */
 const PanelEconomia = () => (
-  <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-4 gap-2">
+  <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
       <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} delay={0} />
       <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} delay={120} />
       <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} delay={240} />
       <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} delay={360} />
     </div>
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Comércio Exterior (US$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
@@ -230,7 +230,7 @@ const PanelEconomia = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Produção Agrícola (M ton)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
@@ -280,14 +280,14 @@ const PanelEconomia = () => (
    PANEL 2 — SOCIAL
    ═══════════════════════════════════════════════════════════ */
 const PanelSocial = () => (
-  <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-4 gap-2">
+  <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
       <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} />
       <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI — ${saudeData.coberturaSUS} SUS`} color={C.red} delay={120} />
       <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual} do estado`} color={C.yellow} delay={240} />
       <KPI title="Frota Veicular" value={`${(transitoData[transitoData.length - 1].frota / 1e6).toFixed(1)} mi`} sub={`${transitoData[transitoData.length - 1].acidentes.toLocaleString()} acidentes`} color={C.blue} delay={360} />
     </div>
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Evolução IDEB">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -332,7 +332,7 @@ const PanelSocial = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
@@ -384,14 +384,14 @@ const PanelSocial = () => (
    PANEL 3 — AMBIENTAL
    ═══════════════════════════════════════════════════════════ */
 const PanelAmbiental = () => (
-  <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-4 gap-2">
+  <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
       <KPI title="Vegetação" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km²`} color={C.green} delay={0} />
       <KPI title="Desmatamento" value={`${lastDesm.area} km²`} sub="-10,2% vs 2022" color={C.red} delay={120} />
       <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} />
       <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
     </div>
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Desmatamento Anual (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
@@ -432,7 +432,7 @@ const PanelAmbiental = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    <div className="grid grid-cols-3 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="Qualidade do Ar (IQA)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -482,14 +482,14 @@ const PanelAmbiental = () => (
    PANEL 4 — VISÃO GERAL
    ═══════════════════════════════════════════════════════════ */
 const PanelVisaoGeral = () => (
-  <div className="flex flex-col gap-2 h-full">
-    <div className="grid grid-cols-4 gap-2">
+  <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
       <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={overviewKPIs.pibRanking} color={C.teal} delay={0} />
       <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={120} />
       <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={240} />
       <KPI title="CadÚnico" value={assistenciaSocial.familiasCadUnico.toLocaleString()} sub={`BF desc. ${assistenciaSocial.descobertura}`} color={C.yellow} delay={360} />
     </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="Evolução do PIB (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -515,7 +515,7 @@ const PanelVisaoGeral = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-0">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
       <Chart title="PIB Municipal (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
@@ -610,7 +610,7 @@ const PanelObras = () => {
   return (
     <div className="flex flex-col gap-2 h-full overflow-auto">
       {/* Hero section: title + progress ring */}
-      <div className="rounded-lg p-3 flex items-start justify-between" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}>
+      <div className="rounded-lg p-2 sm:p-3 flex flex-col sm:flex-row items-start justify-between gap-2 sm:gap-0" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}>
         <div className="flex-1 min-w-0 mr-3">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-[8px] uppercase tracking-widest font-bold px-2 py-0.5 rounded" style={{ color: C.teal, background: 'rgba(141,243,219,0.1)', border: '1px solid rgba(141,243,219,0.2)' }}>
@@ -632,7 +632,7 @@ const PanelObras = () => {
       </div>
 
       {/* Contract info cards */}
-      <div className="grid grid-cols-4 gap-2">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
         <KPI title="Contrato" value={d.contrato.numero} sub={`início ${d.contrato.inicio}\n${d.contrato.diasAtuais} dias atuais`} color={C.teal} delay={0} />
         <KPI title="Término Previsto" value={d.terminoPrevisto} sub={`${d.contrato.diasAtuais} dias atuais`} color={C.blue} delay={120} />
         <KPI title="Valor Total" value={d.valorTotal} sub={`${d.percentualPago} pago`} color={C.purple} delay={240} />
@@ -664,7 +664,7 @@ const PanelObras = () => {
           </div>
           <span className="text-[8px] font-medium" style={{ color: 'rgba(226,232,240,0.5)' }}>{d.cameras.length} cards</span>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {d.cameras.map(cam => (
             <CameraCard key={cam.id} camera={cam} />
           ))}
@@ -703,23 +703,23 @@ const SingleDashboard = () => {
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-        <img src={tituloImg} alt="Título" className="h-5 object-contain" />
-        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-5 object-contain" />
+      <header className="flex-shrink-0 flex items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <img src={tituloImg} alt="Título" className="h-4 sm:h-5 object-contain" />
+        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-4 sm:h-5 object-contain" />
       </header>
       {/* Panel */}
-      <div className="flex-1 min-h-0 p-2 overflow-hidden animate-fade-in">
+      <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
       </div>
       {/* Footer with source + clock */}
-      <footer className="flex-shrink-0 flex items-center justify-between px-3 py-1.5" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-        <span className="text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
+      <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+        <span className="text-[8px] sm:text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
           {panelTitles[active]} — Dados MT
         </span>
-        <span className="text-[9px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
+        <span className="text-[8px] sm:text-[9px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
           {formattedDate} — {formattedTime}
         </span>
-        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[9px] transition-colors" style={{ color: '#8df3db' }}>
+        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[8px] sm:text-[9px] transition-colors" style={{ color: '#8df3db' }}>
           Fonte: dados.mt.gov.br
         </a>
       </footer>
