@@ -517,9 +517,15 @@ const PanelAmbiental = () => (
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="residencial" name="Resid." fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
-            <Bar dataKey="industrial" name="Indust." fill={C.purple} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
-            <Bar dataKey="rural" name="Rural" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
+            <Bar dataKey="residencial" name="Resid." fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="residencial" position="top" fontSize={8} fill={C.label} />
+            </Bar>
+            <Bar dataKey="industrial" name="Indust." fill={C.purple} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out">
+              <LabelList dataKey="industrial" position="top" fontSize={8} fill={C.label} />
+            </Bar>
+            <Bar dataKey="rural" name="Rural" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out">
+              <LabelList dataKey="rural" position="top" fontSize={8} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
