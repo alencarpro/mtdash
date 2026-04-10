@@ -10,18 +10,18 @@ import {
 import {
   comercioExterior, principaisDestinos, mercadoTrabalho, producaoAgricola,
   educacaoData, saudeData, segurancaData, assistenciaSocial, icqvData,
-  desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, obrasData, investimentoInfra,
+  desmatamentoData, biomaData, qualidadeArData, vegetacaoNativa, investimentoInfra,
   overviewKPIs, pibEvolution, sectorPieData, populationData,
   vabSetorial, rendaPorCategoria, consumoEnergia, producaoIndustrial, producaoCarne, turismoData,
   mortalidadeData, violenciaMulher, deficitHabitacional, transitoData,
-  focosIncendio, areasProtegidas, mineracaoData, obrasEstrategicas,
+  focosIncendio, areasProtegidas, mineracaoData,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
 import p1Img from "@/assets/p1.png";
 import p2Img from "@/assets/p2.png";
 import p3Img from "@/assets/p3.png";
 import p4Img from "@/assets/p4.png";
-import p5Img from "@/assets/p5.png";
+
 
 /* ─── Paleta ─── */
 const C = {
@@ -626,65 +626,6 @@ const PanelVisaoGeral = () => (
           </LineChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-  </div>
-);
-
-/* ═══════════════════════════════════════════════════════════
-   PANEL 5 — OBRAS ESTRATÉGICAS (Monitoramento)
-   ═══════════════════════════════════════════════════════════ */
-
-const ProgressRing = ({ percent, size = 100 }: { percent: number; size?: number }) => {
-  const stroke = 8;
-  const radius = (size - stroke) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (percent / 100) * circumference;
-  return (
-    <div className="relative flex items-center justify-center" style={{ width: size, height: size }}>
-      <svg width={size} height={size} className="-rotate-90">
-        <circle cx={size / 2} cy={size / 2} r={radius} fill="none" stroke="rgba(148,163,184,0.15)" strokeWidth={stroke} />
-        <circle
-          cx={size / 2} cy={size / 2} r={radius} fill="none"
-          stroke={C.teal} strokeWidth={stroke} strokeLinecap="round"
-          strokeDasharray={circumference} strokeDashoffset={offset}
-          style={{ transition: 'stroke-dashoffset 1.5s ease-out' }}
-        />
-      </svg>
-      <div className="absolute flex flex-col items-center">
-        <span className="text-lg font-extrabold" style={{ color: '#f8fafc' }}>{percent.toFixed(2)}%</span>
-        <span className="text-[8px] uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>Executado</span>
-      </div>
-    </div>
-  );
-};
-
-const CameraCard = ({ camera }: { camera: typeof obrasEstrategicas.cameras[0] }) => (
-  <div
-    className="rounded-lg overflow-hidden transition-all duration-300 hover:scale-[1.02] cursor-default"
-    style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
-  >
-    <div className="relative w-full" style={{ paddingBottom: '56.25%', background: 'linear-gradient(135deg, rgba(10,17,30,0.95), rgba(20,30,50,0.95))' }}>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-1">
-          <Camera size={20} style={{ color: 'rgba(226,232,240,0.4)' }} />
-          <span className="text-[7px]" style={{ color: 'rgba(226,232,240,0.4)' }}>Feed de câmera</span>
-        </div>
-      </div>
-      <div className="absolute top-1 right-1 flex items-center gap-1 px-1.5 py-0.5 rounded" style={{ background: 'rgba(0,0,0,0.6)' }}>
-        <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-        <span className="text-[7px] font-semibold" style={{ color: '#f8fafc' }}>LIVE</span>
-      </div>
-    </div>
-    <div className="px-2 py-1.5">
-      <div className="flex items-center justify-between mb-0.5">
-        <span className="text-[8px] font-medium" style={{ color: C.teal }}>{camera.cidade}</span>
-      </div>
-      <p className="text-[9px] font-bold truncate" style={{ color: '#f8fafc' }}>{camera.nome}</p>
-      <p className="text-[7px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.6)' }}>{camera.local}</p>
-      <div className="flex items-center justify-between mt-1">
-        <span className="text-[7px]" style={{ color: 'rgba(226,232,240,0.5)' }}>{camera.tipo}</span>
-        <span className="text-[7px]" style={{ color: 'rgba(226,232,240,0.5)' }}>Placa {camera.placa}</span>
-      </div>
     </div>
   </div>
 );
