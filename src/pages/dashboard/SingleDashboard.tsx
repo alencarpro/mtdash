@@ -17,10 +17,6 @@ import {
   focosIncendio, areasProtegidas, mineracaoData,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
-import p1Img from "@/assets/p1.png";
-import p2Img from "@/assets/p2.png";
-import p3Img from "@/assets/p3.png";
-import p4Img from "@/assets/p4.png";
 
 
 /* ─── Paleta ─── */
