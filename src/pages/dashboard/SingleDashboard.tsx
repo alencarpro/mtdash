@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar } from "lucide-react";
+import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
@@ -166,7 +166,7 @@ const PieTooltip = ({ active, payload }: any) => {
   );
 };
 
-const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
+const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { title: string; value: string; sub: string; color?: string; delay?: number; icon?: LucideIcon }) => (
   <div
     className="rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
@@ -189,6 +189,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
+     {Icon && <Icon className="absolute right-3 top-3 opacity-[0.13] group-hover:opacity-[0.22] transition-opacity duration-300" size={38} color="#ffffff" strokeWidth={1.2} />}
      <p className="text-base sm:text-lg md:text-xl uppercase tracking-wider font-medium break-words leading-snug" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
      <p className="text-2xl sm:text-3xl md:text-4xl font-extrabold leading-tight mt-1" style={{ color: '#f8fafc' }}>{value}</p>
      <p className="text-sm sm:text-base md:text-lg break-words leading-snug mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
@@ -235,10 +236,10 @@ const PanelEconomia = () => (
   <div className="flex flex-col gap-2 h-full overflow-auto">
     {/* KPIs - 2x2 */}
     <div className="grid grid-cols-2 gap-2 flex-shrink-0">
-      <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} delay={0} />
-      <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} delay={120} />
-      <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} delay={240} />
-      <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} delay={360} />
+      <KPI title="Superávit" value={`US$ ${lastTrade.superavit} bi`} sub="4T 2025" color={C.teal} delay={0} icon={DollarSign} />
+      <KPI title="Export. Principal" value="Soja 31%" sub="do total" color={C.green} delay={120} icon={Ship} />
+      <KPI title="Emprego" value={`${lastWork.emprego}%`} sub={`Renda R$ ${lastWork.renda}`} color={C.blue} delay={240} icon={Briefcase} />
+      <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} delay={360} icon={Plane} />
     </div>
     {/* Comércio Exterior */}
     <div className="flex-shrink-0" style={{ height: 280 }}>
@@ -359,12 +360,12 @@ const PanelSocial = () => (
   <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs - 3x2 */}
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
-      <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} />
-      <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI`} color={C.red} delay={80} />
-      <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual}`} color={C.yellow} delay={160} />
-      <KPI title="Frota Veicular" value={`${(transitoData[transitoData.length - 1].frota / 1e6).toFixed(1)} mi`} sub={`${transitoData[transitoData.length - 1].acidentes.toLocaleString()} acid.`} color={C.blue} delay={240} />
-      <KPI title="Cobertura SUS" value={saudeData.coberturaSUS} sub="pop. coberta" color={C.green} delay={320} />
-      <KPI title="ICQV Médio" value={(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length).toFixed(2)} sub="índice estadual" color={C.purple} delay={400} />
+      <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} icon={GraduationCap} />
+      <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI`} color={C.red} delay={80} icon={Hospital} />
+      <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual}`} color={C.yellow} delay={160} icon={Home} />
+      <KPI title="Frota Veicular" value={`${(transitoData[transitoData.length - 1].frota / 1e6).toFixed(1)} mi`} sub={`${transitoData[transitoData.length - 1].acidentes.toLocaleString()} acid.`} color={C.blue} delay={240} icon={Car} />
+      <KPI title="Cobertura SUS" value={saudeData.coberturaSUS} sub="pop. coberta" color={C.green} delay={320} icon={HeartPulse} />
+      <KPI title="ICQV Médio" value={(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length).toFixed(2)} sub="índice estadual" color={C.purple} delay={400} icon={Activity} />
     </div>
     {/* Row 1: ICQV */}
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
@@ -497,10 +498,10 @@ const PanelAmbiental = () => (
   <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs - 2x2 */}
     <div className="grid grid-cols-2 gap-2 flex-shrink-0">
-      <KPI title="Vegetação Preservada" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km² protegidos`} color={C.green} delay={0} />
-      <KPI title="Desmatamento Anual" value={`${lastDesm.area} km²`} sub={`-10,2% vs 2022 — ${lastDesm.alertas} alertas`} color={C.red} delay={120} />
-      <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} />
-      <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
+      <KPI title="Vegetação Preservada" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km² protegidos`} color={C.green} delay={0} icon={TreePine} />
+      <KPI title="Desmatamento Anual" value={`${lastDesm.area} km²`} sub={`-10,2% vs 2022 — ${lastDesm.alertas} alertas`} color={C.red} delay={120} icon={Leaf} />
+      <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} icon={Mountain} />
+      <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} icon={Flame} />
     </div>
     {/* Row 1: Desmatamento (wide) + Biomas */}
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
@@ -609,10 +610,10 @@ const PanelVisaoGeral = () => (
   <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs - 2x2 (last row has 1 centered or 2) */}
     <div className="grid grid-cols-2 gap-2 flex-shrink-0">
-      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={`${overviewKPIs.pibRanking} — ${overviewKPIs.pibParticipacao} do Brasil`} color={C.teal} delay={0} />
-      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={120} />
-      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={240} />
-      <KPI title="População" value="3,7 mi" sub="Censo 2022" color={C.green} delay={360} />
+      <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={`${overviewKPIs.pibRanking} — ${overviewKPIs.pibParticipacao} do Brasil`} color={C.teal} delay={0} icon={TrendingUp} />
+      <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={120} icon={DollarSign} />
+      <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={240} icon={BarChart3} />
+      <KPI title="População" value="3,7 mi" sub="Censo 2022" color={C.green} delay={360} icon={Users} />
     </div>
     {/* Evolução do PIB + Crescimento PIB — stacked full width */}
     <div className="flex flex-col gap-2 flex-1 min-h-[200px]">
@@ -716,12 +717,12 @@ const PanelControle = () => (
   <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs */}
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
-      <KPI title="Benefício Financeiro" value="R$ 940,7 mi" sub="214 benefícios validados" color={C.teal} delay={0} />
-      <KPI title="Produtos Auditoria" value="703" sub="622 controle + 81 auditoria" color={C.blue} delay={80} />
-      <KPI title="Aderência Recom." value="86,11%" sub="779 trabalhos monitorados" color={C.green} delay={160} />
-      <KPI title="Ouvidoria" value="21.472" sub="manifestações | 94% no prazo" color={C.yellow} delay={240} />
-      <KPI title="CGE Alerta" value="147.397" sub="alertas gerados em 12 categ." color={C.red} delay={320} />
-      <KPI title="Meta Superada" value="300%" sub="benef. financeiro vs meta" color={C.purple} delay={400} />
+      <KPI title="Benefício Financeiro" value="R$ 940,7 mi" sub="214 benefícios validados" color={C.teal} delay={0} icon={DollarSign} />
+      <KPI title="Produtos Auditoria" value="703" sub="622 controle + 81 auditoria" color={C.blue} delay={80} icon={Search} />
+      <KPI title="Aderência Recom." value="86,11%" sub="779 trabalhos monitorados" color={C.green} delay={160} icon={Target} />
+      <KPI title="Ouvidoria" value="21.472" sub="manifestações | 94% no prazo" color={C.yellow} delay={240} icon={MessageSquare} />
+      <KPI title="CGE Alerta" value="147.397" sub="alertas gerados em 12 categ." color={C.red} delay={320} icon={Bell} />
+      <KPI title="Meta Superada" value="300%" sub="benef. financeiro vs meta" color={C.purple} delay={400} icon={Award} />
     </div>
     {/* Row 1: Benefícios Financeiros + Aderência Recomendações */}
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
@@ -817,12 +818,12 @@ const PanelIntegridade = () => (
   <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs */}
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
-      <KPI title="Planos Integridade" value="31" sub="órgãos com planos publicados" color={C.teal} delay={0} />
-      <KPI title="Ações Monitoradas" value="491" sub="25 órgãos acompanhados" color={C.blue} delay={80} />
-      <KPI title="Capacitações" value="64" sub="3.094 participações" color={C.green} delay={160} />
-      <KPI title="TCACs Firmados" value="224" sub="acordos de ajustamento" color={C.yellow} delay={240} />
-      <KPI title="Selo Transparência" value="Diamante" sub="95,28% — 3º ano consecutivo" color={C.purple} delay={320} />
-      <KPI title="Acesso Informação" value="1.011" sub="pedidos | 74% concedidos" color={C.red} delay={400} />
+      <KPI title="Planos Integridade" value="31" sub="órgãos com planos publicados" color={C.teal} delay={0} icon={Shield} />
+      <KPI title="Ações Monitoradas" value="491" sub="25 órgãos acompanhados" color={C.blue} delay={80} icon={Eye} />
+      <KPI title="Capacitações" value="64" sub="3.094 participações" color={C.green} delay={160} icon={BookOpen} />
+      <KPI title="TCACs Firmados" value="224" sub="acordos de ajustamento" color={C.yellow} delay={240} icon={Handshake} />
+      <KPI title="Selo Transparência" value="Diamante" sub="95,28% — 3º ano consecutivo" color={C.purple} delay={320} icon={Award} />
+      <KPI title="Acesso Informação" value="1.011" sub="pedidos | 74% concedidos" color={C.red} delay={400} icon={Mail} />
     </div>
     {/* Row 1: Dosimetria + Capacitações */}
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
