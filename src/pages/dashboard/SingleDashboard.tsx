@@ -423,16 +423,16 @@ const PanelSocial = () => (
    PANEL 3 — AMBIENTAL
    ═══════════════════════════════════════════════════════════ */
 const PanelAmbiental = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
-    {/* KPIs: all 4 on top */}
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    {/* KPIs - 2x2 */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0">
       <KPI title="Vegetação Preservada" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km² protegidos`} color={C.green} delay={0} />
       <KPI title="Desmatamento Anual" value={`${lastDesm.area} km²`} sub={`-10,2% vs 2022 — ${lastDesm.alertas} alertas`} color={C.red} delay={120} />
       <KPI title="Mineração" value={mineracaoData.producaoOuro} sub={`Fatur. ${mineracaoData.faturamento}`} color={C.yellow} delay={240} />
       <KPI title="Focos Incêndio" value={focosIncendio.reduce((a, b) => a + b.focos, 0).toLocaleString()} sub="Total anual" color={C.red} delay={360} />
     </div>
-    {/* Row 1: Desmatamento wide + Focos + Qualidade Ar */}
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
+    {/* Row 1: Desmatamento (wide) + Biomas */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
       <Chart title="Desmatamento Anual (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
@@ -448,6 +448,19 @@ const PanelAmbiental = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+      <Chart title="Biomas de MT">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
+              {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 2: Focos + Qualidade Ar */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
       <Chart title="Focos de Incêndio (mensal)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
@@ -477,18 +490,8 @@ const PanelAmbiental = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Bottom row: 3 charts */}
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
-      <Chart title="Biomas de MT">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
-              {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
-            </Pie>
-            <Tooltip content={<PieTooltip />} />
-          </PieChart>
-        </ResponsiveContainer>
-      </Chart>
+    {/* Row 3: Áreas Protegidas + Consumo Energia */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
       <Chart title="Áreas Protegidas (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={areasProtegidas} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: -5 }}>
