@@ -17,10 +17,6 @@ import {
   focosIncendio, areasProtegidas, mineracaoData,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
-import p1Img from "@/assets/p1.png";
-import p2Img from "@/assets/p2.png";
-import p3Img from "@/assets/p3.png";
-import p4Img from "@/assets/p4.png";
 
 
 /* ─── Paleta ─── */
@@ -608,7 +604,7 @@ const PanelVisaoGeral = () => (
 );
 
 const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral];
-const panelIcons = [p1Img, p2Img, p3Img, p4Img];
+const panelLabels = ["P1", "P2", "P3", "P4"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
@@ -653,7 +649,7 @@ const SingleDashboard = () => {
         <img src={tituloImg} alt="Título" className="h-8 sm:h-10 object-contain" />
         <div className="flex items-center gap-2">
           <span className="text-[16px] sm:text-[18px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>{panelTitles[active]}</span>
-          <img src={panelIcons[active]} alt={panelTitles[active]} className="h-8 sm:h-10 object-contain" />
+          <span className="text-[16px] sm:text-[18px] font-bold px-2 py-0.5 rounded" style={{ color: '#8df3db', border: '1px solid rgba(141,243,219,0.3)' }}>{panelLabels[active]}</span>
         </div>
       </header>
       {/* Reload progress bar */}
