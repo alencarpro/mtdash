@@ -14,7 +14,7 @@ import {
   overviewKPIs, pibEvolution, sectorPieData, populationData,
   vabSetorial, rendaPorCategoria, consumoEnergia, producaoIndustrial, producaoCarne, turismoData,
   mortalidadeData, violenciaMulher, deficitHabitacional, transitoData,
-  focosIncendio, areasProtegidas, mineracaoData, obrasEstrategicas,
+  focosIncendio, areasProtegidas, mineracaoData, obrasEstrategicas, investimentoInfra,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
 import p1Img from "@/assets/p1.png";
