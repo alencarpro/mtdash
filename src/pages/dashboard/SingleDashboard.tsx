@@ -905,10 +905,8 @@ const SingleDashboard = () => {
       if (s === 1 || s === 31) {
         if (!hasNavigated) {
           hasNavigated = true;
-          const nextPage = (active % panels.length) + 1;
-          // Navega para o próximo painel e faz reload completo
+          const nextPage = ((active + 1) % panels.length) + 1;
           navigate(`/${nextPage}`, { replace: true });
-          setTimeout(() => window.location.reload(), 100);
         }
       } else {
         hasNavigated = false;
