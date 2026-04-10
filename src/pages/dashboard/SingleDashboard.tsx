@@ -5,6 +5,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend,
+  Tooltip,
 } from "recharts";
 import {
   comercioExterior, principaisDestinos, mercadoTrabalho, producaoAgricola,
@@ -71,7 +72,51 @@ const renderLegend = (props: any) => {
   );
 };
 
-/* ─── Compact KPI ─── */
+/* ─── Custom tooltip ─── */
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div style={{
+      background: 'rgba(10,17,30,0.95)',
+      border: '1px solid rgba(141,243,219,0.3)',
+      borderRadius: 8,
+      padding: '8px 12px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+      backdropFilter: 'blur(8px)',
+    }}>
+      {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 10, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
+      {payload.map((entry: any, i: number) => (
+        <div key={i} className="flex items-center gap-2" style={{ fontSize: 10, marginTop: 2 }}>
+          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
+          <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
+          <span style={{ color: '#f8fafc', fontWeight: 700 }}>
+            {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+const PieTooltip = ({ active, payload }: any) => {
+  if (!active || !payload?.length) return null;
+  const d = payload[0];
+  return (
+    <div style={{
+      background: 'rgba(10,17,30,0.95)',
+      border: '1px solid rgba(141,243,219,0.3)',
+      borderRadius: 8,
+      padding: '8px 12px',
+      boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
+    }}>
+      <div className="flex items-center gap-2" style={{ fontSize: 10 }}>
+        <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
+        <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
+      </div>
+    </div>
+  );
+};
+
 const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; value: string; sub: string; color?: string; delay?: number }) => (
   <div
     className="rounded-lg px-3 py-2 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
@@ -153,6 +198,7 @@ const PanelEconomia = () => (
             <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out" />
             <Line type="monotone" dataKey="importacao" name="Importação" stroke={C.yellow} strokeWidth={2} dot={false} animationDuration={2000} animationBegin={300} animationEasing="ease-out" />
           </LineChart>
@@ -164,6 +210,7 @@ const PanelEconomia = () => (
             <Pie data={principaisDestinos} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={2} dataKey="percentual" nameKey="pais" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
               {principaisDestinos.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
             </Pie>
+            <Tooltip content={<PieTooltip />} />
           </PieChart>
         </ResponsiveContainer>
       </Chart>
@@ -174,6 +221,7 @@ const PanelEconomia = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="agropecuaria" name="Agro" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
             <Bar dataKey="industria" name="Indústria" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
             <Bar dataKey="servicos" name="Serviços" fill={C.purple} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
@@ -188,6 +236,7 @@ const PanelEconomia = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} width={42} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
               <LabelList dataKey="producao" position="right" fontSize={8} fill={C.label} />
             </Bar>
@@ -201,6 +250,7 @@ const PanelEconomia = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="bovino" name="Bovino" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
             <Bar dataKey="suino" name="Suíno" fill={C.yellow} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
             <Bar dataKey="aves" name="Aves" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
@@ -214,6 +264,7 @@ const PanelEconomia = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="variacao" stroke={C.purple} fill="url(#cind)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="variacao" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${v}%`} />
             </Area>
@@ -242,6 +293,7 @@ const PanelSocial = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} domain={[4, 6]} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="ideb" stroke={C.teal} strokeWidth={2} dot={{ r: 3, fill: C.teal }} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="ideb" position="top" fontSize={8} fill={C.label} />
             </Line>
@@ -255,6 +307,7 @@ const PanelSocial = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="ocorrencias" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
@@ -271,6 +324,7 @@ const PanelSocial = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationEasing="ease-out" />
             <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out" />
           </LineChart>
@@ -285,6 +339,7 @@ const PanelSocial = () => (
             <XAxis dataKey="city" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide domain={[0, 1]} />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
             <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
             <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
@@ -298,6 +353,7 @@ const PanelSocial = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="registros" name="Registros" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="registros" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
@@ -311,6 +367,7 @@ const PanelSocial = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" domain={[0, 100]} stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
             <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={60} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="value" name="Índice" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
               {radarAvg.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
               <LabelList dataKey="value" position="right" fontSize={9} fill={C.label} />
@@ -341,6 +398,7 @@ const PanelAmbiental = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
             </Bar>
@@ -354,6 +412,7 @@ const PanelAmbiental = () => (
             <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
               {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
             </Pie>
+            <Tooltip content={<PieTooltip />} />
           </PieChart>
         </ResponsiveContainer>
       </Chart>
@@ -364,6 +423,7 @@ const PanelAmbiental = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="focos" position="top" fontSize={6} fill={C.label} />
             </Area>
@@ -379,6 +439,7 @@ const PanelAmbiental = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
             <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="iqa" position="top" fontSize={6} fill={C.label} />
             </Area>
@@ -391,6 +452,7 @@ const PanelAmbiental = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} width={65} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="area" fill={C.green} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
               <LabelList dataKey="area" position="right" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
             </Bar>
@@ -404,6 +466,7 @@ const PanelAmbiental = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="residencial" name="Resid." fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
             <Bar dataKey="industrial" name="Indust." fill={C.purple} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
             <Bar dataKey="rural" name="Rural" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
@@ -433,6 +496,7 @@ const PanelVisaoGeral = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={30} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="pib" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}`} />
             </Area>
@@ -445,6 +509,7 @@ const PanelVisaoGeral = () => (
             <Pie data={sectorPieData} cx="50%" cy="50%" innerRadius="30%" outerRadius="55%" paddingAngle={3} dataKey="value" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
               {sectorPieData.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
             </Pie>
+            <Tooltip content={<PieTooltip />} />
           </PieChart>
         </ResponsiveContainer>
       </Chart>
@@ -456,6 +521,7 @@ const PanelVisaoGeral = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
             <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
             </Bar>
@@ -468,6 +534,7 @@ const PanelVisaoGeral = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
             <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="investimento" position="top" fontSize={8} fill={C.label} />
             </Bar>
