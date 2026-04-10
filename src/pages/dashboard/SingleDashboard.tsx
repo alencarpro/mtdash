@@ -651,7 +651,10 @@ const SingleDashboard = () => {
       {/* Header */}
       <header className="flex-shrink-0 flex items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
         <img src={tituloImg} alt="Título" className="h-8 sm:h-10 object-contain" />
-        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-8 sm:h-10 object-contain" />
+        <div className="flex items-center gap-2">
+          <span className="text-[16px] sm:text-[18px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>{panelTitles[active]}</span>
+          <img src={panelIcons[active]} alt={panelTitles[active]} className="h-8 sm:h-10 object-contain" />
+        </div>
       </header>
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
@@ -670,9 +673,6 @@ const SingleDashboard = () => {
       </div>
       {/* Footer with source + clock */}
        <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-         <span className="text-[16px] sm:text-[18px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
-           {panelTitles[active]} — Dados MT
-         </span>
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
