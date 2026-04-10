@@ -52,9 +52,9 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   if ((percent || value / 100) < 0.05) return null;
   return (
-    <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={8} fontWeight={600}>
-      {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
-    </text>
+     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={16} fontWeight={600}>
+       {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
+     </text>
   );
 };
 
@@ -62,13 +62,13 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
 const renderLegend = (props: any) => {
   const { payload } = props;
   return (
-    <div className="flex items-center justify-center gap-3 mt-0.5">
-      {payload?.map((entry: any, index: number) => (
-        <span key={index} className="flex items-center gap-1 text-[8px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
-          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color }} />
-          {entry.value}
-        </span>
-      ))}
+     <div className="flex items-center justify-center gap-3 mt-0.5">
+       {payload?.map((entry: any, index: number) => (
+         <span key={index} className="flex items-center gap-1.5 text-[16px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+           <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: entry.color }} />
+           {entry.value}
+         </span>
+       ))}
     </div>
   );
 };
@@ -85,14 +85,14 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
       backdropFilter: 'blur(8px)',
     }}>
-      {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 10, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
-      {payload.map((entry: any, i: number) => (
-        <div key={i} className="flex items-center gap-2" style={{ fontSize: 10, marginTop: 2 }}>
-          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
-          <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
-          <span style={{ color: '#f8fafc', fontWeight: 700 }}>
-            {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
-          </span>
+       {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 18, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
+       {payload.map((entry: any, i: number) => (
+         <div key={i} className="flex items-center gap-2" style={{ fontSize: 18, marginTop: 2 }}>
+           <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
+           <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
+           <span style={{ color: '#f8fafc', fontWeight: 700 }}>
+             {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
+           </span>
         </div>
       ))}
     </div>
@@ -110,9 +110,9 @@ const PieTooltip = ({ active, payload }: any) => {
       padding: '8px 12px',
       boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
     }}>
-      <div className="flex items-center gap-2" style={{ fontSize: 10 }}>
-        <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
-        <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
+       <div className="flex items-center gap-2" style={{ fontSize: 18 }}>
+         <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
+         <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
       </div>
     </div>
   );
@@ -141,9 +141,9 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
-    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
-    <p className="text-sm sm:text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
-    <p className="text-[8px] sm:text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
+     <p className="text-[16px] sm:text-[18px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+     <p className="text-2xl sm:text-3xl font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
+     <p className="text-[16px] sm:text-[18px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
@@ -163,7 +163,7 @@ const Chart = ({ title, children }: { title: string; children: React.ReactNode }
       e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
     }}
   >
-    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-semibold mb-1 truncate transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <p className="text-[16px] sm:text-[18px] uppercase tracking-wider font-semibold mb-1 truncate transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
@@ -199,8 +199,8 @@ const PanelEconomia = () => (
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="trimestre" stroke={C.axis} fontSize={6} tickLine={false} axisLine={false} />
-              <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} />
+              <XAxis dataKey="trimestre" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={50} />
               <Legend content={renderLegend} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
               <Line type="monotone" dataKey="exportacao" name="Exportação" stroke={C.teal} strokeWidth={2} dot={false} animationDuration={2000} animationEasing="ease-out" />
@@ -226,7 +226,7 @@ const PanelEconomia = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
@@ -241,10 +241,10 @@ const PanelEconomia = () => (
           <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} width={42} />
+            <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} width={80} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
-              <LabelList dataKey="producao" position="right" fontSize={8} fill={C.label} />
+              <LabelList dataKey="producao" position="right" fontSize={16} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -253,7 +253,7 @@ const PanelEconomia = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={producaoCarne} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
@@ -268,11 +268,11 @@ const PanelEconomia = () => (
           <AreaChart data={producaoIndustrial} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
             <defs><linearGradient id="cind" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.purple} stopOpacity={0.4} /><stop offset="95%" stopColor={C.purple} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="variacao" stroke={C.purple} fill="url(#cind)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="variacao" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${v}%`} />
+              <LabelList dataKey="variacao" position="top" fontSize={14} fill={C.label} formatter={(v: number) => `${v}%`} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
@@ -301,11 +301,11 @@ const PanelSocial = () => (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
-            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={25} domain={[4, 6]} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={50} domain={[4, 6]} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="ideb" stroke={C.teal} strokeWidth={2} dot={{ r: 3, fill: C.teal }} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="ideb" position="top" fontSize={8} fill={C.label} />
+              <LabelList dataKey="ideb" position="top" fontSize={16} fill={C.label} />
             </Line>
           </LineChart>
         </ResponsiveContainer>
@@ -314,15 +314,15 @@ const PanelSocial = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={segurancaData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="ocorrencias" position="top" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+              <LabelList dataKey="ocorrencias" position="top" fontSize={14} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
             <Bar dataKey="homicidios" name="Homicídios" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out">
-              <LabelList dataKey="homicidios" position="top" fontSize={7} fill={C.label} />
+              <LabelList dataKey="homicidios" position="top" fontSize={14} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -334,12 +334,12 @@ const PanelSocial = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={[...radarAvg].sort((a, b) => b.value - a.value)} layout="vertical" margin={{ top: 8, right: 30, bottom: 8, left: 10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
-            <XAxis type="number" domain={[0, 100]} stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
-            <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={60} />
+            <XAxis type="number" domain={[0, 100]} stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
+            <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="value" name="Índice" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
               {[...radarAvg].sort((a, b) => b.value - a.value).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-              <LabelList dataKey="value" position="right" fontSize={9} fill={C.label} />
+              <LabelList dataKey="value" position="right" fontSize={18} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -349,7 +349,7 @@ const PanelSocial = () => (
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="city" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+              <XAxis dataKey="city" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
               <YAxis hide domain={[0, 1]} />
               <Legend content={renderLegend} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
@@ -367,7 +367,7 @@ const PanelSocial = () => (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mortalidadeData} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
@@ -380,12 +380,12 @@ const PanelSocial = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={violenciaMulher} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="registros" name="Registros" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="registros" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+              <LabelList dataKey="registros" position="top" fontSize={12} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
             <Bar dataKey="medidas" name="Medidas Prot." fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
           </BarChart>
@@ -396,11 +396,11 @@ const PanelSocial = () => (
           <AreaChart data={transitoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
             <defs><linearGradient id="cfrota" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="acidentes" stroke={C.yellow} fill="url(#cfrota)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="acidentes" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+              <LabelList dataKey="acidentes" position="top" fontSize={12} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
@@ -427,12 +427,12 @@ const PanelAmbiental = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={desmatamentoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="area" position="top" fontSize={7} fill={C.label} />
+              <LabelList dataKey="area" position="top" fontSize={14} fill={C.label} />
             </Bar>
             <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
           </BarChart>
@@ -443,11 +443,11 @@ const PanelAmbiental = () => (
           <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
             <defs><linearGradient id="cfogo" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.red} stopOpacity={0.4} /><stop offset="95%" stopColor={C.red} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="focos" stroke={C.red} fill="url(#cfogo)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="focos" position="top" fontSize={6} fill={C.label} />
+              <LabelList dataKey="focos" position="top" fontSize={12} fill={C.label} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
@@ -457,11 +457,11 @@ const PanelAmbiental = () => (
           <AreaChart data={qualidadeArData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
             <defs><linearGradient id="ciqa" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.yellow} stopOpacity={0.4} /><stop offset="95%" stopColor={C.yellow} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="mes" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} />
+            <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="iqa" stroke={C.yellow} fill="url(#ciqa)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="iqa" position="top" fontSize={6} fill={C.label} />
+              <LabelList dataKey="iqa" position="top" fontSize={12} fill={C.label} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
@@ -484,10 +484,10 @@ const PanelAmbiental = () => (
           <BarChart data={areasProtegidas} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: -5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} width={65} />
+            <YAxis type="category" dataKey="tipo" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={110} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="area" fill={C.green} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
-              <LabelList dataKey="area" position="right" fontSize={7} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
+              <LabelList dataKey="area" position="right" fontSize={14} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -496,7 +496,7 @@ const PanelAmbiental = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={consumoEnergia} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
@@ -528,11 +528,11 @@ const PanelVisaoGeral = () => (
           <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
             <defs><linearGradient id="cpib" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.teal} stopOpacity={0.4} /><stop offset="95%" stopColor={C.teal} stopOpacity={0} /></linearGradient></defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
-            <YAxis stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={30} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
+            <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={55} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="pib" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}`} />
+              <LabelList dataKey="pib" position="top" fontSize={16} fill={C.label} formatter={(v: number) => `${v}`} />
             </Area>
           </AreaChart>
         </ResponsiveContainer>
@@ -554,11 +554,11 @@ const PanelVisaoGeral = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={populationData} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="city" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <XAxis dataKey="city" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="pibMunicipal" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="pibMunicipal" position="top" fontSize={8} fill={C.label} />
+              <LabelList dataKey="pibMunicipal" position="top" fontSize={16} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -567,11 +567,11 @@ const PanelVisaoGeral = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={investimentoInfra} margin={{ top: 14, right: 4, bottom: 0, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="investimento" position="top" fontSize={8} fill={C.label} />
+              <LabelList dataKey="investimento" position="top" fontSize={16} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -584,11 +584,11 @@ const PanelVisaoGeral = () => (
           <BarChart data={rendaPorCategoria} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="categoria" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} width={65} />
+            <YAxis type="category" dataKey="categoria" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} width={110} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valor" fill={C.purple} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
               {rendaPorCategoria.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
-              <LabelList dataKey="valor" position="right" fontSize={8} fill={C.label} formatter={(v: number) => `R$ ${v.toLocaleString()}`} />
+              <LabelList dataKey="valor" position="right" fontSize={16} fill={C.label} formatter={(v: number) => `R$ ${v.toLocaleString()}`} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
@@ -597,7 +597,7 @@ const PanelVisaoGeral = () => (
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={consumoEnergia} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
@@ -611,11 +611,11 @@ const PanelVisaoGeral = () => (
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="crescimento" stroke={C.yellow} strokeWidth={2} dot={{ r: 3, fill: C.yellow }} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="crescimento" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}%`} />
+              <LabelList dataKey="crescimento" position="top" fontSize={16} fill={C.label} formatter={(v: number) => `${v}%`} />
             </Line>
           </LineChart>
         </ResponsiveContainer>
@@ -667,8 +667,8 @@ const SingleDashboard = () => {
     >
       {/* Header */}
       <header className="flex-shrink-0 flex items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-        <img src={tituloImg} alt="Título" className="h-4 sm:h-5 object-contain" />
-        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-4 sm:h-5 object-contain" />
+        <img src={tituloImg} alt="Título" className="h-8 sm:h-10 object-contain" />
+        <img src={panelIcons[active]} alt={panelTitles[active]} className="h-8 sm:h-10 object-contain" />
       </header>
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
@@ -686,16 +686,16 @@ const SingleDashboard = () => {
         <ActivePanel />
       </div>
       {/* Footer with source + clock */}
-      <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-        <span className="text-[8px] sm:text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
-          {panelTitles[active]} — Dados MT
-        </span>
-        <span className="text-[8px] sm:text-[9px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
-          {formattedDate} — {formattedTime}
-        </span>
-        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[8px] sm:text-[9px] transition-colors" style={{ color: '#8df3db' }}>
-          Fonte: dados.mt.gov.br
-        </a>
+       <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+         <span className="text-[16px] sm:text-[18px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
+           {panelTitles[active]} — Dados MT
+         </span>
+         <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
+           {formattedDate} — {formattedTime}
+         </span>
+         <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[16px] sm:text-[18px] transition-colors" style={{ color: '#8df3db' }}>
+           Fonte: dados.mt.gov.br
+         </a>
       </footer>
     </div>
   );
