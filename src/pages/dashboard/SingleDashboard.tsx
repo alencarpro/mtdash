@@ -323,7 +323,7 @@ const PanelSocial = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={50} domain={[4, 6]} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="pts" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="ideb" stroke={C.teal} strokeWidth={2} dot={{ r: 3, fill: C.teal }} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="ideb" position="top" fontSize={16} fill={C.label} />
             </Line>
@@ -337,7 +337,7 @@ const PanelSocial = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="ocorrências" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="ocorrencias" name="Ocorrências" fill={C.blue} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="ocorrencias" position="top" fontSize={14} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Bar>
@@ -356,7 +356,7 @@ const PanelSocial = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" domain={[0, 100]} stroke={C.axis} fontSize={16} tickLine={false} axisLine={false} />
             <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={100} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="pts" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="value" name="Índice" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
               {[...radarAvg].sort((a, b) => b.value - a.value).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
               <LabelList dataKey="value" position="right" fontSize={18} fill={C.label} />
@@ -371,7 +371,7 @@ const PanelSocial = () => (
             <XAxis type="number" domain={[0, 1]} hide />
             <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="índice" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="saude" position="right" fontSize={8} fill={C.label} />
             </Bar>
@@ -394,7 +394,7 @@ const PanelSocial = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={0} />
             <YAxis hide />
             <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="por mil hab." />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="infantil" position="top" offset={8} fontSize={10} fill={C.label} />
             </Line>
@@ -411,7 +411,7 @@ const PanelSocial = () => (
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} tickMargin={8} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Tooltip content={<CustomTooltip unit="acidentes" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Area type="monotone" dataKey="acidentes" stroke={C.yellow} fill="url(#cfrota)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
               <LabelList dataKey="acidentes" position="top" offset={8} fontSize={10} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
             </Area>
