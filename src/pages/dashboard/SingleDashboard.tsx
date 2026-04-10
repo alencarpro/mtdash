@@ -522,9 +522,7 @@ const PanelVisaoGeral = () => (
               <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={1} />
               <YAxis stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={40} />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-              <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
-                <LabelList dataKey="pib" position="top" fontSize={10} fill={C.label} formatter={(v: number) => `${v}`} />
-              </Area>
+              <Area type="monotone" dataKey="pib" stroke={C.teal} fill="url(#cpib)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out" />
             </AreaChart>
           </ResponsiveContainer>
         </Chart>
@@ -537,9 +535,7 @@ const PanelVisaoGeral = () => (
               <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={1} />
               <YAxis hide />
               <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-              <Line type="monotone" dataKey="crescimento" stroke={C.yellow} strokeWidth={2} dot={{ r: 3, fill: C.yellow }} animationDuration={2000} animationEasing="ease-out">
-                <LabelList dataKey="crescimento" position="top" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
-              </Line>
+              <Line type="monotone" dataKey="crescimento" stroke={C.yellow} strokeWidth={2} dot={{ r: 3, fill: C.yellow }} animationDuration={2000} animationEasing="ease-out" />
             </LineChart>
           </ResponsiveContainer>
         </Chart>
