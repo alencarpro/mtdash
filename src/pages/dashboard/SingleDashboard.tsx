@@ -643,18 +643,22 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
+  const RELOAD_INTERVAL = 60; // seconds
   const [now, setNow] = useState(new Date());
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(timer);
-  }, []);
+  const [progress, setProgress] = useState(0);
 
-  // Auto-reload current panel every 60 seconds
   useEffect(() => {
-    const reload = setInterval(() => {
-      window.location.reload();
-    }, 60000);
-    return () => clearInterval(reload);
+    const start = Date.now();
+    const timer = setInterval(() => {
+      setNow(new Date());
+      const elapsed = (Date.now() - start) / 1000;
+      const pct = Math.min((elapsed / RELOAD_INTERVAL) * 100, 100);
+      setProgress(pct);
+      if (elapsed >= RELOAD_INTERVAL) {
+        window.location.reload();
+      }
+    }, 1000);
+    return () => clearInterval(timer);
   }, []);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
@@ -672,6 +676,17 @@ const SingleDashboard = () => {
         <img src={tituloImg} alt="Título" className="h-4 sm:h-5 object-contain" />
         <img src={panelIcons[active]} alt={panelTitles[active]} className="h-4 sm:h-5 object-contain" />
       </header>
+      {/* Reload progress bar */}
+      <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
+        <div
+          className="h-full transition-all duration-1000 ease-linear"
+          style={{
+            width: `${progress}%`,
+            background: 'linear-gradient(90deg, #8df3db, #60a5fa)',
+            boxShadow: '0 0 6px rgba(141,243,219,0.4)',
+          }}
+        />
+      </div>
       {/* Panel */}
       <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden animate-fade-in">
         <ActivePanel />
