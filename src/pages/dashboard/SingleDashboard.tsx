@@ -881,18 +881,33 @@ const SingleDashboard = () => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const start = Date.now();
-    const timer = setInterval(() => {
+    // Calculate seconds into the current 30s window (0-29 aligned to :01/:31)
+    const getElapsedInWindow = () => {
+      const s = new Date().getSeconds();
+      // Windows: 1-30 and 31-60(0). Offset by 1 so windows start at :01 and :31
+      return ((s - 1 + 60) % 60) % 30;
+    };
+
+    const tick = () => {
       setNow(new Date());
-      const elapsed = (Date.now() - start) / 1000;
-      const pct = Math.min((elapsed / ROTATE_INTERVAL) * 100, 100);
-      setProgress(pct);
-      if (elapsed >= ROTATE_INTERVAL) {
+      const elapsed = getElapsedInWindow();
+      setProgress((elapsed / ROTATE_INTERVAL) * 100);
+    };
+
+    tick(); // initial
+
+    const timer = setInterval(tick, 1000);
+
+    // Wait for the next :01 or :31 to trigger navigation
+    const checkRotate = setInterval(() => {
+      const s = new Date().getSeconds();
+      if (s === 1 || s === 31) {
         const nextPage = active < panels.length - 1 ? active + 2 : 1;
         navigate(`/${nextPage}`, { replace: true });
       }
-    }, 1000);
-    return () => clearInterval(timer);
+    }, 500);
+
+    return () => { clearInterval(timer); clearInterval(checkRotate); };
   }, [active, navigate]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
