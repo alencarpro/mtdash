@@ -467,8 +467,18 @@ const PanelAmbiental = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Bottom row: 2 charts */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
+    {/* Bottom row: 3 charts */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
+      <Chart title="Biomas de MT">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={biomaData} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="percentual" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} animationEasing="ease-out">
+              {biomaData.map((_, i) => <Cell key={i} fill={BIOMA_COLORS[i]} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
       <Chart title="Áreas Protegidas (km²)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={areasProtegidas} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: -5 }}>
