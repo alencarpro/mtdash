@@ -689,77 +689,8 @@ const CameraCard = ({ camera }: { camera: typeof obrasEstrategicas.cameras[0] })
   </div>
 );
 
-const PanelObras = () => {
-  const d = obrasEstrategicas;
-  return (
-    <div className="flex flex-col gap-2 h-full overflow-auto">
-      {/* Hero section: title + progress ring */}
-      <div className="rounded-lg p-2 sm:p-3 flex flex-col sm:flex-row items-start justify-between gap-2 sm:gap-0" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}>
-        <div className="flex-1 min-w-0 mr-3">
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[8px] uppercase tracking-widest font-bold px-2 py-0.5 rounded" style={{ color: C.teal, background: 'rgba(141,243,219,0.1)', border: '1px solid rgba(141,243,219,0.2)' }}>
-              Painel de Monitoramento
-            </span>
-            <span className="text-[8px] uppercase tracking-widest font-semibold px-2 py-0.5 rounded" style={{ color: C.blue, background: 'rgba(96,165,250,0.1)', border: '1px solid rgba(96,165,250,0.2)' }}>
-              Percentual Executado
-            </span>
-          </div>
-          <h2 className="text-lg font-extrabold mt-1" style={{ color: '#f8fafc' }}>{d.titulo}</h2>
-          <p className="text-[9px] mt-0.5 leading-relaxed" style={{ color: 'rgba(226,232,240,0.72)' }}>{d.descricao}</p>
-          <div className="flex items-center gap-2 mt-1.5">
-            <span className="text-[8px] px-2 py-0.5 rounded font-semibold" style={{ background: 'rgba(141,243,219,0.1)', color: C.teal, border: '1px solid rgba(141,243,219,0.2)' }}>{d.contrato.numero}</span>
-            <span className="text-[8px] px-2 py-0.5 rounded font-semibold" style={{ background: 'rgba(96,165,250,0.1)', color: C.blue, border: '1px solid rgba(96,165,250,0.2)' }}>{d.contrato.status}</span>
-            <span className="text-[8px]" style={{ color: 'rgba(226,232,240,0.5)' }}>{d.cameras.length} câmeras</span>
-          </div>
-        </div>
-        <ProgressRing percent={d.percentualExecutado} size={90} />
-      </div>
-
-      {/* Contract info cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-        <KPI title="Contrato" value={d.contrato.numero} sub={`início ${d.contrato.inicio}\n${d.contrato.diasAtuais} dias atuais`} color={C.teal} delay={0} />
-        <KPI title="Término Previsto" value={d.terminoPrevisto} sub={`${d.contrato.diasAtuais} dias atuais`} color={C.blue} delay={120} />
-        <KPI title="Valor Total" value={d.valorTotal} sub={`${d.percentualPago} pago`} color={C.purple} delay={240} />
-        <KPI title="Execução Física" value={d.execucaoFisica.area} sub={d.execucaoFisica.status} color={C.green} delay={360} />
-      </div>
-
-      {/* Objeto */}
-      <div className="rounded-lg p-2" style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}>
-        <div className="flex items-center justify-between mb-1">
-          <div>
-            <span className="text-[8px] uppercase tracking-wider font-bold" style={{ color: C.yellow }}>Objeto</span>
-            <span className="text-[9px] ml-2 font-semibold" style={{ color: '#f8fafc' }}>Detalhes do contrato</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.1)', color: C.teal }}>{d.objeto.totalBRT} BRT</span>
-            <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(134,239,172,0.1)', color: C.green }}>{d.objeto.online} online</span>
-            <span className="text-[8px] px-1.5 py-0.5 rounded" style={{ background: 'rgba(248,113,113,0.1)', color: C.red }}>{d.objeto.offline} offline</span>
-          </div>
-        </div>
-        <p className="text-[8px] leading-relaxed" style={{ color: 'rgba(226,232,240,0.6)' }}>{d.objeto.detalhes}</p>
-      </div>
-
-      {/* Cameras section */}
-      <div>
-        <div className="flex items-center justify-between mb-1.5">
-          <div className="flex items-center gap-2">
-            <span className="text-[8px] uppercase tracking-wider font-bold" style={{ color: C.yellow }}>Monitoramento</span>
-            <span className="text-[10px] font-semibold" style={{ color: '#f8fafc' }}>Câmeras de obras</span>
-          </div>
-          <span className="text-[8px] font-medium" style={{ color: 'rgba(226,232,240,0.5)' }}>{d.cameras.length} cards</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          {d.cameras.map(cam => (
-            <CameraCard key={cam.id} camera={cam} />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-};
-
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelObras];
-const panelIcons = [p1Img, p2Img, p3Img, p4Img, p5Img];
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral];
+const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
