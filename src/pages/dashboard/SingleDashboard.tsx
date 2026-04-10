@@ -528,7 +528,7 @@ const PanelVisaoGeral = () => (
       <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={240} />
     </div>
     {/* Row 1: full-width PIB evolution */}
-    <div className="flex-1 min-h-0">
+    <div className="flex-1 min-h-[180px]">
       <Chart title="Evolução do PIB (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
