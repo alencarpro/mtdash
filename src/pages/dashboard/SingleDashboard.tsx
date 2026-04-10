@@ -386,19 +386,19 @@ const PanelSocial = () => (
     </div>
     {/* Row 3: Mortalidade + Violência + Trânsito */}
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
-      <Chart title="Mortalidade / Violência Mulher">
+      <Chart title="Mortalidade / Violência Mulher (por mil hab.)">
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart data={mortalidadeData} margin={{ top: 14, right: 12, bottom: 14, left: -10 }}>
+          <LineChart data={mortalidadeData} margin={{ top: 18, right: 16, bottom: 14, left: 16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="year" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} interval={0} />
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationEasing="ease-out">
-              <LabelList dataKey="infantil" position="top" fontSize={9} fill={C.label} content={({ x, y, value }: any) => <text x={x} y={y - 6} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text>} />
+            <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="infantil" position="top" offset={8} fontSize={10} fill={C.label} />
             </Line>
-            <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out">
-              <LabelList dataKey="geral" position="bottom" fontSize={9} fill={C.label} content={({ x, y, value }: any) => <text x={x} y={y + 14} textAnchor="middle" fontSize={9} fill={C.label}>{value}</text>} />
+            <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 3 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out">
+              <LabelList dataKey="geral" position="bottom" offset={8} fontSize={10} fill={C.label} />
             </Line>
           </LineChart>
         </ResponsiveContainer>
