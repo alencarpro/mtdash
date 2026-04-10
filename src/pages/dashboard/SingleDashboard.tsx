@@ -193,7 +193,7 @@ const PanelEconomia = () => (
       <KPI title="Turismo" value={turismoData.visitantesAnuais} sub={`Receita ${turismoData.receitaTurismo}`} color={C.yellow} delay={360} />
     </div>
     {/* Comércio Exterior */}
-    <div className="flex-shrink-0" style={{ height: '22%' }}>
+    <div className="flex-shrink-0" style={{ height: 280 }}>
       <Chart title="Comércio Exterior (US$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={comercioExterior} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
@@ -209,7 +209,7 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* Destinos Exportações */}
-    <div className="flex-shrink-0" style={{ height: '22%' }}>
+    <div className="flex-shrink-0" style={{ height: 280 }}>
       <Chart title="Destinos Exportações">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -222,7 +222,7 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* VAB Setorial */}
-    <div className="flex-shrink-0" style={{ height: '22%' }}>
+    <div className="flex-shrink-0" style={{ height: 280 }}>
       <Chart title="VAB Setorial (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={vabSetorial} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
@@ -239,7 +239,7 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* Produção Agrícola */}
-    <div className="flex-shrink-0" style={{ height: '22%' }}>
+    <div className="flex-shrink-0" style={{ height: 280 }}>
       <Chart title="Produção Agrícola (M ton)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={producaoAgricola} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: -5 }}>
@@ -255,7 +255,7 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* Produção de Carne */}
-    <div className="flex-shrink-0" style={{ height: '22%' }}>
+    <div className="flex-shrink-0" style={{ height: 280 }}>
       <Chart title="Produção de Carne (mil ton)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={producaoCarne} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
@@ -272,7 +272,7 @@ const PanelEconomia = () => (
       </Chart>
     </div>
     {/* Produção Industrial */}
-    <div className="flex-shrink-0" style={{ height: '22%' }}>
+    <div className="flex-shrink-0" style={{ height: 280 }}>
       <Chart title="Produção Industrial (% var.)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={producaoIndustrial} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
