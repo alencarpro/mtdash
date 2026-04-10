@@ -869,11 +869,11 @@ const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6"];
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
   const navigate = useNavigate();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 5)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade"];
 
   const RELOAD_INTERVAL = 30; // seconds
   const [now, setNow] = useState(new Date());
