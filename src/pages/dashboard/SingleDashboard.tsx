@@ -481,8 +481,8 @@ const PanelAmbiental = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Row 2: Focos + Qualidade Ar */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[200px]">
+    {/* Row 2: Focos + Qualidade Ar — full width, half height each */}
+    <div className="grid grid-cols-1 gap-2 flex-1 min-h-[200px]">
       <Chart title="Focos de Incêndio (mensal)">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={focosIncendio} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
