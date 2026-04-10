@@ -420,7 +420,9 @@ const PanelAmbiental = () => (
             <Bar dataKey="area" name="Área (km²)" fill={C.red} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
               <LabelList dataKey="area" position="top" fontSize={14} fill={C.label} />
             </Bar>
-            <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
+            <Bar dataKey="alertas" name="Alertas" fill={C.yellow} radius={[3, 3, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out">
+              <LabelList dataKey="alertas" position="top" fontSize={12} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
