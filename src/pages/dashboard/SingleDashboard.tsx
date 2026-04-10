@@ -611,7 +611,7 @@ const SingleDashboard = () => {
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia"];
 
   const RELOAD_INTERVAL = 30; // seconds
   const [now, setNow] = useState(new Date());
