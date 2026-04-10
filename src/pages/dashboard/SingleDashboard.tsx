@@ -295,7 +295,7 @@ const PanelEconomia = () => (
    PANEL 2 — SOCIAL
    ═══════════════════════════════════════════════════════════ */
 const PanelSocial = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs - 3x2 */}
     <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
       <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} />
@@ -406,7 +406,7 @@ const PanelSocial = () => (
    PANEL 3 — AMBIENTAL
    ═══════════════════════════════════════════════════════════ */
 const PanelAmbiental = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs - 2x2 */}
     <div className="grid grid-cols-2 gap-2 flex-shrink-0">
       <KPI title="Vegetação Preservada" value={`${vegetacaoNativa.vegetacaoPreservada}%`} sub={`${(vegetacaoNativa.areaProtegida / 1000).toFixed(0)} mil km² protegidos`} color={C.green} delay={0} />
@@ -510,7 +510,7 @@ const PanelAmbiental = () => (
    PANEL 4 — VISÃO GERAL
    ═══════════════════════════════════════════════════════════ */
 const PanelVisaoGeral = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs - 2x2 (last row has 1 centered or 2) */}
     <div className="grid grid-cols-2 gap-2 flex-shrink-0">
       <KPI title="PIB Estadual" value={overviewKPIs.pibTotal} sub={`${overviewKPIs.pibRanking} — ${overviewKPIs.pibParticipacao} do Brasil`} color={C.teal} delay={0} />
