@@ -295,9 +295,9 @@ const PanelEconomia = () => (
    PANEL 2 — SOCIAL
    ═══════════════════════════════════════════════════════════ */
 const PanelSocial = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto sm:overflow-hidden">
-    {/* KPIs: 6 in a row */}
-    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    {/* KPIs - 3x2 */}
+    <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 flex-shrink-0">
       <KPI title="IDEB 2023" value={lastEdu.ideb.toString()} sub={`${lastEdu.matriculas.toLocaleString()} matrículas`} color={C.teal} delay={0} />
       <KPI title="Leitos Hosp." value={saudeData.leitos.toLocaleString()} sub={`${saudeData.leitosUTI} UTI`} color={C.red} delay={80} />
       <KPI title="Déf. Habitacional" value={deficitHabitacional.totalFamilias.toLocaleString()} sub={`${deficitHabitacional.percentualEstadual}`} color={C.yellow} delay={160} />
@@ -305,8 +305,8 @@ const PanelSocial = () => (
       <KPI title="Cobertura SUS" value={saudeData.coberturaSUS} sub="pop. coberta" color={C.green} delay={320} />
       <KPI title="ICQV Médio" value={(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length).toFixed(2)} sub="índice estadual" color={C.purple} delay={400} />
     </div>
-    {/* Row 1: 2 charts side by side */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-1 min-h-0">
+    {/* Row 1: IDEB + Segurança */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
       <Chart title="Evolução IDEB">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={educacaoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
@@ -338,8 +338,8 @@ const PanelSocial = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Row 2: 1 narrow + 1 wide (inverted asymmetry from Panel 1) */}
-    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
+    {/* Row 2: ICQV Médias + ICQV Município */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
       <Chart title="ICQV — Médias Estaduais">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={[...radarAvg].sort((a, b) => b.value - a.value)} layout="vertical" margin={{ top: 8, right: 30, bottom: 8, left: 10 }}>
@@ -354,26 +354,24 @@ const PanelSocial = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-      <div className="sm:col-span-2 flex flex-col min-h-0">
-        <Chart title="ICQV por Município">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-              <XAxis dataKey="city" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
-              <YAxis hide domain={[0, 1]} />
-              <Legend content={renderLegend} />
-              <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-              <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
-              <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
-              <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
-            </BarChart>
-          </ResponsiveContainer>
-        </Chart>
-      </div>
+      <Chart title="ICQV por Município">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="city" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
+            <YAxis hide domain={[0, 1]} />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
+            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
+            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
     </div>
-    {/* Row 3: 3 equal */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
-      <Chart title="Mortalidade (por 1000 hab.)">
+    {/* Row 3: Mortalidade + Violência + Trânsito */}
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 260 }}>
+      <Chart title="Mortalidade / Violência Mulher">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mortalidadeData} margin={{ top: 10, right: 8, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
@@ -384,21 +382,6 @@ const PanelSocial = () => (
             <Line type="monotone" dataKey="infantil" name="Infantil" stroke={C.yellow} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationEasing="ease-out" />
             <Line type="monotone" dataKey="geral" name="Geral" stroke={C.blue} strokeWidth={2} dot={{ r: 2 }} animationDuration={2000} animationBegin={300} animationEasing="ease-out" />
           </LineChart>
-        </ResponsiveContainer>
-      </Chart>
-      <Chart title="Violência contra a Mulher">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={violenciaMulher} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
-            <YAxis hide />
-            <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="registros" name="Registros" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
-              <LabelList dataKey="registros" position="top" fontSize={12} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
-            </Bar>
-            <Bar dataKey="medidas" name="Medidas Prot." fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
-          </BarChart>
         </ResponsiveContainer>
       </Chart>
       <Chart title="Trânsito — Acidentes">
