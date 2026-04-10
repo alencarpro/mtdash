@@ -353,15 +353,21 @@ const PanelSocial = () => (
       </Chart>
       <Chart title="ICQV por Município">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={icqvData} margin={{ top: 4, right: 4, bottom: 14, left: -10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="city" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
-            <YAxis hide domain={[0, 1]} />
+          <BarChart data={[...icqvData].sort((a, b) => b.icqv - a.icqv)} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" domain={[0, 1]} hide />
+            <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
-            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
-            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
+            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="saude" position="right" fontSize={8} fill={C.label} />
+            </Bar>
+            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out">
+              <LabelList dataKey="educacao" position="right" fontSize={8} fill={C.label} />
+            </Bar>
+            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out">
+              <LabelList dataKey="economia" position="right" fontSize={8} fill={C.label} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
