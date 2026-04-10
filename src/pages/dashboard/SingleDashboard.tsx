@@ -15,6 +15,9 @@ import {
   vabSetorial, rendaPorCategoria, consumoEnergia, producaoIndustrial, producaoCarne, turismoData,
   mortalidadeData, violenciaMulher, deficitHabitacional, transitoData,
   focosIncendio, areasProtegidas, mineracaoData,
+  beneficiosFinanceiros, aderenciaRecomendacoes, auditoriaControle, ouvidoriaManifestacoes,
+  cgeAlerta, areasAuditadas, integridadeNumeros, dosimetriaPenas, capacitacoesCGE,
+  tcacs, planejamentoEstrategico, custosServicos,
 } from "@/data/mockData";
 import tituloImg from "@/assets/titulo.png";
 
