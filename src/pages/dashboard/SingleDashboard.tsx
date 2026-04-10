@@ -52,9 +52,9 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   if ((percent || value / 100) < 0.05) return null;
   return (
-    <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={8} fontWeight={600}>
-      {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
-    </text>
+     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={16} fontWeight={600}>
+       {name} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
+     </text>
   );
 };
 
@@ -62,13 +62,13 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
 const renderLegend = (props: any) => {
   const { payload } = props;
   return (
-    <div className="flex items-center justify-center gap-3 mt-0.5">
-      {payload?.map((entry: any, index: number) => (
-        <span key={index} className="flex items-center gap-1 text-[8px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
-          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color }} />
-          {entry.value}
-        </span>
-      ))}
+     <div className="flex items-center justify-center gap-3 mt-0.5">
+       {payload?.map((entry: any, index: number) => (
+         <span key={index} className="flex items-center gap-1.5 text-[16px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+           <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: entry.color }} />
+           {entry.value}
+         </span>
+       ))}
     </div>
   );
 };
@@ -85,14 +85,14 @@ const CustomTooltip = ({ active, payload, label }: any) => {
       boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
       backdropFilter: 'blur(8px)',
     }}>
-      {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 10, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
-      {payload.map((entry: any, i: number) => (
-        <div key={i} className="flex items-center gap-2" style={{ fontSize: 10, marginTop: 2 }}>
-          <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
-          <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
-          <span style={{ color: '#f8fafc', fontWeight: 700 }}>
-            {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
-          </span>
+       {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 18, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
+       {payload.map((entry: any, i: number) => (
+         <div key={i} className="flex items-center gap-2" style={{ fontSize: 18, marginTop: 2 }}>
+           <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
+           <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
+           <span style={{ color: '#f8fafc', fontWeight: 700 }}>
+             {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
+           </span>
         </div>
       ))}
     </div>
@@ -110,9 +110,9 @@ const PieTooltip = ({ active, payload }: any) => {
       padding: '8px 12px',
       boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
     }}>
-      <div className="flex items-center gap-2" style={{ fontSize: 10 }}>
-        <span className="inline-block w-2 h-2 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
-        <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
+       <div className="flex items-center gap-2" style={{ fontSize: 18 }}>
+         <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
+         <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
       </div>
     </div>
   );
@@ -141,9 +141,9 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0 }: { title: string; 
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
       style={{ backgroundColor: color, color, animation: `accentGlow 3s ease-in-out ${delay + 400}ms infinite` }}
     />
-    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
-    <p className="text-sm sm:text-base font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
-    <p className="text-[8px] sm:text-[9px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
+     <p className="text-[16px] sm:text-[18px] uppercase tracking-wider font-medium truncate" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+     <p className="text-2xl sm:text-3xl font-extrabold leading-tight mt-0.5" style={{ color: '#f8fafc' }}>{value}</p>
+     <p className="text-[16px] sm:text-[18px] truncate mt-0.5" style={{ color: 'rgba(226,232,240,0.72)' }}>{sub}</p>
   </div>
 );
 
@@ -163,7 +163,7 @@ const Chart = ({ title, children }: { title: string; children: React.ReactNode }
       e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
     }}
   >
-    <p className="text-[8px] sm:text-[9px] uppercase tracking-wider font-semibold mb-1 truncate transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
+    <p className="text-[16px] sm:text-[18px] uppercase tracking-wider font-semibold mb-1 truncate transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1 min-h-0">{children}</div>
   </div>
 );
@@ -686,16 +686,16 @@ const SingleDashboard = () => {
         <ActivePanel />
       </div>
       {/* Footer with source + clock */}
-      <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
-        <span className="text-[8px] sm:text-[9px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
-          {panelTitles[active]} — Dados MT
-        </span>
-        <span className="text-[8px] sm:text-[9px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
-          {formattedDate} — {formattedTime}
-        </span>
-        <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[8px] sm:text-[9px] transition-colors" style={{ color: '#8df3db' }}>
-          Fonte: dados.mt.gov.br
-        </a>
+       <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
+         <span className="text-[16px] sm:text-[18px] font-medium uppercase tracking-wider" style={{ color: 'rgba(226,232,240,0.72)' }}>
+           {panelTitles[active]} — Dados MT
+         </span>
+         <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
+           {formattedDate} — {formattedTime}
+         </span>
+         <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[16px] sm:text-[18px] transition-colors" style={{ color: '#8df3db' }}>
+           Fonte: dados.mt.gov.br
+         </a>
       </footer>
     </div>
   );
