@@ -636,6 +636,7 @@ const panelIcons = [p1Img, p2Img, p3Img, p4Img];
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
+  const navigate = useNavigate();
   const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 3)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
@@ -647,6 +648,15 @@ const SingleDashboard = () => {
     const timer = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
+
+  // Auto-cycle panels every 30 seconds
+  useEffect(() => {
+    const cycle = setInterval(() => {
+      const next = ((active + 1) % panels.length) + 1;
+      navigate(`/${next}`, { replace: true });
+    }, 30000);
+    return () => clearInterval(cycle);
+  }, [active, navigate]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
