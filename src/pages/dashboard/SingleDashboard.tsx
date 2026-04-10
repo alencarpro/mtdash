@@ -527,7 +527,7 @@ const PanelVisaoGeral = () => (
       <KPI title="PIB per Capita" value={overviewKPIs.pibPerCapita} sub={overviewKPIs.pibPerCapitaRanking} color={C.purple} delay={120} />
       <KPI title="Crescimento" value={overviewKPIs.crescimentoMedio} sub={overviewKPIs.crescimentoPeriodo} color={C.blue} delay={240} />
     </div>
-    {/* Hero: full-width PIB evolution */}
+    {/* Row 1: full-width PIB evolution */}
     <div className="flex-1 min-h-0">
       <Chart title="Evolução do PIB (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
@@ -544,7 +544,7 @@ const PanelVisaoGeral = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Bottom: 3 columns */}
+    {/* Row 2: 3 columns */}
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
       <Chart title="PIB por Setor (%)">
         <ResponsiveContainer width="100%" height="100%">
@@ -580,6 +580,50 @@ const PanelVisaoGeral = () => (
               <LabelList dataKey="investimento" position="top" fontSize={8} fill={C.label} />
             </Bar>
           </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    {/* Row 3: 3 columns */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 flex-1 min-h-0">
+      <Chart title="Renda por Categoria (R$)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={rendaPorCategoria} layout="vertical" margin={{ top: 4, right: 35, bottom: 0, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="categoria" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} width={65} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" fill={C.purple} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
+              {rendaPorCategoria.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              <LabelList dataKey="valor" position="right" fontSize={8} fill={C.label} formatter={(v: number) => `R$ ${v.toLocaleString()}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Consumo Energia (GWh)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={consumoEnergia} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={8} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="residencial" name="Resid." fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out" />
+            <Bar dataKey="industrial" name="Indust." fill={C.purple} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200} animationEasing="ease-out" />
+            <Bar dataKey="rural" name="Rural" fill={C.green} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400} animationEasing="ease-out" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Crescimento PIB (%)">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={pibEvolution} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Line type="monotone" dataKey="crescimento" stroke={C.yellow} strokeWidth={2} dot={{ r: 3, fill: C.yellow }} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="crescimento" position="top" fontSize={8} fill={C.label} formatter={(v: number) => `${v}%`} />
+            </Line>
+          </LineChart>
         </ResponsiveContainer>
       </Chart>
     </div>
