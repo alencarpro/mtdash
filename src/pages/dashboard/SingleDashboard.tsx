@@ -643,7 +643,7 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Visão Geral"];
 
-  const RELOAD_INTERVAL = 60; // seconds
+  const RELOAD_INTERVAL = 30; // seconds
   const [now, setNow] = useState(new Date());
   const [progress, setProgress] = useState(0);
 
