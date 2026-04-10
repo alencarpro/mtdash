@@ -377,6 +377,50 @@ const PanelSocial = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 flex-1 min-h-0">
+      <Chart title="Trânsito — Acidentes e Vítimas">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={transitoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="acidentes" name="Acidentes" fill={C.yellow} radius={[2, 2, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="acidentes" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(1)}k`} />
+            </Bar>
+            <Bar dataKey="vitimas" name="Vítimas" fill={C.red} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-out" />
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Frota Veicular (milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart data={transitoData} margin={{ top: 12, right: 8, bottom: 0, left: -10 }}>
+            <defs><linearGradient id="cfrota" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.blue} stopOpacity={0.4} /><stop offset="95%" stopColor={C.blue} stopOpacity={0} /></linearGradient></defs>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Area type="monotone" dataKey="frota" stroke={C.blue} fill="url(#cfrota)" strokeWidth={2} animationDuration={2000} animationEasing="ease-out">
+              <LabelList dataKey="frota" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1e6).toFixed(2)}M`} />
+            </Area>
+          </AreaChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Educação — Matrículas (mil)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={educacaoData} margin={{ top: 14, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="year" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="matriculas" name="Matrículas" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              <LabelList dataKey="matriculas" position="top" fontSize={6} fill={C.label} formatter={(v: number) => `${(v / 1000).toFixed(0)}k`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
   </div>
 );
 
