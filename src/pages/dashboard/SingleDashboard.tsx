@@ -174,7 +174,7 @@ const radarAvg = [
   { subject: "Educação", value: Math.round(icqvData.reduce((a, b) => a + b.educacao, 0) / icqvData.length * 100) },
   { subject: "Economia", value: Math.round(icqvData.reduce((a, b) => a + b.economia, 0) / icqvData.length * 100) },
   { subject: "ICQV", value: Math.round(icqvData.reduce((a, b) => a + b.icqv, 0) / icqvData.length * 100) },
-];
+].sort((a, b) => b.value - a.value);
 const lastTrade = comercioExterior[comercioExterior.length - 1];
 const lastWork = mercadoTrabalho[mercadoTrabalho.length - 1];
 const lastEdu = educacaoData[educacaoData.length - 1];
