@@ -649,14 +649,13 @@ const SingleDashboard = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Auto-cycle panels every 30 seconds
+  // Auto-reload current panel every 60 seconds
   useEffect(() => {
-    const cycle = setInterval(() => {
-      const next = ((active + 1) % panels.length) + 1;
-      navigate(`/${next}`, { replace: true });
-    }, 30000);
-    return () => clearInterval(cycle);
-  }, [active, navigate]);
+    const reload = setInterval(() => {
+      window.location.reload();
+    }, 60000);
+    return () => clearInterval(reload);
+  }, []);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
