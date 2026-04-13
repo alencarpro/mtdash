@@ -1000,9 +1000,15 @@ const SingleDashboard = () => {
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-         <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[16px] sm:text-[18px] transition-colors" style={{ color: '#8df3db' }}>
-           Fonte: dados.mt.gov.br
-         </a>
+         {active === 4 || active === 5 ? (
+           <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+             Fonte: Balanço de Gestão 2025 — CGE-MT
+           </span>
+         ) : (
+           <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[16px] sm:text-[18px] transition-colors" style={{ color: '#8df3db' }}>
+             Fonte: dados.mt.gov.br
+           </a>
+         )}
       </footer>
     </div>
   );
