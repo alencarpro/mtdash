@@ -922,7 +922,7 @@ const SingleDashboard = () => {
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Balanço de Gestão 2025 - CGE-MT", "Balanço de Gestão 2025 - CGE-MT"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
   // Nível 1 = azul claro, Nível 3 = azul intenso (fundo do header)
   const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041"];
