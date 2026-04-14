@@ -1203,7 +1203,10 @@ const PanelBeneficios = () => (
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={120} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="qtdAcoes" name="Ações" fill={C.blue} radius={[0, 3, 3, 0]} animationDuration={1800}>
+            <Bar dataKey="qtdAcoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {topClassesBeneficio.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="qtdAcoes" position="right" fontSize={12} fill={C.label} />
             </Bar>
           </BarChart>

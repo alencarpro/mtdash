@@ -28,12 +28,12 @@ export const macrofuncaoStats = [
 ];
 
 export const topClassesBeneficio = [
-  { nome: "Recuperação de valores", qtdAcoes: 18, natureza: "Quantitativa" },
-  { nome: "Economia potencial", qtdAcoes: 14, natureza: "Quantitativa" },
-  { nome: "Correção de irregularidades", qtdAcoes: 12, natureza: "Qualitativa" },
-  { nome: "Melhoria de processos", qtdAcoes: 9, natureza: "Qualitativa" },
-  { nome: "Prevenção de danos", qtdAcoes: 8, natureza: "Quantitativa" },
-  { nome: "Fortalecimento institucional", qtdAcoes: 5, natureza: "Qualitativa" },
+  { nome: "Recuperação de valores", qtdAcoes: 18, natureza: "Quantitativa", fill: "#38bdf8" },
+  { nome: "Economia potencial", qtdAcoes: 14, natureza: "Quantitativa", fill: "#8df3db" },
+  { nome: "Correção de irregularidades", qtdAcoes: 12, natureza: "Qualitativa", fill: "#a78bfa" },
+  { nome: "Melhoria de processos", qtdAcoes: 9, natureza: "Qualitativa", fill: "#fbbf24" },
+  { nome: "Prevenção de danos", qtdAcoes: 8, natureza: "Quantitativa", fill: "#fb923c" },
+  { nome: "Fortalecimento institucional", qtdAcoes: 5, natureza: "Qualitativa", fill: "#60a5fa" },
 ];
 
 export const dimensaoImpacto = [
