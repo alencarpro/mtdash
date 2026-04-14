@@ -48,13 +48,13 @@ const tabs = [
 /* ─── Custom pie label ─── */
 const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value, percent }: any) => {
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 10;
+  const radius = outerRadius + 8;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   if ((percent || value / 100) < 0.05) return null;
-  const displayName = name.length > 12 ? name.substring(0, 12) + '…' : name;
+  const displayName = name.length > 14 ? name.substring(0, 14) + '…' : name;
   return (
-     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={11} fontWeight={600}>
+     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={10} fontWeight={600}>
        {displayName} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
      </text>
   );
@@ -64,15 +64,15 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
 const renderLegend = (props: any) => {
   const { payload } = props;
   return (
-     <div className="mt-1 flex w-full flex-wrap items-start justify-center gap-x-3 gap-y-2 px-1 text-center">
+     <div className="mt-1 flex w-full flex-wrap items-start justify-center gap-x-3 gap-y-1.5 px-1 text-center">
        {payload?.map((entry: any, index: number) => (
          <span
            key={index}
-           className="flex min-w-0 max-w-full items-start justify-center gap-1.5 text-[11px] leading-tight sm:text-[13px] md:text-[14px]"
+           className="flex min-w-0 shrink-0 items-center gap-1.5 text-[10px] leading-snug sm:text-[12px] md:text-[13px]"
            style={{ color: 'rgba(226,232,240,0.72)' }}
          >
-            <span className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: entry.color }} />
-             <span className="max-w-[6.5rem] whitespace-normal break-words sm:max-w-none">{entry.value}</span>
+            <span className="inline-block w-2 h-2 rounded-sm flex-shrink-0 sm:w-2.5 sm:h-2.5" style={{ backgroundColor: entry.color }} />
+             <span className="whitespace-nowrap">{entry.value}</span>
           </span>
         ))}
     </div>
