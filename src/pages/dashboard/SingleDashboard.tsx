@@ -1235,9 +1235,9 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#161D49", "#161D49", "#161D49", "#161D49", "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5"];
+  const panelHeaderBgs = ["#070738", "#070738", "#070738", "#070738", "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5"];
   const panelBodyBgs = [
-    "#161D49", "#161D49", "#161D49", "#161D49", // Painéis 1-4
+    "#070738", "#070738", "#070738", "#070738", // Painéis 1-4
     "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5" // Painéis 5-9
   ];
   const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
