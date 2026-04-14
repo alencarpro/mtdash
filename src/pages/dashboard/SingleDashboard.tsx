@@ -1057,7 +1057,7 @@ const formatBRL = (v: number) => {
 };
 
 const PanelBeneficios = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs */}
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
       <KPI title="Impacto Financeiro" value="R$ 940,7 Mi" sub="benefícios 2025" color={C.teal} delay={0} icon={DollarSign} />
@@ -1066,8 +1066,8 @@ const PanelBeneficios = () => (
       <KPI title="Dimensões" value={`${beneficiosSummary.totalDimensoes}`} sub={`${beneficiosSummary.totalClasses} classes`} color={C.yellow} delay={360} icon={Compass} />
     </div>
 
-    {/* Impacto Financeiro por Adjunta */}
-    <div className="flex-shrink-0" style={{ height: 260 }}>
+    {/* Row 1: Impacto por Adjunta + Dimensão de Impacto */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[180px]">
       <Chart title="Impacto Financeiro por Adjunta (R$ Mi)">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={adjuntasRanking.map(a => ({ ...a, valorMi: +(a.valorTotal / 1e6).toFixed(1) }))} layout="vertical" margin={{ top: 4, right: 50, bottom: 0, left: 0 }}>
@@ -1081,10 +1081,20 @@ const PanelBeneficios = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
+      <Chart title="Dimensão de Impacto">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={dimensaoImpacto} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={2} dataKey="qtd" nameKey="nome" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+              {dimensaoImpacto.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
     </div>
 
-    {/* Distribuição por Macrofunção */}
-    <div className="flex-shrink-0" style={{ height: 280 }}>
+    {/* Row 2: Macrofunção + Top Classes */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[180px]">
       <Chart title="Distribuição de Ações por Macrofunção">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={macrofuncaoStats} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
@@ -1098,10 +1108,6 @@ const PanelBeneficios = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-    </div>
-
-    {/* Top Classes de Benefício */}
-    <div className="flex-shrink-0" style={{ height: 260 }}>
       <Chart title="Top Classes de Benefício">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={topClassesBeneficio} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
@@ -1113,20 +1119,6 @@ const PanelBeneficios = () => (
               <LabelList dataKey="qtdAcoes" position="right" fontSize={12} fill={C.label} />
             </Bar>
           </BarChart>
-        </ResponsiveContainer>
-      </Chart>
-    </div>
-
-    {/* Dimensão de Impacto (pie) */}
-    <div className="flex-shrink-0" style={{ height: 260 }}>
-      <Chart title="Dimensão de Impacto">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie data={dimensaoImpacto} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={2} dataKey="qtd" nameKey="nome" label={renderPieLabel} labelLine={false} animationDuration={1800}>
-              {dimensaoImpacto.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
-            </Pie>
-            <Tooltip content={<PieTooltip />} />
-          </PieChart>
         </ResponsiveContainer>
       </Chart>
     </div>
