@@ -994,9 +994,6 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin"
                   />
-                  <div className="absolute top-1.5 left-1.5 px-1.5 py-0.5 rounded text-[8px] font-bold" style={{ background: 'rgba(45,212,191,0.85)', color: '#0a111e' }}>
-                    ON
-                  </div>
                 </div>
                 <span className="text-[10px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
                   {cam.tpObra || cam.nome}
