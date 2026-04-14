@@ -1236,6 +1236,11 @@ const SingleDashboard = () => {
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
   const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041"];
+  const panelBodyBgs = [
+    "#161D49", "#161D49", "#161D49", "#161D49", // Painéis 1-4
+    "", "", "", "", "" // Painéis 5-9: padrão
+  ];
+  const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
 
   const ROTATE_INTERVAL = 30;
   const [now, setNow] = useState(new Date());
@@ -1298,7 +1303,7 @@ const SingleDashboard = () => {
     <div
       className="h-dvh w-full flex flex-col overflow-hidden"
       style={{
-        background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
+        background: panelBodyBgs[active] || defaultBg,
       }}
     >
       {/* Header */}
