@@ -938,6 +938,8 @@ const ProgressRing = ({ value, size = 90, label }: { value: number; size?: numbe
 };
 
 /* Shared obra card with cameras — optimized layout */
+const CAMERA_VIEWPORT = { width: 430, height: 300 };
+
 const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
   const shortName =
     o.obraId === 1 ? "BRT Cuiabá/VG" :
@@ -946,10 +948,45 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
     "Ponte Rio Juruena";
   const pct = parseFloat(o.contrato.percentualExecutado.replace("%", "").replace(",", "."));
   const camCount = o.cameras.length;
-  // Use 2 cols for ≤2 cameras, 3 cols for 3-6
   const camCols = camCount <= 2 ? 'grid-cols-2' : 'grid-cols-3';
+  const [cameraScales, setCameraScales] = useState<Record<number, number>>({});
+
+  useEffect(() => {
+    if (!camCount || typeof ResizeObserver === "undefined") return;
+
+    const root = document.getElementById(`obra-card-${o.obraId}`);
+    if (!root) return;
+
+    const cameraFrames = Array.from(root.querySelectorAll<HTMLElement>("[data-camera-frame-index]"));
+    if (!cameraFrames.length) return;
+
+    const measureFrame = (element: HTMLElement) => {
+      const index = Number(element.dataset.cameraFrameIndex);
+      const { width, height } = element.getBoundingClientRect();
+
+      if (!width || !height || Number.isNaN(index)) return;
+
+      const nextScale = Math.min(width / CAMERA_VIEWPORT.width, height / CAMERA_VIEWPORT.height);
+
+      setCameraScales((prev) => (
+        prev[index] === nextScale ? prev : { ...prev, [index]: nextScale }
+      ));
+    };
+
+    cameraFrames.forEach(measureFrame);
+
+    const observer = new ResizeObserver((entries) => {
+      entries.forEach((entry) => measureFrame(entry.target as HTMLElement));
+    });
+
+    cameraFrames.forEach((frame) => observer.observe(frame));
+
+    return () => observer.disconnect();
+  }, [camCount, o.obraId]);
+
   return (
     <div
+      id={`obra-card-${o.obraId}`}
       className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
       style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
     >
@@ -983,13 +1020,25 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
             {o.cameras.map((cam, ci) => (
               <div key={ci} className="flex flex-col gap-1">
                 <div
-                  className="rounded-md overflow-hidden relative group/cam w-full flex items-center justify-center"
+                  data-camera-frame-index={ci}
+                  className="rounded-md overflow-hidden relative group/cam w-full"
                   style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
                 >
                   <iframe
                     src={cam.link}
                     title={cam.tpObra || cam.nome}
-                    style={{ border: 'none', background: '#0a111e', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', height: '100%', objectFit: 'contain' }}
+                    style={{
+                      border: 'none',
+                      background: '#0a111e',
+                      position: 'absolute',
+                      top: '50%',
+                      left: '50%',
+                      width: `${CAMERA_VIEWPORT.width}px`,
+                      height: `${CAMERA_VIEWPORT.height}px`,
+                      transform: `translate(-50%, -50%) scale(${cameraScales[ci] ?? 1})`,
+                      transformOrigin: 'center center',
+                      willChange: 'transform',
+                    }}
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin"
                     allow="autoplay"
