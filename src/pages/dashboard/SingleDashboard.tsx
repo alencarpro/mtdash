@@ -48,13 +48,13 @@ const tabs = [
 /* ─── Custom pie label ─── */
 const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value, percent }: any) => {
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 8;
+  const radius = outerRadius + 10;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   if ((percent || value / 100) < 0.05) return null;
-  const displayName = name.length > 14 ? name.substring(0, 14) + '…' : name;
+  const displayName = name.length > 12 ? name.substring(0, 12) + '…' : name;
   return (
-     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={10} fontWeight={600}>
+     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={11} fontWeight={600}>
        {displayName} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
      </text>
   );
@@ -64,15 +64,15 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
 const renderLegend = (props: any) => {
   const { payload } = props;
   return (
-     <div className="mt-1 flex w-full flex-wrap items-start justify-center gap-x-3 gap-y-1.5 px-1 text-center">
+     <div className="mt-1 flex w-full flex-wrap items-start justify-center gap-x-3 gap-y-2 px-1 text-center">
        {payload?.map((entry: any, index: number) => (
          <span
            key={index}
-           className="flex min-w-0 shrink-0 items-center gap-1.5 text-[10px] leading-snug sm:text-[12px] md:text-[13px]"
+           className="flex min-w-0 max-w-full items-start justify-center gap-1.5 text-[11px] leading-tight sm:text-[13px] md:text-[14px]"
            style={{ color: 'rgba(226,232,240,0.72)' }}
          >
-            <span className="inline-block w-2 h-2 rounded-sm flex-shrink-0 sm:w-2.5 sm:h-2.5" style={{ backgroundColor: entry.color }} />
-             <span className="whitespace-nowrap">{entry.value}</span>
+            <span className="inline-block w-2.5 h-2.5 rounded-sm flex-shrink-0" style={{ backgroundColor: entry.color }} />
+             <span className="max-w-[6.5rem] whitespace-normal break-words sm:max-w-none">{entry.value}</span>
           </span>
         ))}
     </div>
@@ -172,9 +172,8 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
   <div
     className="rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
-      background: 'var(--card-bg, rgba(10,17,30,0.78))',
+      background: 'rgba(10,17,30,0.78)',
       border: '1px solid rgba(148,163,184,0.15)',
-      pointerEvents: 'var(--card-pointer, auto)' as any,
       animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
     onMouseEnter={e => {
@@ -203,16 +202,16 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
     className="group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 transition-all duration-300 ease-out md:hover:z-10 md:hover:scale-[1.02] cursor-default"
-    style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)', pointerEvents: 'var(--card-pointer, auto)' as any, animation: 'glowBorder 6s ease-in-out infinite' }}
+    style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
       e.currentTarget.style.borderColor = 'rgba(96,165,250,0.4)';
-      e.currentTarget.style.background = 'var(--card-bg-hover, rgba(10,17,30,0.92))';
+      e.currentTarget.style.background = 'rgba(10,17,30,0.92)';
     }}
     onMouseLeave={e => {
       e.currentTarget.style.boxShadow = '';
       e.currentTarget.style.borderColor = 'rgba(148,163,184,0.15)';
-      e.currentTarget.style.background = 'var(--card-bg, rgba(10,17,30,0.78))';
+      e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
     }}
   >
     <p className="text-[12px] sm:text-[14px] md:text-[16px] uppercase tracking-wider font-semibold mb-1 break-words leading-snug transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
@@ -1010,7 +1009,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
     <div
       id={`obra-card-${o.obraId}`}
       className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
-      style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)' }}
+      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
     >
       {/* Header row: title + badge */}
       <div className="flex items-center gap-3">
@@ -1044,14 +1043,14 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                 <div
                   data-camera-frame-index={ci}
                   className="rounded-md overflow-hidden relative group/cam w-full"
-                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: 'var(--card-bg, #0a111e)' }}
+                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
                 >
                   <iframe
                     src={cam.link}
                     title={cam.tpObra || cam.nome}
                     style={{
                       border: 'none',
-                      background: 'var(--card-bg, #0a111e)',
+                      background: '#0a111e',
                       position: 'absolute',
                       top: '50%',
                       left: '50%',
@@ -1236,20 +1235,7 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#000050", "#000050", "#000050", "#000050", "#004F5E", "#004F5E", "#123A5A", "#123A5A", "#004F5E"];
-  const panelBodyBgs = [
-    "#00005E", "#00005E", "#00005E", "#00005E",
-    "#004F5E", "#004F5E", "#123A5A", "#123A5A", "#004F5E"
-  ];
-  const panelCardBgs = [
-    'rgba(20,20,130,0.75)', 'rgba(20,20,130,0.75)', 'rgba(20,20,130,0.75)', 'rgba(20,20,130,0.75)',
-    'rgba(0,90,108,0.75)', 'rgba(0,90,108,0.75)', 'rgba(22,68,105,0.75)', 'rgba(22,68,105,0.75)', 'rgba(0,90,108,0.75)'
-  ];
-  const panelCardBgHovers = [
-    'rgba(30,30,150,0.88)', 'rgba(30,30,150,0.88)', 'rgba(30,30,150,0.88)', 'rgba(30,30,150,0.88)',
-    'rgba(0,100,118,0.88)', 'rgba(0,100,118,0.88)', 'rgba(28,78,118,0.88)', 'rgba(28,78,118,0.88)', 'rgba(0,100,118,0.88)'
-  ];
-  const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
+  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041"];
 
   const ROTATE_INTERVAL = 30;
   const [now, setNow] = useState(new Date());
@@ -1308,92 +1294,17 @@ const SingleDashboard = () => {
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
 
-  // Edge hover navigation for /tX routes
-  const [edgeHoverEnabled, setEdgeHoverEnabled] = useState(false);
-  const [edgeHoverVisible, setEdgeHoverVisible] = useState(false);
-
-  const handleEdgeHover = (direction: 'prev' | 'next') => {
-    if (!sequence || !edgeHoverEnabled) return;
-    const currentIdx = sequence.indexOf(effectiveActive);
-    if (currentIdx === -1) {
-      // effectiveActive may be manual; find its position
-      const seqIdx = sequence.indexOf(manualPanel ?? active);
-      const fallbackIdx = seqIdx === -1 ? 0 : seqIdx;
-      const newIdx = direction === 'next'
-        ? (fallbackIdx + 1) % sequence.length
-        : (fallbackIdx - 1 + sequence.length) % sequence.length;
-      setManualPanel(sequence[newIdx]);
-      return;
-    }
-    const newIdx = direction === 'next'
-      ? (currentIdx + 1) % sequence.length
-      : (currentIdx - 1 + sequence.length) % sequence.length;
-    setManualPanel(sequence[newIdx]);
-  };
-
-  const [manualPanel, setManualPanel] = useState<number | null>(null);
-
-  // Reset manual override when rotation tick changes (clock boundary)
-  useEffect(() => {
-    setManualPanel(null);
-  }, [rotationTick]);
-
-  // Enable edge hover on mouse move, disable after 5s
-  useEffect(() => {
-    if (!sequence) return;
-    let timer: ReturnType<typeof setTimeout>;
-    const onMove = () => {
-      setEdgeHoverEnabled(true);
-      setEdgeHoverVisible(true);
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        setEdgeHoverEnabled(false);
-        setEdgeHoverVisible(false);
-      }, 5000);
-    };
-    window.addEventListener('mousemove', onMove);
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      clearTimeout(timer);
-    };
-  }, [sequence]);
-
-  const effectiveActive = manualPanel !== null && sequence ? manualPanel : active;
-  const EffectivePanel = panels[effectiveActive];
-
   return (
     <div
-      className="h-dvh w-full flex flex-col overflow-hidden relative"
+      className="h-dvh w-full flex flex-col overflow-hidden"
       style={{
-        background: panelBodyBgs[effectiveActive] || defaultBg,
-        '--card-bg': panelCardBgs[effectiveActive],
-        '--card-bg-hover': panelCardBgHovers[effectiveActive],
-        '--card-pointer': sequence && !edgeHoverEnabled ? 'none' : 'auto',
-      } as React.CSSProperties}
+        background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
+      }}
     >
-      {/* Edge hover zones for /tX routes */}
-      {sequence && edgeHoverVisible && (
-        <>
-          <div
-            className="absolute left-0 top-0 bottom-0 w-16 z-50 flex items-center justify-center cursor-pointer transition-opacity duration-300"
-            style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.08), transparent)', opacity: edgeHoverEnabled ? 1 : 0 }}
-            onClick={() => handleEdgeHover('prev')}
-          >
-            <span className="text-white/60 text-3xl">‹</span>
-          </div>
-          <div
-            className="absolute right-0 top-0 bottom-0 w-16 z-50 flex items-center justify-center cursor-pointer transition-opacity duration-300"
-            style={{ background: 'linear-gradient(-90deg, rgba(255,255,255,0.08), transparent)', opacity: edgeHoverEnabled ? 1 : 0 }}
-            onClick={() => handleEdgeHover('next')}
-          >
-            <span className="text-white/60 text-3xl">›</span>
-          </div>
-        </>
-      )}
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[effectiveActive] }}>
+      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
-        <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[effectiveActive] }}>{panelTitles[effectiveActive]}</span>
+        <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>{panelTitles[active]}</span>
       </header>
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
@@ -1408,18 +1319,18 @@ const SingleDashboard = () => {
       </div>
       {/* Panel */}
       <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden animate-fade-in">
-        <EffectivePanel />
+        <ActivePanel />
       </div>
       {/* Footer with source + clock */}
        <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-         {effectiveActive === 4 || effectiveActive === 5 || effectiveActive === 8 ? (
+         {active === 4 || active === 5 || active === 8 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: Balanço de Gestão 2025 — CGE-MT
            </span>
-         ) : effectiveActive === 6 || effectiveActive === 7 ? (
+         ) : active === 6 || active === 7 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: SINFRA-MT — Obras Estratégicas
            </span>
