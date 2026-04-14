@@ -386,12 +386,12 @@ export const obrasEstrategicas = {
 };
 
 export const investimentoInfra = [
-  { year: "2020", investimento: 1.8 },
-  { year: "2021", investimento: 2.3 },
-  { year: "2022", investimento: 3.1 },
-  { year: "2023", investimento: 3.8 },
-  { year: "2024", investimento: 4.2 },
-  { year: "2025", investimento: 4.5 },
+  { year: "2020", investimento: 1.8, fill: "#38bdf8" },
+  { year: "2021", investimento: 2.3, fill: "#6ee7b7" },
+  { year: "2022", investimento: 3.1, fill: "#a78bfa" },
+  { year: "2023", investimento: 3.8, fill: "#fb923c" },
+  { year: "2024", investimento: 4.2, fill: "#8df3db" },
+  { year: "2025", investimento: 4.5, fill: "#fbbf24" },
 ];
 
 // ===== PAINEL 5 — CONTROLE & EFICIÊNCIA (CGE) =====

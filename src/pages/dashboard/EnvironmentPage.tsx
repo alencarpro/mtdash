@@ -90,7 +90,11 @@ const EnvironmentPage = () => {
               <XAxis dataKey="year" stroke="hsl(220 10% 46%)" fontSize={12} />
               <YAxis stroke="hsl(220 10% 46%)" fontSize={12} />
               <Tooltip contentStyle={{ backgroundColor: "hsl(220 25% 12%)", border: "1px solid hsl(220 20% 18%)", borderRadius: 8, color: "hsl(220 10% 92%)" }} formatter={(value: number) => [`R$ ${value} bi`, ""]} />
-              <Bar dataKey="investimento" name="Investimento" fill="hsl(174 72% 40%)" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="investimento" name="Investimento" radius={[4, 4, 0, 0]}>
+                {investimentoInfra.map((entry, index) => (
+                  <Cell key={index} fill={entry.fill} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
