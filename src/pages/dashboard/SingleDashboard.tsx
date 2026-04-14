@@ -1276,11 +1276,11 @@ const SingleDashboard = () => {
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-         {active === 4 || active === 5 || active === 7 ? (
+         {active === 4 || active === 5 || active === 8 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: Balanço de Gestão 2025 — CGE-MT
            </span>
-         ) : active === 6 ? (
+         ) : active === 6 || active === 7 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: SINFRA-MT — Obras Estratégicas
            </span>
