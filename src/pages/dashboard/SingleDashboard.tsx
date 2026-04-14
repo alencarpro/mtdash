@@ -984,13 +984,12 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
               <div key={ci} className="flex flex-col gap-1">
                 <div
                   className="rounded-md overflow-hidden relative group/cam"
-                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '4/3' }}
+                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9' }}
                 >
                   <iframe
                     src={cam.link}
                     title={cam.tpObra || cam.nome}
-                    className="w-full h-full"
-                    style={{ border: 'none', background: '#0a111e', transform: 'scale(1)', transformOrigin: 'center center' }}
+                    style={{ border: 'none', background: '#0a111e', position: 'absolute', top: '-10%', left: '-2%', width: '104%', height: '120%' }}
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin"
                     allow="autoplay"
