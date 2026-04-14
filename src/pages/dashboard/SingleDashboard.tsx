@@ -950,22 +950,22 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
   const camCols = camCount <= 2 ? 'grid-cols-2' : 'grid-cols-3';
   return (
     <div
-      className="rounded-lg p-3 sm:p-4 flex flex-col gap-2"
+      className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
       style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
     >
       {/* Header row: title + badge */}
-      <div className="flex items-center gap-2">
-        <HardHat className="w-5 h-5 flex-shrink-0" style={{ color: C.teal }} />
-        <p className="text-[14px] sm:text-[16px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
-        <span className="ml-auto text-[11px] px-2.5 py-1 rounded-md font-semibold" style={{ background: pct >= 100 ? 'rgba(134,239,172,0.2)' : 'rgba(141,243,219,0.12)', color: pct >= 100 ? C.green : 'rgba(226,232,240,0.9)' }}>
+      <div className="flex items-center gap-3">
+        <HardHat className="w-7 h-7 flex-shrink-0" style={{ color: C.teal }} />
+        <p className="text-[18px] sm:text-[22px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
+        <span className="ml-auto text-[14px] sm:text-[16px] px-3 py-1.5 rounded-md font-semibold" style={{ background: pct >= 100 ? 'rgba(134,239,172,0.2)' : 'rgba(141,243,219,0.12)', color: pct >= 100 ? C.green : 'rgba(226,232,240,0.9)' }}>
           {o.contrato.percentualExecutado} executado
         </span>
       </div>
 
-      {/* Info row: ring + details side by side */}
-      <div className="flex items-start gap-4">
-        <ProgressRing value={pct} size={80} label="" />
-        <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-[11px] sm:text-[12px] flex-1" style={{ color: 'rgba(226,232,240,0.72)' }}>
+      {/* Info row: ring + details centered */}
+      <div className="flex items-center justify-center gap-6">
+        <ProgressRing value={pct} size={100} label="" />
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[15px] sm:text-[17px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
           <span>Valor Total:</span><span className="font-bold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
           <span>Contrato:</span><span className="text-right">{o.contrato.contrato}</span>
           <span>Situação:</span><span className="text-right font-semibold" style={{ color: o.contrato.situacao === 'Vigente' ? C.green : C.red }}>{o.contrato.situacao}</span>
@@ -976,8 +976,8 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
       {/* Cameras */}
       {camCount > 0 && (
         <div className="flex flex-col gap-2 mt-1">
-          <p className="text-[12px] font-semibold flex items-center gap-1.5" style={{ color: C.teal }}>
-            <Camera className="w-4 h-4" /> Câmeras ao vivo ({camCount})
+          <p className="text-[14px] sm:text-[16px] font-semibold flex items-center gap-1.5" style={{ color: C.teal }}>
+            <Camera className="w-5 h-5" /> Câmeras ao vivo ({camCount})
           </p>
           <div className={`grid ${camCols} gap-2`}>
             {o.cameras.map((cam, ci) => (
@@ -995,7 +995,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                     allow="autoplay"
                   />
                 </div>
-                <span className="text-[10px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
+                <span className="text-[12px] sm:text-[14px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
                   {cam.tpObra || cam.nome}
                 </span>
               </div>
