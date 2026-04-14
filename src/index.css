@@ -183,6 +183,10 @@
   transform: none !important;
   box-shadow: none !important;
   filter: none !important;
+  border-color: inherit !important;
+}
+.hover-disabled * {
+  transition: none !important;
 }
 .hover-disabled .absolute.left-0.w-16,
 .hover-disabled .absolute.right-0.w-16 {
