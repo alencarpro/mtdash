@@ -1367,6 +1367,7 @@ const SingleDashboard = () => {
         background: panelBodyBgs[effectiveActive] || defaultBg,
         '--card-bg': panelCardBgs[effectiveActive],
         '--card-bg-hover': panelCardBgHovers[effectiveActive],
+        '--card-pointer': sequence && !edgeHoverEnabled ? 'none' : 'auto',
       } as React.CSSProperties}
     >
       {/* Edge hover zones for /tX routes */}
