@@ -1236,17 +1236,17 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#0A1F44", "#0A1F44", "#0A1F44", "#0A1F44", "#004F5E", "#004F5E", "#123A5A", "#123A5A", "#004F5E"];
+  const panelHeaderBgs = ["#00005E", "#00005E", "#00005E", "#00005E", "#004F5E", "#004F5E", "#123A5A", "#123A5A", "#004F5E"];
   const panelBodyBgs = [
-    "#0A1F44", "#0A1F44", "#0A1F44", "#0A1F44",
+    "#00005E", "#00005E", "#00005E", "#00005E",
     "#004F5E", "#004F5E", "#123A5A", "#123A5A", "#004F5E"
   ];
   const panelCardBgs = [
-    'rgba(10,31,68,0.85)', 'rgba(10,31,68,0.85)', 'rgba(10,31,68,0.85)', 'rgba(10,31,68,0.85)',
+    'rgba(10,10,110,0.9)', 'rgba(10,10,110,0.9)', 'rgba(10,10,110,0.9)', 'rgba(10,10,110,0.9)',
     'rgba(0,79,94,0.85)', 'rgba(0,79,94,0.85)', 'rgba(18,58,90,0.85)', 'rgba(18,58,90,0.85)', 'rgba(0,79,94,0.85)'
   ];
   const panelCardBgHovers = [
-    'rgba(10,31,68,0.95)', 'rgba(10,31,68,0.95)', 'rgba(10,31,68,0.95)', 'rgba(10,31,68,0.95)',
+    'rgba(15,15,120,0.95)', 'rgba(15,15,120,0.95)', 'rgba(15,15,120,0.95)', 'rgba(15,15,120,0.95)',
     'rgba(0,79,94,0.95)', 'rgba(0,79,94,0.95)', 'rgba(18,58,90,0.95)', 'rgba(18,58,90,0.95)', 'rgba(0,79,94,0.95)'
   ];
   const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
