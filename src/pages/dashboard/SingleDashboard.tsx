@@ -1188,8 +1188,8 @@ const PanelBeneficios = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelBeneficios];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"];
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios];
+const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
