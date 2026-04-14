@@ -70,14 +70,14 @@ export const sectorPieData = [
 ];
 
 export const populationData = [
-  { city: "Cuiabá", population: 618124, pibMunicipal: 32.4 },
-  { city: "Rondonópolis", population: 236042, pibMunicipal: 14.2 },
-  { city: "Sorriso", population: 92677, pibMunicipal: 12.5 },
-  { city: "Sinop", population: 146005, pibMunicipal: 9.8 },
-  { city: "Lucas", population: 65849, pibMunicipal: 8.9 },
-  { city: "Várzea Grande", population: 287526, pibMunicipal: 8.7 },
-  { city: "Tangará", population: 103750, pibMunicipal: 4.1 },
-  { city: "Cáceres", population: 94861, pibMunicipal: 2.8 },
+  { city: "Cuiabá", population: 618124, pibMunicipal: 32.4, fill: "#38bdf8" },
+  { city: "Rondonópolis", population: 236042, pibMunicipal: 14.2, fill: "#6ee7b7" },
+  { city: "Sorriso", population: 92677, pibMunicipal: 12.5, fill: "#a78bfa" },
+  { city: "Sinop", population: 146005, pibMunicipal: 9.8, fill: "#fb923c" },
+  { city: "Lucas", population: 65849, pibMunicipal: 8.9, fill: "#f472b6" },
+  { city: "Várzea Grande", population: 287526, pibMunicipal: 8.7, fill: "#8df3db" },
+  { city: "Tangará", population: 103750, pibMunicipal: 4.1, fill: "#fbbf24" },
+  { city: "Cáceres", population: 94861, pibMunicipal: 2.8, fill: "#60a5fa" },
 ];
 
 // ===== ECONOMIA =====
