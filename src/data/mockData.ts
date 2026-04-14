@@ -122,11 +122,11 @@ export const mercadoTrabalho = [
 ];
 
 export const producaoAgricola = [
-  { cultura: "Milho", producao: 46.2, area: 7.3 },
-  { cultura: "Soja", producao: 43.8, area: 12.1 },
-  { cultura: "Cana", producao: 18.5, area: 0.28 },
-  { cultura: "Algodão", producao: 5.8, area: 1.5 },
-  { cultura: "Arroz", producao: 0.35, area: 0.05 },
+  { cultura: "Milho", producao: 46.2, area: 7.3, fill: "#8df3db" },
+  { cultura: "Soja", producao: 43.8, area: 12.1, fill: "#6ee7b7" },
+  { cultura: "Cana", producao: 18.5, area: 0.28, fill: "#38bdf8" },
+  { cultura: "Algodão", producao: 5.8, area: 1.5, fill: "#a78bfa" },
+  { cultura: "Arroz", producao: 0.35, area: 0.05, fill: "#fb923c" },
 ];
 
 // ===== SOCIAL =====
