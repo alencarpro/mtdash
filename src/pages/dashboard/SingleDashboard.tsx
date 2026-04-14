@@ -172,7 +172,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
   <div
     className="rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
-      background: 'rgba(10,17,30,0.78)',
+      background: 'var(--card-bg, rgba(10,17,30,0.78))',
       border: '1px solid rgba(148,163,184,0.15)',
       animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
@@ -202,16 +202,16 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
     className="group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 transition-all duration-300 ease-out md:hover:z-10 md:hover:scale-[1.02] cursor-default"
-    style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
+    style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
       e.currentTarget.style.borderColor = 'rgba(96,165,250,0.4)';
-      e.currentTarget.style.background = 'rgba(10,17,30,0.92)';
+      e.currentTarget.style.background = 'var(--card-bg-hover, rgba(10,17,30,0.92))';
     }}
     onMouseLeave={e => {
       e.currentTarget.style.boxShadow = '';
       e.currentTarget.style.borderColor = 'rgba(148,163,184,0.15)';
-      e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
+      e.currentTarget.style.background = 'var(--card-bg, rgba(10,17,30,0.78))';
     }}
   >
     <p className="text-[12px] sm:text-[14px] md:text-[16px] uppercase tracking-wider font-semibold mb-1 break-words leading-snug transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
@@ -1235,10 +1235,18 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#161D49", "#161D49", "#161D49", "#161D49", "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5"];
+  const panelHeaderBgs = ["#070738", "#070738", "#070738", "#070738", "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5"];
   const panelBodyBgs = [
-    "#161D49", "#161D49", "#161D49", "#161D49", // Painéis 1-4
+    "#070738", "#070738", "#070738", "#070738", // Painéis 1-4
     "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5" // Painéis 5-9
+  ];
+  const panelCardBgs = [
+    'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)',
+    'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)'
+  ];
+  const panelCardBgHovers = [
+    'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)',
+    'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)'
   ];
   const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
 
@@ -1349,7 +1357,9 @@ const SingleDashboard = () => {
       className="h-dvh w-full flex flex-col overflow-hidden relative"
       style={{
         background: panelBodyBgs[effectiveActive] || defaultBg,
-      }}
+        '--card-bg': panelCardBgs[effectiveActive],
+        '--card-bg-hover': panelCardBgHovers[effectiveActive],
+      } as React.CSSProperties}
     >
       {/* Edge hover zones for /tX routes */}
       {sequence && edgeHoverVisible && (
