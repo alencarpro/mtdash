@@ -1017,14 +1017,14 @@ const obrasGroup2 = obrasEstrategicasList.filter(o => o.obraId >= 3);
    PANEL 7 — OBRAS: BRT Cuiabá + Cplx. Leblon
    ═══════════════════════════════════════════════════════════ */
 const PanelObras = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
       <KPI title="BRT Cuiabá" value="27,26%" sub="R$ 485,7 Mi total" color={C.teal} delay={0} icon={HardHat} />
       <KPI title="Cplx. Leblon" value="50,94%" sub="R$ 105,0 Mi total" color={C.blue} delay={120} icon={HardHat} />
       <KPI title="Câmeras" value={`${obrasGroup1.reduce((s, o) => s + o.cameras.length, 0)}`} sub="monitoramento ao vivo" color={C.purple} delay={240} icon={Camera} />
       <KPI title="Investimento" value="R$ 590,7 Mi" sub="obras neste painel" color={C.green} delay={360} icon={CircleDollarSign} />
     </div>
-    <div className="grid grid-cols-1 gap-3 flex-shrink-0">
+    <div className="grid grid-cols-1 gap-2 flex-1 min-h-0">
       {obrasGroup1.map(o => <ObraCard key={o.obraId} o={o} />)}
     </div>
   </div>
@@ -1034,14 +1034,14 @@ const PanelObras = () => (
    PANEL 8 — OBRAS: Hosp. J. Muller + Ponte Juruena
    ═══════════════════════════════════════════════════════════ */
 const PanelObrasCameras = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
+  <div className="flex flex-col gap-2 h-full overflow-hidden">
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
       <KPI title="Hosp. J. Muller" value="100,00%" sub="R$ 247,1 Mi total" color={C.green} delay={0} icon={HardHat} />
       <KPI title="Ponte Juruena" value="59,43%" sub="R$ 309,1 Mi total" color={C.blue} delay={120} icon={HardHat} />
       <KPI title="Câmeras" value={`${obrasGroup2.reduce((s, o) => s + o.cameras.length, 0)}`} sub="monitoramento ao vivo" color={C.purple} delay={240} icon={Camera} />
       <KPI title="Investimento" value="R$ 556,2 Mi" sub="obras neste painel" color={C.teal} delay={360} icon={CircleDollarSign} />
     </div>
-    <div className="grid grid-cols-1 gap-3 flex-shrink-0">
+    <div className="grid grid-cols-1 gap-2 flex-1 min-h-0">
       {obrasGroup2.map(o => <ObraCard key={o.obraId} o={o} />)}
     </div>
   </div>
