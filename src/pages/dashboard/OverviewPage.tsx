@@ -73,7 +73,11 @@ const OverviewPage = () => {
             <XAxis dataKey="city" stroke="hsl(220 10% 46%)" fontSize={11} />
             <YAxis stroke="hsl(220 10% 46%)" fontSize={11} />
             <Tooltip contentStyle={{ backgroundColor: "hsl(220 25% 12%)", border: "1px solid hsl(220 20% 18%)", borderRadius: 8, color: "hsl(220 10% 92%)" }} formatter={(value: number) => [`R$ ${value} bi`, "PIB Municipal"]} />
-            <Bar dataKey="pibMunicipal" fill="hsl(199 89% 48%)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="pibMunicipal" radius={[4, 4, 0, 0]}>
+              {populationData.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </ChartCard>
