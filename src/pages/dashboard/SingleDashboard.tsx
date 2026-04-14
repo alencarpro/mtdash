@@ -48,13 +48,13 @@ const tabs = [
 /* ─── Custom pie label ─── */
 const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, value, percent }: any) => {
   const RADIAN = Math.PI / 180;
-  const radius = outerRadius + 10;
+  const radius = outerRadius + 8;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
   if ((percent || value / 100) < 0.05) return null;
-  const displayName = name.length > 12 ? name.substring(0, 12) + '…' : name;
+  const displayName = name.length > 14 ? name.substring(0, 14) + '…' : name;
   return (
-     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={11} fontWeight={600}>
+     <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={10} fontWeight={600}>
        {displayName} {typeof percent === 'number' ? `${(percent * 100).toFixed(0)}%` : `${value}%`}
      </text>
   );
