@@ -912,21 +912,143 @@ const PanelIntegridade = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6"];
+/* ═══════════════════════════════════════════════════════════
+   PANEL 7 — OBRAS ESTRATÉGICAS
+   ═══════════════════════════════════════════════════════════ */
+const ProgressRing = ({ value, size = 90, label }: { value: number; size?: number; label: string }) => {
+  const r = (size - 10) / 2;
+  const circ = 2 * Math.PI * r;
+  const offset = circ - (value / 100) * circ;
+  return (
+    <div className="flex flex-col items-center gap-1">
+      <svg width={size} height={size} className="drop-shadow-lg">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(141,243,219,0.12)" strokeWidth={7} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={value >= 100 ? C.green : C.teal} strokeWidth={7}
+          strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          style={{ transition: 'stroke-dashoffset 1.5s ease-out' }} />
+        <text x="50%" y="50%" textAnchor="middle" dominantBaseline="central" fill="#f8fafc" fontSize={size > 80 ? 16 : 13} fontWeight={700}>
+          {value.toFixed(1)}%
+        </text>
+      </svg>
+      <span className="text-[10px] sm:text-[11px] text-center leading-tight max-w-[100px]" style={{ color: 'rgba(226,232,240,0.72)' }}>{label}</span>
+    </div>
+  );
+};
+
+const PanelObras = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    {/* KPIs */}
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Obras" value={`${obrasSummary.totalObras}`} sub="obras estratégicas" color={C.teal} delay={0} icon={HardHat} />
+      <KPI title="Investimento" value={obrasSummary.investimentoTotal} sub="valor total contratos" color={C.blue} delay={120} icon={CircleDollarSign} />
+      <KPI title="Câmeras" value={`${obrasSummary.totalCameras}`} sub="monitoramento ao vivo" color={C.purple} delay={240} icon={Camera} />
+      <KPI title="Concluída" value={`${obrasSummary.obraConcluida}`} sub="obra finalizada" color={C.green} delay={360} icon={CheckCircle2} />
+    </div>
+
+    {/* Progress rings por obra */}
+    <div
+      className="flex-shrink-0 rounded-lg p-3 sm:p-4"
+      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+    >
+      <p className="text-[12px] sm:text-[14px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'rgba(226,232,240,0.72)' }}>
+        Percentual Executado por Obra
+      </p>
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
+        {obrasEstrategicasList.map((o) => {
+          const pct = parseFloat(o.contrato.percentualExecutado.replace("%", "").replace(",", "."));
+          const shortName =
+            o.obraId === 1 ? "BRT Cuiabá/VG" :
+            o.obraId === 2 ? "Cplx. Leblon" :
+            o.obraId === 3 ? "Hosp. J. Muller" :
+            "Ponte Juruena";
+          return <ProgressRing key={o.obraId} value={pct} label={shortName} />;
+        })}
+      </div>
+    </div>
+
+    {/* Valores por obra (bar chart) */}
+    <div className="flex-shrink-0" style={{ height: 280 }}>
+      <Chart title="Valores por Obra (R$ milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={obrasValorChart} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="nome" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Legend content={renderLegend} />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="total" name="Valor Total" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500}>
+              <LabelList dataKey="total" position="top" fontSize={9} fill={C.label} />
+            </Bar>
+            <Bar dataKey="executado" name="Executado" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200}>
+              <LabelList dataKey="executado" position="top" fontSize={9} fill={C.label} />
+            </Bar>
+            <Bar dataKey="pago" name="Pago" fill={C.yellow} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400}>
+              <LabelList dataKey="pago" position="top" fontSize={9} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+
+    {/* Execução % (bar horizontal) */}
+    <div className="flex-shrink-0" style={{ height: 240 }}>
+      <Chart title="Execução Física (%)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={obrasExecucaoChart} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" domain={[0, 100]} hide />
+            <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={95} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="%" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="executado" name="Executado" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800}>
+              <LabelList dataKey="executado" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `${v}%`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+
+    {/* Cards de detalhes por obra */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-shrink-0">
+      {obrasEstrategicasList.map((o) => (
+        <div
+          key={o.obraId}
+          className="rounded-lg p-3 sm:p-4 flex flex-col gap-1.5"
+          style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+        >
+          <p className="text-[12px] sm:text-[13px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{o.contrato.obra}</p>
+          <div className="flex flex-wrap gap-2 text-[10px] sm:text-[11px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+            <span className="px-2 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.12)' }}>{o.contrato.contrato}</span>
+            <span className="px-2 py-0.5 rounded" style={{ background: o.contrato.situacao === 'Vigente' ? 'rgba(45,212,191,0.2)' : 'rgba(248,113,113,0.2)' }}>{o.contrato.situacao}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px] sm:text-[11px] mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>
+            <span>Valor Total:</span><span className="font-semibold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
+            <span>Executado:</span><span className="font-semibold text-right" style={{ color: C.teal }}>{o.contrato.percentualExecutado}</span>
+            <span>Pago:</span><span className="font-semibold text-right" style={{ color: C.yellow }}>{o.contrato.percentualPago}</span>
+            <span>Início:</span><span className="text-right">{o.contrato.dataInicio}</span>
+            <span>Término:</span><span className="text-right">{o.contrato.dataFim}</span>
+            <span>Câmeras:</span><span className="text-right">{o.cameras.length}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras];
+const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
   const navigate = useNavigate();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, 5)) : 0;
+  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade"];
-  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  // Nível 1 = azul claro, Nível 3 = azul intenso (fundo do header)
-  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras Estratégicas"];
+  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#102041"];
 
   const ROTATE_INTERVAL = 30; // seconds per panel
   const [now, setNow] = useState(new Date());
