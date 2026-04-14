@@ -919,17 +919,38 @@ const PanelIntegridade = () => (
 const ProgressRing = ({ value, size = 90, label }: { value: number; size?: number; label: string }) => {
   const r = (size - 10) / 2;
   const circ = 2 * Math.PI * r;
-  const offset = circ - (value / 100) * circ;
+  const [animatedValue, setAnimatedValue] = useState(0);
+
+  useEffect(() => {
+    // Start from 0 and animate to target value
+    setAnimatedValue(0);
+    const startTime = performance.now();
+    const duration = 1800; // ms
+
+    const animate = (currentTime: number) => {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease-out cubic for smooth deceleration
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setAnimatedValue(eased * value);
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+
+    const raf = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(raf);
+  }, [value]);
+
+  const offset = circ - (animatedValue / 100) * circ;
+
   return (
     <div className="flex flex-col items-center gap-1">
       <svg width={size} height={size} className="drop-shadow-lg">
         <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(141,243,219,0.12)" strokeWidth={7} />
-        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={value >= 100 ? C.green : C.teal} strokeWidth={7}
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={animatedValue >= 100 ? C.green : C.teal} strokeWidth={7}
           strokeDasharray={circ} strokeDashoffset={offset} strokeLinecap="round"
-          transform={`rotate(-90 ${size / 2} ${size / 2})`}
-          style={{ transition: 'stroke-dashoffset 1.5s ease-out' }} />
+          transform={`rotate(-90 ${size / 2} ${size / 2})`} />
         <text x="50%" y="50%" textAnchor="middle" dominantBaseline="central" fill="#f8fafc" fontSize={size > 80 ? 16 : 13} fontWeight={700}>
-          {value.toFixed(1)}%
+          {animatedValue.toFixed(1)}%
         </text>
       </svg>
       <span className="text-[10px] sm:text-[11px] text-center leading-tight max-w-[100px]" style={{ color: 'rgba(226,232,240,0.72)' }}>{label}</span>
