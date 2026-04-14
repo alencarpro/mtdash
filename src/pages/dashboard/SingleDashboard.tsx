@@ -174,6 +174,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
     style={{
       background: 'var(--card-bg, rgba(10,17,30,0.78))',
       border: '1px solid rgba(148,163,184,0.15)',
+      pointerEvents: 'var(--card-pointer, auto)' as any,
       animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
     onMouseEnter={e => {
@@ -202,7 +203,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
     className="group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 transition-all duration-300 ease-out md:hover:z-10 md:hover:scale-[1.02] cursor-default"
-    style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
+    style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)', pointerEvents: 'var(--card-pointer, auto)' as any, animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
       e.currentTarget.style.borderColor = 'rgba(96,165,250,0.4)';
@@ -1313,12 +1314,20 @@ const SingleDashboard = () => {
 
   const handleEdgeHover = (direction: 'prev' | 'next') => {
     if (!sequence || !edgeHoverEnabled) return;
-    const currentIdx = sequence.indexOf(active);
-    if (currentIdx === -1) return;
+    const currentIdx = sequence.indexOf(effectiveActive);
+    if (currentIdx === -1) {
+      // effectiveActive may be manual; find its position
+      const seqIdx = sequence.indexOf(manualPanel ?? active);
+      const fallbackIdx = seqIdx === -1 ? 0 : seqIdx;
+      const newIdx = direction === 'next'
+        ? (fallbackIdx + 1) % sequence.length
+        : (fallbackIdx - 1 + sequence.length) % sequence.length;
+      setManualPanel(sequence[newIdx]);
+      return;
+    }
     const newIdx = direction === 'next'
       ? (currentIdx + 1) % sequence.length
       : (currentIdx - 1 + sequence.length) % sequence.length;
-    // Force rotation tick to re-render is not enough; we override active via manual state
     setManualPanel(sequence[newIdx]);
   };
 
@@ -1359,6 +1368,7 @@ const SingleDashboard = () => {
         background: panelBodyBgs[effectiveActive] || defaultBg,
         '--card-bg': panelCardBgs[effectiveActive],
         '--card-bg-hover': panelCardBgHovers[effectiveActive],
+        '--card-pointer': sequence && !edgeHoverEnabled ? 'none' : 'auto',
       } as React.CSSProperties}
     >
       {/* Edge hover zones for /tX routes */}
