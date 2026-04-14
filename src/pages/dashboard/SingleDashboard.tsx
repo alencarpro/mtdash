@@ -744,7 +744,10 @@ const PanelControle = () => (
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="area" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={120} />
             <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="valor" fill={C.teal} radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+            <Bar dataKey="valor" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+              {beneficiosFinanceiros.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="valor" position="right" fontSize={14} fill={C.label} formatter={(v: number) => `R$ ${v}`} />
             </Bar>
           </BarChart>

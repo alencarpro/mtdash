@@ -397,9 +397,9 @@ export const investimentoInfra = [
 // ===== PAINEL 5 — CONTROLE & EFICIÊNCIA (CGE) =====
 
 export const beneficiosFinanceiros = [
-  { area: "Executiva e Ações Estratégicas", qtd: 5, valor: 814.26, percentual: 87 },
-  { area: "Auditoria e Controle", qtd: 45, valor: 117.68, percentual: 12.5 },
-  { area: "Corregedoria (PARs)", qtd: 16, valor: 8.8, percentual: 0.9 },
+  { area: "Executiva e Ações Estratégicas", qtd: 5, valor: 814.26, percentual: 87, fill: "#8df3db" },
+  { area: "Auditoria e Controle", qtd: 45, valor: 117.68, percentual: 12.5, fill: "#38bdf8" },
+  { area: "Corregedoria (PARs)", qtd: 16, valor: 8.8, percentual: 0.9, fill: "#a78bfa" },
 ];
 
 export const aderenciaRecomendacoes = [
