@@ -1299,17 +1299,81 @@ const SingleDashboard = () => {
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
 
+  // Edge hover navigation for /tX routes
+  const [edgeHoverEnabled, setEdgeHoverEnabled] = useState(false);
+  const [edgeHoverVisible, setEdgeHoverVisible] = useState(false);
+
+  const handleEdgeHover = (direction: 'prev' | 'next') => {
+    if (!sequence || !edgeHoverEnabled) return;
+    const currentIdx = sequence.indexOf(active);
+    if (currentIdx === -1) return;
+    const newIdx = direction === 'next'
+      ? (currentIdx + 1) % sequence.length
+      : (currentIdx - 1 + sequence.length) % sequence.length;
+    // Force rotation tick to re-render is not enough; we override active via manual state
+    setManualPanel(sequence[newIdx]);
+  };
+
+  const [manualPanel, setManualPanel] = useState<number | null>(null);
+
+  // Reset manual override when rotation tick changes (clock boundary)
+  useEffect(() => {
+    setManualPanel(null);
+  }, [rotationTick]);
+
+  // Enable edge hover on mouse move, disable after 5s
+  useEffect(() => {
+    if (!sequence) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const onMove = () => {
+      setEdgeHoverEnabled(true);
+      setEdgeHoverVisible(true);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        setEdgeHoverEnabled(false);
+        setEdgeHoverVisible(false);
+      }, 5000);
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      clearTimeout(timer);
+    };
+  }, [sequence]);
+
+  const effectiveActive = manualPanel !== null && sequence ? manualPanel : active;
+  const EffectivePanel = panels[effectiveActive];
+
   return (
     <div
-      className="h-dvh w-full flex flex-col overflow-hidden"
+      className="h-dvh w-full flex flex-col overflow-hidden relative"
       style={{
-        background: panelBodyBgs[active] || defaultBg,
+        background: panelBodyBgs[effectiveActive] || defaultBg,
       }}
     >
+      {/* Edge hover zones for /tX routes */}
+      {sequence && edgeHoverVisible && (
+        <>
+          <div
+            className="absolute left-0 top-0 bottom-0 w-16 z-50 flex items-center justify-center cursor-pointer transition-opacity duration-300"
+            style={{ background: 'linear-gradient(90deg, rgba(255,255,255,0.08), transparent)', opacity: edgeHoverEnabled ? 1 : 0 }}
+            onClick={() => handleEdgeHover('prev')}
+          >
+            <span className="text-white/60 text-3xl">‹</span>
+          </div>
+          <div
+            className="absolute right-0 top-0 bottom-0 w-16 z-50 flex items-center justify-center cursor-pointer transition-opacity duration-300"
+            style={{ background: 'linear-gradient(-90deg, rgba(255,255,255,0.08), transparent)', opacity: edgeHoverEnabled ? 1 : 0 }}
+            onClick={() => handleEdgeHover('next')}
+          >
+            <span className="text-white/60 text-3xl">›</span>
+          </div>
+        </>
+      )}
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
+      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[effectiveActive] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
-        <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>{panelTitles[active]}</span>
+        <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[effectiveActive] }}>{panelTitles[effectiveActive]}</span>
       </header>
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
@@ -1324,18 +1388,18 @@ const SingleDashboard = () => {
       </div>
       {/* Panel */}
       <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden animate-fade-in">
-        <ActivePanel />
+        <EffectivePanel />
       </div>
       {/* Footer with source + clock */}
        <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-         {active === 4 || active === 5 || active === 8 ? (
+         {effectiveActive === 4 || effectiveActive === 5 || effectiveActive === 8 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: Balanço de Gestão 2025 — CGE-MT
            </span>
-         ) : active === 6 || active === 7 ? (
+         ) : effectiveActive === 6 || effectiveActive === 7 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: SINFRA-MT — Obras Estratégicas
            </span>
