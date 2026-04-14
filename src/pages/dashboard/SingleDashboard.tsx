@@ -983,13 +983,13 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
             {o.cameras.map((cam, ci) => (
               <div key={ci} className="flex flex-col gap-1">
                 <div
-                  className="rounded-md overflow-hidden relative group/cam flex items-center justify-center"
-                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
+                  className="rounded-md overflow-hidden relative group/cam w-full"
+                  style={{ border: '1px solid rgba(141,243,219,0.2)', paddingBottom: '56.25%', background: '#0a111e' }}
                 >
                   <iframe
                     src={cam.link}
                     title={cam.tpObra || cam.nome}
-                    style={{ border: 'none', background: '#0a111e', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%', height: '100%' }}
+                    style={{ border: 'none', background: '#0a111e', position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin"
                     allow="autoplay"
