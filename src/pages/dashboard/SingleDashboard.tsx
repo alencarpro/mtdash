@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2 } from "lucide-react";
+import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass, Trophy } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
+import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto } from "@/data/beneficiosControleData";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
@@ -1035,8 +1036,115 @@ const PanelObras = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7"];
+/* ═══════════════════════════════════════════════════════════
+   PANEL 8 — BENEFÍCIOS DE CONTROLE
+   ═══════════════════════════════════════════════════════════ */
+const formatBRL = (v: number) => {
+  if (v >= 1e6) return `R$ ${(v / 1e6).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} Mi`;
+  if (v >= 1e3) return `R$ ${(v / 1e3).toLocaleString("pt-BR", { minimumFractionDigits: 0, maximumFractionDigits: 0 })} Mil`;
+  return `R$ ${v.toLocaleString("pt-BR")}`;
+};
+
+const PanelBeneficios = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    {/* KPIs */}
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Impacto Financeiro" value="R$ 940,7 Mi" sub="benefícios 2025" color={C.teal} delay={0} icon={DollarSign} />
+      <KPI title="Ações" value={`${beneficiosSummary.totalAcoes}`} sub={`${beneficiosSummary.acoesComValor} com valor`} color={C.blue} delay={120} icon={ClipboardList} />
+      <KPI title="Adjuntas" value={`${beneficiosSummary.totalAdjuntas}`} sub={`${beneficiosSummary.unidadesAtivas} unidades`} color={C.purple} delay={240} icon={Layers} />
+      <KPI title="Dimensões" value={`${beneficiosSummary.totalDimensoes}`} sub={`${beneficiosSummary.totalClasses} classes`} color={C.yellow} delay={360} icon={Compass} />
+    </div>
+
+    {/* Podium - Ranking por Adjunta */}
+    <div
+      className="flex-shrink-0 rounded-lg p-3 sm:p-4"
+      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+    >
+      <p className="text-[12px] sm:text-[14px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'rgba(226,232,240,0.72)' }}>
+        Ranking por Impacto Financeiro — Adjuntas
+      </p>
+      <div className="flex items-end justify-center gap-3 sm:gap-6">
+        {[1, 0, 2, 3].map((rankIdx) => {
+          const item = adjuntasRanking[rankIdx];
+          if (!item) return null;
+          const rank = rankIdx + 1;
+          const heights = [140, 110, 85, 65];
+          const colors = [C.yellow, C.teal, C.blue, C.purple];
+          const icons = [Trophy, ShieldCheck, Search, MessageSquare];
+          const Icon = icons[rankIdx];
+          return (
+            <div key={item.nome} className="flex flex-col items-center gap-1">
+              <Icon size={28} color={colors[rankIdx]} strokeWidth={1.5} />
+              <span className="text-[13px] sm:text-[15px] font-bold" style={{ color: '#f8fafc' }}>{formatBRL(item.valorTotal)}</span>
+              <span className="text-[10px] sm:text-[11px] text-center max-w-[80px]" style={{ color: 'rgba(226,232,240,0.72)' }}>{item.nome}</span>
+              <div
+                className="w-16 sm:w-20 rounded-t-md flex items-center justify-center"
+                style={{
+                  height: heights[rankIdx],
+                  background: `linear-gradient(180deg, ${colors[rankIdx]}33 0%, ${colors[rankIdx]}11 100%)`,
+                  border: `1px solid ${colors[rankIdx]}44`,
+                }}
+              >
+                <span className="text-[20px] sm:text-[24px] font-black" style={{ color: colors[rankIdx] }}>{rank}º</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* Distribuição por Macrofunção */}
+    <div className="flex-shrink-0" style={{ height: 280 }}>
+      <Chart title="Distribuição de Ações por Macrofunção">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={macrofuncaoStats} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="nome" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="qtdAcoes" name="Ações" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500}>
+              <LabelList dataKey="qtdAcoes" position="top" fontSize={12} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+
+    {/* Top Classes de Benefício */}
+    <div className="flex-shrink-0" style={{ height: 260 }}>
+      <Chart title="Top Classes de Benefício">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={topClassesBeneficio} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={120} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="qtdAcoes" name="Ações" fill={C.blue} radius={[0, 3, 3, 0]} animationDuration={1800}>
+              <LabelList dataKey="qtdAcoes" position="right" fontSize={12} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+
+    {/* Dimensão de Impacto (pie) */}
+    <div className="flex-shrink-0" style={{ height: 260 }}>
+      <Chart title="Dimensão de Impacto">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={dimensaoImpacto} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={2} dataKey="qtd" nameKey="nome" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+              {dimensaoImpacto.map((_, i) => <Cell key={i} fill={COLORS[i]} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+  </div>
+);
+
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelBeneficios];
+const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
@@ -1046,9 +1154,9 @@ const SingleDashboard = () => {
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras Estratégicas"];
-  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#102041"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras Estratégicas", "Benefícios de Controle"];
+  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#102041", "#102041"];
 
   const ROTATE_INTERVAL = 30; // seconds per panel
   const [now, setNow] = useState(new Date());
@@ -1123,7 +1231,7 @@ const SingleDashboard = () => {
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-         {active === 4 || active === 5 ? (
+         {active === 4 || active === 5 || active === 7 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: Balanço de Gestão 2025 — CGE-MT
            </span>
