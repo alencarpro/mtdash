@@ -172,7 +172,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
   <div
     className="rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
     style={{
-      background: 'rgba(10,17,30,0.78)',
+      background: 'var(--card-bg, rgba(10,17,30,0.78))',
       border: '1px solid rgba(148,163,184,0.15)',
       animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
