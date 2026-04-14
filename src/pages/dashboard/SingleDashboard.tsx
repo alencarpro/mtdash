@@ -1008,52 +1008,96 @@ const PanelObras = () => (
         </ResponsiveContainer>
       </Chart>
     </div>
+  </div>
+);
 
-    {/* Cards de detalhes por obra */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 flex-shrink-0">
-      {obrasEstrategicasList.map((o) => (
-        <div
-          key={o.obraId}
-          className="rounded-lg p-3 sm:p-4 flex flex-col gap-1.5"
-          style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
-        >
-          <p className="text-[12px] sm:text-[13px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{o.contrato.obra}</p>
-          <div className="flex flex-wrap gap-2 text-[10px] sm:text-[11px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
-            <span className="px-2 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.12)' }}>{o.contrato.contrato}</span>
-            <span className="px-2 py-0.5 rounded" style={{ background: o.contrato.situacao === 'Vigente' ? 'rgba(45,212,191,0.2)' : 'rgba(248,113,113,0.2)' }}>{o.contrato.situacao}</span>
-          </div>
-          <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px] sm:text-[11px] mt-1" style={{ color: 'rgba(226,232,240,0.72)' }}>
-            <span>Valor Total:</span><span className="font-semibold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
-            <span>Executado:</span><span className="font-semibold text-right" style={{ color: C.teal }}>{o.contrato.percentualExecutado}</span>
-            <span>Pago:</span><span className="font-semibold text-right" style={{ color: C.yellow }}>{o.contrato.percentualPago}</span>
-            <span>Início:</span><span className="text-right">{o.contrato.dataInicio}</span>
-            <span>Término:</span><span className="text-right">{o.contrato.dataFim}</span>
-            <span>Câmeras:</span><span className="text-right">{o.cameras.length}</span>
-          </div>
-          {o.cameras.length > 0 && (
-            <div className="mt-1.5 flex flex-col gap-1">
-              <p className="text-[10px] font-semibold flex items-center gap-1" style={{ color: C.teal }}>
-                <Camera className="w-3 h-3" /> Câmeras ao vivo
-              </p>
-              <div className="flex flex-wrap gap-1">
-                {o.cameras.map((cam, ci) => (
-                  <a
-                    key={ci}
-                    href={cam.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded hover:opacity-80 transition-opacity truncate max-w-[180px]"
-                    style={{ background: 'rgba(141,243,219,0.10)', color: 'rgba(141,243,219,0.9)', border: '1px solid rgba(141,243,219,0.2)' }}
-                    title={cam.nome}
-                  >
-                    {cam.tpObra || cam.nome}
-                  </a>
-                ))}
-              </div>
+/* ═══════════════════════════════════════════════════════════
+   PANEL 8 — OBRAS ESTRATÉGICAS — CÂMERAS AO VIVO
+   ═══════════════════════════════════════════════════════════ */
+const PanelObrasCameras = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    {/* KPIs */}
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Obras" value={`${obrasSummary.totalObras}`} sub="obras estratégicas" color={C.teal} delay={0} icon={HardHat} />
+      <KPI title="Câmeras" value={`${obrasSummary.totalCameras}`} sub="monitoramento ao vivo" color={C.purple} delay={120} icon={Camera} />
+      <KPI title="Investimento" value={obrasSummary.investimentoTotal} sub="valor total contratos" color={C.blue} delay={240} icon={CircleDollarSign} />
+      <KPI title="Concluída" value={`${obrasSummary.obraConcluida}`} sub="obra finalizada" color={C.green} delay={360} icon={CheckCircle2} />
+    </div>
+
+    {/* Cards por obra com câmeras em iframe */}
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-shrink-0">
+      {obrasEstrategicasList.map((o) => {
+        const shortName =
+          o.obraId === 1 ? "BRT Cuiabá/VG" :
+          o.obraId === 2 ? "Cplx. Viário Leblon" :
+          o.obraId === 3 ? "Hosp. Júlio Muller" :
+          "Ponte Rio Juruena";
+        return (
+          <div
+            key={o.obraId}
+            className="rounded-lg p-3 sm:p-4 flex flex-col gap-2"
+            style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+          >
+            <div className="flex items-center gap-2">
+              <HardHat className="w-4 h-4 flex-shrink-0" style={{ color: C.teal }} />
+              <p className="text-[13px] sm:text-[14px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
+              <span className="ml-auto text-[10px] px-2 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.12)', color: 'rgba(226,232,240,0.72)' }}>
+                {o.contrato.percentualExecutado} executado
+              </span>
             </div>
-          )}
-        </div>
-      ))}
+            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px] sm:text-[11px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+              <span>Valor Total:</span><span className="font-semibold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
+              <span>Contrato:</span><span className="text-right">{o.contrato.contrato}</span>
+            </div>
+            {o.cameras.length > 0 && (
+              <div className="mt-1 flex flex-col gap-1.5">
+                <p className="text-[10px] font-semibold flex items-center gap-1" style={{ color: C.teal }}>
+                  <Camera className="w-3 h-3" /> Câmeras ao vivo ({o.cameras.length})
+                </p>
+                <div className="grid grid-cols-2 gap-2">
+                  {o.cameras.slice(0, 4).map((cam, ci) => (
+                    <div key={ci} className="flex flex-col gap-1">
+                      <div
+                        className="rounded overflow-hidden"
+                        style={{ border: '1px solid rgba(141,243,219,0.15)', aspectRatio: '16/9' }}
+                      >
+                        <iframe
+                          src={cam.link}
+                          title={cam.tpObra || cam.nome}
+                          className="w-full h-full"
+                          style={{ border: 'none', background: '#000' }}
+                          loading="lazy"
+                          sandbox="allow-scripts allow-same-origin"
+                        />
+                      </div>
+                      <span className="text-[9px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
+                        {cam.tpObra || cam.nome}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                {o.cameras.length > 4 && (
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {o.cameras.slice(4).map((cam, ci) => (
+                      <a
+                        key={ci}
+                        href={cam.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded hover:opacity-80 transition-opacity truncate max-w-[180px]"
+                        style={{ background: 'rgba(141,243,219,0.10)', color: 'rgba(141,243,219,0.9)', border: '1px solid rgba(141,243,219,0.2)' }}
+                        title={cam.nome}
+                      >
+                        {cam.tpObra || cam.nome}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        );
+      })}
     </div>
   </div>
 );
@@ -1144,8 +1188,8 @@ const PanelBeneficios = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelBeneficios];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8"];
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios];
+const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"];
 
 /* ─── Main ─── */
 const SingleDashboard = () => {
@@ -1155,9 +1199,9 @@ const SingleDashboard = () => {
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras Estratégicas", "Benefícios de Controle"];
-  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#102041", "#102041"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras Estratégicas", "Obras — Câmeras ao Vivo", "Benefícios de Controle"];
+  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#102041", "#102041", "#102041"];
 
   const ROTATE_INTERVAL = 30; // seconds per panel
   const [now, setNow] = useState(new Date());
@@ -1232,11 +1276,11 @@ const SingleDashboard = () => {
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-         {active === 4 || active === 5 || active === 7 ? (
+         {active === 4 || active === 5 || active === 8 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: Balanço de Gestão 2025 — CGE-MT
            </span>
-         ) : active === 6 ? (
+         ) : active === 6 || active === 7 ? (
            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
              Fonte: SINFRA-MT — Obras Estratégicas
            </span>
