@@ -12,10 +12,10 @@ export const beneficiosSummary = {
 };
 
 export const adjuntasRanking = [
-  { nome: "Executiva", qtdAcoes: 5, valorTotal: 814260000 },
-  { nome: "Auditoria", qtdAcoes: 45, valorTotal: 117680000 },
-  { nome: "Corregedoria", qtdAcoes: 16, valorTotal: 8800000 },
-  { nome: "Ouvidoria", qtdAcoes: 5, valorTotal: 0 },
+  { nome: "Executiva", qtdAcoes: 5, valorTotal: 814260000, fill: "#8df3db" },
+  { nome: "Auditoria", qtdAcoes: 45, valorTotal: 117680000, fill: "#38bdf8" },
+  { nome: "Corregedoria", qtdAcoes: 16, valorTotal: 8800000, fill: "#a78bfa" },
+  { nome: "Ouvidoria", qtdAcoes: 5, valorTotal: 0, fill: "#fbbf24" },
 ];
 
 export const macrofuncaoStats = [
