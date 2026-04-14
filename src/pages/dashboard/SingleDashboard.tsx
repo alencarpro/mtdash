@@ -174,6 +174,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
     style={{
       background: 'var(--card-bg, rgba(10,17,30,0.78))',
       border: '1px solid rgba(148,163,184,0.15)',
+      pointerEvents: 'var(--card-pointer, auto)' as any,
       animation: `cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms forwards, subtleFloat 7s ease-in-out ${delay + 900}ms infinite, glowBorder 6s ease-in-out ${delay}ms infinite`,
     }}
     onMouseEnter={e => {
