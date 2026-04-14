@@ -882,7 +882,10 @@ const PanelIntegridade = () => (
             <XAxis dataKey="orgao" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip unit="acordos" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="acordos" fill={C.blue} radius={[4, 4, 0, 0]} animationDuration={1500}>
+            <Bar dataKey="acordos" radius={[4, 4, 0, 0]} animationDuration={1500}>
+              {tcacs.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="acordos" position="top" fontSize={16} fill={C.label} />
             </Bar>
           </BarChart>

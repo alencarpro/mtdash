@@ -484,10 +484,10 @@ export const capacitacoesCGE = [
 ];
 
 export const tcacs = [
-  { orgao: "SESP", acordos: 78 },
-  { orgao: "SEDUC", acordos: 56 },
-  { orgao: "SEPLAG", acordos: 52 },
-  { orgao: "Outros", acordos: 38 },
+  { orgao: "SESP", acordos: 78, fill: "#38bdf8" },
+  { orgao: "SEDUC", acordos: 56, fill: "#6ee7b7" },
+  { orgao: "SEPLAG", acordos: 52, fill: "#a78bfa" },
+  { orgao: "Outros", acordos: 38, fill: "#fbbf24" },
 ];
 
 export const planejamentoEstrategico = [
