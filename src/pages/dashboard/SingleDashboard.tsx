@@ -1240,6 +1240,14 @@ const SingleDashboard = () => {
     "#070738", "#070738", "#070738", "#070738", // Painéis 1-4
     "#3C71A5", "#3C71A5", "#184681", "#184681", "#3C71A5" // Painéis 5-9
   ];
+  const panelCardBgs = [
+    'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)',
+    'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)', 'rgba(10,17,30,0.78)'
+  ];
+  const panelCardBgHovers = [
+    'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)',
+    'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)', 'rgba(10,17,30,0.92)'
+  ];
   const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
 
   const ROTATE_INTERVAL = 30;
