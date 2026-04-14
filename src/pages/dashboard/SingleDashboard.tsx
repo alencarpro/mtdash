@@ -1157,7 +1157,10 @@ const PanelBeneficios = () => (
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip unit="R$ Mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="valorMi" name="Valor" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800}>
+            <Bar dataKey="valorMi" name="Valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {adjuntasRanking.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="valorMi" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `R$ ${v} Mi`} />
             </Bar>
           </BarChart>
