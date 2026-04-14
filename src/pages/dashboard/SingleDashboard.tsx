@@ -203,7 +203,7 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
     className="group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 transition-all duration-300 ease-out md:hover:z-10 md:hover:scale-[1.02] cursor-default"
-    style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
+    style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)', pointerEvents: 'var(--card-pointer, auto)' as any, animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
       e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
       e.currentTarget.style.borderColor = 'rgba(96,165,250,0.4)';
