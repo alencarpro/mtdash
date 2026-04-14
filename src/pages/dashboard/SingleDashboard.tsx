@@ -1299,11 +1299,57 @@ const SingleDashboard = () => {
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
 
+  // Edge hover navigation for /tX routes
+  const [edgeHoverEnabled, setEdgeHoverEnabled] = useState(false);
+  const [edgeHoverVisible, setEdgeHoverVisible] = useState(false);
+  const edgeTimeoutRef = useState<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleEdgeHover = (direction: 'prev' | 'next') => {
+    if (!sequence || !edgeHoverEnabled) return;
+    const currentIdx = sequence.indexOf(active);
+    if (currentIdx === -1) return;
+    const newIdx = direction === 'next'
+      ? (currentIdx + 1) % sequence.length
+      : (currentIdx - 1 + sequence.length) % sequence.length;
+    // Force rotation tick to re-render is not enough; we override active via manual state
+    setManualPanel(sequence[newIdx]);
+  };
+
+  const [manualPanel, setManualPanel] = useState<number | null>(null);
+
+  // Reset manual override when rotation tick changes (clock boundary)
+  useEffect(() => {
+    setManualPanel(null);
+  }, [rotationTick]);
+
+  // Enable edge hover on mouse move, disable after 5s
+  useEffect(() => {
+    if (!sequence) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const onMove = () => {
+      setEdgeHoverEnabled(true);
+      setEdgeHoverVisible(true);
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        setEdgeHoverEnabled(false);
+        setEdgeHoverVisible(false);
+      }, 5000);
+    };
+    window.addEventListener('mousemove', onMove);
+    return () => {
+      window.removeEventListener('mousemove', onMove);
+      clearTimeout(timer);
+    };
+  }, [sequence]);
+
+  const effectiveActive = manualPanel !== null && sequence ? manualPanel : active;
+  const EffectivePanel = panels[effectiveActive];
+
   return (
     <div
-      className="h-dvh w-full flex flex-col overflow-hidden"
+      className="h-dvh w-full flex flex-col overflow-hidden relative"
       style={{
-        background: panelBodyBgs[active] || defaultBg,
+        background: panelBodyBgs[effectiveActive] || defaultBg,
       }}
     >
       {/* Header */}
