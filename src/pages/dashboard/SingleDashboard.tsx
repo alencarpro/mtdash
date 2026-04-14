@@ -1051,7 +1051,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                     title={cam.tpObra || cam.nome}
                     style={{
                       border: 'none',
-                      background: '#0a111e',
+                      background: 'var(--card-bg, #0a111e)',
                       position: 'absolute',
                       top: '50%',
                       left: '50%',
