@@ -1313,12 +1313,20 @@ const SingleDashboard = () => {
 
   const handleEdgeHover = (direction: 'prev' | 'next') => {
     if (!sequence || !edgeHoverEnabled) return;
-    const currentIdx = sequence.indexOf(active);
-    if (currentIdx === -1) return;
+    const currentIdx = sequence.indexOf(effectiveActive);
+    if (currentIdx === -1) {
+      // effectiveActive may be manual; find its position
+      const seqIdx = sequence.indexOf(manualPanel ?? active);
+      const fallbackIdx = seqIdx === -1 ? 0 : seqIdx;
+      const newIdx = direction === 'next'
+        ? (fallbackIdx + 1) % sequence.length
+        : (fallbackIdx - 1 + sequence.length) % sequence.length;
+      setManualPanel(sequence[newIdx]);
+      return;
+    }
     const newIdx = direction === 'next'
       ? (currentIdx + 1) % sequence.length
       : (currentIdx - 1 + sequence.length) % sequence.length;
-    // Force rotation tick to re-render is not enough; we override active via manual state
     setManualPanel(sequence[newIdx]);
   };
 
