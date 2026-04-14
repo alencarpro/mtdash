@@ -1217,19 +1217,57 @@ const SingleDashboard = () => {
   const getRotationIndex = () => {
     const now = new Date();
     const totalSeconds = now.getMinutes() * 60 + now.getSeconds();
-    // Each 30s window: 01-30, 31-00 → offset by 1
     const windowIndex = Math.floor(((totalSeconds - 1 + 3600) % 3600) / 30);
     return windowIndex;
   };
 
   const [rotationTick, setRotationTick] = useState(0);
+  // Manual override for /tX routes
+  const [manualIndex, setManualIndex] = useState<number | null>(null);
+  // Hover idle: disable hover effects after 5s of no mouse movement
+  const [hoverDisabled, setHoverDisabled] = useState(false);
+
+  // Reset manual override when rotation tick changes (auto-advance)
+  useEffect(() => {
+    setManualIndex(null);
+  }, [rotationTick]);
+
+  // Mouse idle timer: after 5s without movement, disable hover
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const resetIdle = () => {
+      setHoverDisabled(false);
+      clearTimeout(timer);
+      timer = setTimeout(() => setHoverDisabled(true), 5000);
+    };
+    resetIdle();
+    window.addEventListener("mousemove", resetIdle);
+    return () => {
+      window.removeEventListener("mousemove", resetIdle);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const active = sequence
-    ? sequence[getRotationIndex() % sequence.length]
+    ? (manualIndex !== null ? sequence[manualIndex % sequence.length] : sequence[getRotationIndex() % sequence.length])
     : (() => {
         const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
         return isNaN(idx) ? 0 : idx;
       })();
+
+  // Current sequence index for edge navigation
+  const currentSeqIndex = sequence
+    ? (manualIndex !== null ? manualIndex % sequence.length : getRotationIndex() % sequence.length)
+    : 0;
+
+  const goNext = () => {
+    if (!sequence) return;
+    setManualIndex((currentSeqIndex + 1) % sequence.length);
+  };
+  const goPrev = () => {
+    if (!sequence) return;
+    setManualIndex((currentSeqIndex - 1 + sequence.length) % sequence.length);
+  };
 
   const ActivePanel = panels[active];
 
