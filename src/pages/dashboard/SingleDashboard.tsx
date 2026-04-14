@@ -1044,7 +1044,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                 <div
                   data-camera-frame-index={ci}
                   className="rounded-md overflow-hidden relative group/cam w-full"
-                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
+                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: 'var(--card-bg, #0a111e)' }}
                 >
                   <iframe
                     src={cam.link}
