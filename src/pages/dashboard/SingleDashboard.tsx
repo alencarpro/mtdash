@@ -1433,7 +1433,7 @@ const SingleDashboard = () => {
         />
       </div>
       {/* Panel */}
-      <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden animate-fade-in">
+      <div className="flex-1 min-h-0 p-1.5 sm:p-2 overflow-hidden">
         <ActivePanel />
       </div>
       {/* Footer with source + clock */}
