@@ -1187,7 +1187,10 @@ const PanelBeneficios = () => (
             <XAxis dataKey="nome" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="qtdAcoes" name="Ações" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500}>
+            <Bar dataKey="qtdAcoes" name="Ações" radius={[3, 3, 0, 0]} animationDuration={1500}>
+              {macrofuncaoStats.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="qtdAcoes" position="top" fontSize={12} fill={C.label} />
             </Bar>
           </BarChart>
