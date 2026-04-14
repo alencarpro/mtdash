@@ -1142,23 +1142,23 @@ const PanelBeneficios = () => (
   <div className="flex flex-col gap-2 h-full overflow-hidden">
     {/* KPIs */}
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
-      <KPI title="Impacto Financeiro" value="R$ 940,7 Mi" sub="benefícios 2025" color={C.teal} delay={0} icon={DollarSign} />
-      <KPI title="Ações" value={`${beneficiosSummary.totalAcoes}`} sub={`${beneficiosSummary.acoesComValor} com valor`} color={C.blue} delay={120} icon={ClipboardList} />
-      <KPI title="Adjuntas" value={`${beneficiosSummary.totalAdjuntas}`} sub={`${beneficiosSummary.unidadesAtivas} unidades`} color={C.purple} delay={240} icon={Layers} />
-      <KPI title="Dimensões" value={`${beneficiosSummary.totalDimensoes}`} sub={`${beneficiosSummary.totalClasses} classes`} color={C.yellow} delay={360} icon={Compass} />
+      <KPI title="Impacto Financeiro" value="R$ 940,9 Mi" sub="benefícios 2025" color={C.teal} delay={0} icon={DollarSign} />
+      <KPI title="Benefícios" value={`${beneficiosSummary.totalBeneficios}`} sub={`${beneficiosSummary.totalAcoes} ações | ${beneficiosSummary.totalAdjuntas} adjuntas`} color={C.blue} delay={120} icon={ClipboardList} />
+      <KPI title="Potencial" value={`${beneficiosSummary.potencial}`} sub={`${beneficiosSummary.efetivo} efetivos`} color={C.purple} delay={240} icon={Target} />
+      <KPI title="Unidades" value={`${beneficiosSummary.unidadesAtivas}`} sub={`${beneficiosSummary.totalClasses} classes de benefício`} color={C.yellow} delay={360} icon={Layers} />
     </div>
 
     {/* Row 1: Impacto por Adjunta + Dimensão de Impacto */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[180px]">
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[160px]">
       <Chart title="Impacto Financeiro por Adjunta (R$ Mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={adjuntasRanking.map(a => ({ ...a, valorMi: +(a.valorTotal / 1e6).toFixed(1) }))} layout="vertical" margin={{ top: 4, right: 50, bottom: 0, left: 0 }}>
+          <BarChart data={adjuntasRanking.filter(a => a.valorTotal > 0).map(a => ({ ...a, valorMi: +(a.valorTotal / 1e6).toFixed(1) }))} layout="vertical" margin={{ top: 4, right: 50, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip unit="R$ Mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valorMi" name="Valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {adjuntasRanking.map((entry, index) => (
+              {adjuntasRanking.filter(a => a.valorTotal > 0).map((entry, index) => (
                 <Cell key={index} fill={entry.fill} />
               ))}
               <LabelList dataKey="valorMi" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `R$ ${v} Mi`} />
@@ -1178,38 +1178,68 @@ const PanelBeneficios = () => (
       </Chart>
     </div>
 
-    {/* Row 2: Macrofunção + Top Classes */}
-    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[180px]">
-      <Chart title="Distribuição de Ações por Macrofunção">
+    {/* Row 2: Benefícios por Adjunta + Top Classes */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[160px]">
+      <Chart title="Benefícios por Adjunta">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={macrofuncaoStats} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
+          <BarChart data={adjuntasRanking.filter(a => a.beneficios > 0)} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
             <XAxis dataKey="nome" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} />
             <YAxis hide />
-            <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="qtdAcoes" name="Ações" radius={[3, 3, 0, 0]} animationDuration={1500}>
-              {macrofuncaoStats.map((entry, index) => (
+            <Tooltip content={<CustomTooltip unit="benefícios" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="beneficios" name="Benefícios" radius={[3, 3, 0, 0]} animationDuration={1500}>
+              {adjuntasRanking.filter(a => a.beneficios > 0).map((entry, index) => (
                 <Cell key={index} fill={entry.fill} />
               ))}
-              <LabelList dataKey="qtdAcoes" position="top" fontSize={12} fill={C.label} />
+              <LabelList dataKey="beneficios" position="top" fontSize={12} fill={C.label} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
       <Chart title="Top Classes de Benefício">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={topClassesBeneficio} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
+          <BarChart data={topClassesBeneficio} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={120} tick={WrappedYAxisTick} />
+            <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={120} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="qtdAcoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1800}>
               {topClassesBeneficio.map((entry, index) => (
                 <Cell key={index} fill={entry.fill} />
               ))}
-              <LabelList dataKey="qtdAcoes" position="right" fontSize={12} fill={C.label} />
+              <LabelList dataKey="qtdAcoes" position="right" fontSize={11} fill={C.label} />
             </Bar>
           </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+
+    {/* Row 3: Top Unidades + Natureza */}
+    <div className="grid grid-cols-2 gap-2 flex-1 min-h-[160px]">
+      <Chart title="Top 10 Unidades por Ações">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={unidadesDetalhadas} layout="vertical" margin={{ top: 4, right: 30, bottom: 0, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="unidade" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={75} />
+            <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="acoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {unidadesDetalhadas.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
+              <LabelList dataKey="acoes" position="right" fontSize={11} fill={C.label} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Natureza dos Benefícios">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={naturezaBeneficios} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={4} dataKey="qtd" nameKey="nome" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+              {naturezaBeneficios.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
         </ResponsiveContainer>
       </Chart>
     </div>
