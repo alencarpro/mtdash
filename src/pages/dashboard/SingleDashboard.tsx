@@ -1217,19 +1217,57 @@ const SingleDashboard = () => {
   const getRotationIndex = () => {
     const now = new Date();
     const totalSeconds = now.getMinutes() * 60 + now.getSeconds();
-    // Each 30s window: 01-30, 31-00 → offset by 1
     const windowIndex = Math.floor(((totalSeconds - 1 + 3600) % 3600) / 30);
     return windowIndex;
   };
 
   const [rotationTick, setRotationTick] = useState(0);
+  // Manual override for /tX routes
+  const [manualIndex, setManualIndex] = useState<number | null>(null);
+  // Hover idle: disable hover effects after 5s of no mouse movement
+  const [hoverDisabled, setHoverDisabled] = useState(false);
+
+  // Reset manual override when rotation tick changes (auto-advance)
+  useEffect(() => {
+    setManualIndex(null);
+  }, [rotationTick]);
+
+  // Mouse idle timer: after 5s without movement, disable hover
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout>;
+    const resetIdle = () => {
+      setHoverDisabled(false);
+      clearTimeout(timer);
+      timer = setTimeout(() => setHoverDisabled(true), 5000);
+    };
+    resetIdle();
+    window.addEventListener("mousemove", resetIdle);
+    return () => {
+      window.removeEventListener("mousemove", resetIdle);
+      clearTimeout(timer);
+    };
+  }, []);
 
   const active = sequence
-    ? sequence[getRotationIndex() % sequence.length]
+    ? (manualIndex !== null ? sequence[manualIndex % sequence.length] : sequence[getRotationIndex() % sequence.length])
     : (() => {
         const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
         return isNaN(idx) ? 0 : idx;
       })();
+
+  // Current sequence index for edge navigation
+  const currentSeqIndex = sequence
+    ? (manualIndex !== null ? manualIndex % sequence.length : getRotationIndex() % sequence.length)
+    : 0;
+
+  const goNext = () => {
+    if (!sequence) return;
+    setManualIndex((currentSeqIndex + 1) % sequence.length);
+  };
+  const goPrev = () => {
+    if (!sequence) return;
+    setManualIndex((currentSeqIndex - 1 + sequence.length) % sequence.length);
+  };
 
   const ActivePanel = panels[active];
 
@@ -1296,11 +1334,34 @@ const SingleDashboard = () => {
 
   return (
     <div
-      className="h-dvh w-full flex flex-col overflow-hidden"
+      className={`h-dvh w-full flex flex-col overflow-hidden relative${hoverDisabled ? ' hover-disabled' : ''}`}
       style={{
         background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
       }}
     >
+      {/* Edge hover zones for /tX routes */}
+      {sequence && (
+        <>
+          <div
+            className="absolute left-0 top-0 bottom-0 w-16 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'linear-gradient(90deg, rgba(141,243,219,0.12), transparent)' }}
+            onClick={goPrev}
+          >
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+            </div>
+          </div>
+          <div
+            className="absolute right-0 top-0 bottom-0 w-16 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'linear-gradient(-90deg, rgba(96,165,250,0.12), transparent)' }}
+            onClick={goNext}
+          >
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+        </>
+      )}
       {/* Header */}
       <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />

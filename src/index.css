@@ -176,3 +176,15 @@
     animation: subtleFloat 6s ease-in-out infinite;
   }
 }
+
+/* Disable all hover effects when idle */
+.hover-disabled *:hover {
+  transform: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+.hover-disabled .absolute.left-0.w-16,
+.hover-disabled .absolute.right-0.w-16 {
+  pointer-events: none;
+  opacity: 0 !important;
+}
