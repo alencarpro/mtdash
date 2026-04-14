@@ -84,7 +84,7 @@ export const obrasEstrategicasList: ObraPainel[] = [
     obraId: 3,
     contrato: {
       obra: "Hospital Universitário Júlio Muller",
-      contrato: "Contrato 051/2020/SINFRA",
+      contrato: "051/2020/SINFRA",
       objeto: "Contratação Integrada de Empresa para Elaboração de projeto executivo, elaboração de as built, obtenção de licenças, outorgas, aprovações e execução das obras do hospital universitário Júlio Muller em Cuiabá/MT.",
       situacao: "Vigente",
       dataInicio: "20/01/2021",
