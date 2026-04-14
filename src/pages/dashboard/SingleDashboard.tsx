@@ -1303,7 +1303,7 @@ const SingleDashboard = () => {
     <div
       className="h-dvh w-full flex flex-col overflow-hidden"
       style={{
-        background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
+        background: panelBodyBgs[active] || defaultBg,
       }}
     >
       {/* Header */}
