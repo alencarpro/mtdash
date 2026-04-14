@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass, Trophy } from "lucide-react";
+import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
 import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto } from "@/data/beneficiosControleData";
 import {
@@ -1055,42 +1055,21 @@ const PanelBeneficios = () => (
       <KPI title="Dimensões" value={`${beneficiosSummary.totalDimensoes}`} sub={`${beneficiosSummary.totalClasses} classes`} color={C.yellow} delay={360} icon={Compass} />
     </div>
 
-    {/* Podium - Ranking por Adjunta */}
-    <div
-      className="flex-shrink-0 rounded-lg p-3 sm:p-4"
-      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
-    >
-      <p className="text-[12px] sm:text-[14px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'rgba(226,232,240,0.72)' }}>
-        Ranking por Impacto Financeiro — Adjuntas
-      </p>
-      <div className="flex items-end justify-center gap-3 sm:gap-6">
-        {[1, 0, 2, 3].map((rankIdx) => {
-          const item = adjuntasRanking[rankIdx];
-          if (!item) return null;
-          const rank = rankIdx + 1;
-          const heights = [140, 110, 85, 65];
-          const colors = [C.yellow, C.teal, C.blue, C.purple];
-          const icons = [Trophy, ShieldCheck, Search, MessageSquare];
-          const Icon = icons[rankIdx];
-          return (
-            <div key={item.nome} className="flex flex-col items-center gap-1">
-              <Icon size={28} color={colors[rankIdx]} strokeWidth={1.5} />
-              <span className="text-[13px] sm:text-[15px] font-bold" style={{ color: '#f8fafc' }}>{formatBRL(item.valorTotal)}</span>
-              <span className="text-[10px] sm:text-[11px] text-center max-w-[80px]" style={{ color: 'rgba(226,232,240,0.72)' }}>{item.nome}</span>
-              <div
-                className="w-16 sm:w-20 rounded-t-md flex items-center justify-center"
-                style={{
-                  height: heights[rankIdx],
-                  background: `linear-gradient(180deg, ${colors[rankIdx]}33 0%, ${colors[rankIdx]}11 100%)`,
-                  border: `1px solid ${colors[rankIdx]}44`,
-                }}
-              >
-                <span className="text-[20px] sm:text-[24px] font-black" style={{ color: colors[rankIdx] }}>{rank}º</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+    {/* Impacto Financeiro por Adjunta */}
+    <div className="flex-shrink-0" style={{ height: 260 }}>
+      <Chart title="Impacto Financeiro por Adjunta (R$ Mi)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={adjuntasRanking.map(a => ({ ...a, valorMi: +(a.valorTotal / 1e6).toFixed(1) }))} layout="vertical" margin={{ top: 4, right: 50, bottom: 0, left: 0 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={100} />
+            <Tooltip content={<CustomTooltip unit="R$ Mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valorMi" name="Valor" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800}>
+              <LabelList dataKey="valorMi" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `R$ ${v} Mi`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
     </div>
 
     {/* Distribuição por Macrofunção */}
