@@ -706,7 +706,10 @@ const PanelVisaoGeral = () => (
             <XAxis dataKey="year" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip unit="R$ bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="investimento" fill={C.teal} radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+            <Bar dataKey="investimento" radius={[3, 3, 0, 0]} animationDuration={1500} animationEasing="ease-out">
+              {investimentoInfra.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="investimento" position="top" fontSize={16} fill={C.label} />
             </Bar>
           </BarChart>
