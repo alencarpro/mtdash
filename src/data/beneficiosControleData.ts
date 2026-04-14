@@ -19,12 +19,12 @@ export const adjuntasRanking = [
 ];
 
 export const macrofuncaoStats = [
-  { nome: "Controle Prévio", qtdAcoes: 22 },
-  { nome: "Auditoria", qtdAcoes: 15 },
-  { nome: "Corregedoria", qtdAcoes: 12 },
-  { nome: "Ações Estratégicas", qtdAcoes: 8 },
-  { nome: "Ouvidoria", qtdAcoes: 5 },
-  { nome: "Transparência", qtdAcoes: 4 },
+  { nome: "Controle Prévio", qtdAcoes: 22, fill: "#8df3db" },
+  { nome: "Auditoria", qtdAcoes: 15, fill: "#38bdf8" },
+  { nome: "Corregedoria", qtdAcoes: 12, fill: "#a78bfa" },
+  { nome: "Ações Estratégicas", qtdAcoes: 8, fill: "#fbbf24" },
+  { nome: "Ouvidoria", qtdAcoes: 5, fill: "#fb923c" },
+  { nome: "Transparência", qtdAcoes: 4, fill: "#60a5fa" },
 ];
 
 export const topClassesBeneficio = [
