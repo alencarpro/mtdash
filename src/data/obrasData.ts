@@ -36,7 +36,7 @@ export const obrasEstrategicasList: ObraPainel[] = [
     obraId: 1,
     contrato: {
       obra: "Implantação do corredor de transporte público integrado por meio do BRT nas cidades de Cuiabá e Várzea Grande",
-      contrato: "Contrato 052/2022",
+      contrato: "052/2022",
       objeto: "Contratação integrada de empresa para execução dos serviços de elaboração de projetos básicos e executivos de engenharia, projetos de desapropriação, obtenção de licenças, outorgas, aprovações e execução das obras de infraestrutura urbana para implantação do corredor BRT em Cuiabá e Várzea Grande.",
       situacao: "Vigente",
       dataInicio: "25/10/2022",
@@ -62,7 +62,7 @@ export const obrasEstrategicasList: ObraPainel[] = [
     obraId: 2,
     contrato: {
       obra: "Complexo viário do Jardim Leblon",
-      contrato: "Contrato 012/2024",
+      contrato: "012/2024",
       objeto: "O objeto do presente instrumento consiste na execução de obra de implantação do Complexo Viário na Avenida Miguel Sutil (Jardim Leblon) com a Rua Boa Vista para acesso à Avenida Arquimedes Pereira Lima, acesso e retorno da marginal à Avenida Miguel Sutil na região da Avenida do CPA.",
       situacao: "Vigente",
       dataInicio: "15/04/2024",
