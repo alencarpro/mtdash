@@ -1030,6 +1030,28 @@ const PanelObras = () => (
             <span>Término:</span><span className="text-right">{o.contrato.dataFim}</span>
             <span>Câmeras:</span><span className="text-right">{o.cameras.length}</span>
           </div>
+          {o.cameras.length > 0 && (
+            <div className="mt-1.5 flex flex-col gap-1">
+              <p className="text-[10px] font-semibold flex items-center gap-1" style={{ color: C.teal }}>
+                <Camera className="w-3 h-3" /> Câmeras ao vivo
+              </p>
+              <div className="flex flex-wrap gap-1">
+                {o.cameras.map((cam, ci) => (
+                  <a
+                    key={ci}
+                    href={cam.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded hover:opacity-80 transition-opacity truncate max-w-[180px]"
+                    style={{ background: 'rgba(141,243,219,0.10)', color: 'rgba(141,243,219,0.9)', border: '1px solid rgba(141,243,219,0.2)' }}
+                    title={cam.nome}
+                  >
+                    {cam.tpObra || cam.nome}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       ))}
     </div>
