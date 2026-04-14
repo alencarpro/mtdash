@@ -1128,19 +1128,49 @@ const PanelBeneficios = () => (
 const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios];
 const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"];
 
+/* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
+const rotationSequences: Record<string, number[]> = {
+  t1: [0, 1, 2, 3],   // P1, P2, P3, P4
+  t2: [2, 3, 0, 1],   // P3, P4, P1, P2
+  t3: [6, 7],          // P7, P8
+  t4: [4, 5, 8],       // P5, P6, P9
+};
+
 /* ─── Main ─── */
 const SingleDashboard = () => {
   const { page } = useParams<{ page: string }>();
   const navigate = useNavigate();
-  const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
-  const active = isNaN(idx) ? 0 : idx;
+  const location = window.location.pathname.replace("/", "");
+
+  // Check if we're on a /tX rotation route
+  const rotationKey = Object.keys(rotationSequences).find(k => location === k);
+  const sequence = rotationKey ? rotationSequences[rotationKey] : null;
+
+  // For rotation routes, determine active panel from clock
+  const getRotationIndex = () => {
+    const now = new Date();
+    const totalSeconds = now.getMinutes() * 60 + now.getSeconds();
+    // Each 30s window: 01-30, 31-00 → offset by 1
+    const windowIndex = Math.floor(((totalSeconds - 1 + 3600) % 3600) / 30);
+    return windowIndex;
+  };
+
+  const [rotationTick, setRotationTick] = useState(0);
+
+  const active = sequence
+    ? sequence[getRotationIndex() % sequence.length]
+    : (() => {
+        const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
+        return isNaN(idx) ? 0 : idx;
+      })();
+
   const ActivePanel = panels[active];
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
   const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041"];
 
-  const ROTATE_INTERVAL = 30; // seconds per panel
+  const ROTATE_INTERVAL = 30;
   const [now, setNow] = useState(new Date());
   const [progress, setProgress] = useState(0);
 
@@ -1162,21 +1192,37 @@ const SingleDashboard = () => {
 
     const timer = setInterval(tick, 1000);
 
-    const checkRotate = setInterval(() => {
-      const s = new Date().getSeconds();
-      if (s === 1 || s === 31) {
-        if (!hasNavigated) {
-          hasNavigated = true;
-          const nextPage = ((active + 1) % panels.length) + 1;
-          navigate(`/${nextPage}`, { replace: true });
+    if (sequence) {
+      // For rotation routes, just force re-render at boundaries
+      const checkRotate = setInterval(() => {
+        const s = new Date().getSeconds();
+        if (s === 1 || s === 31) {
+          if (!hasNavigated) {
+            hasNavigated = true;
+            setRotationTick(t => t + 1);
+          }
+        } else {
+          hasNavigated = false;
         }
-      } else {
-        hasNavigated = false;
-      }
-    }, 500);
-
-    return () => { clearInterval(timer); clearInterval(checkRotate); };
-  }, [active, navigate]);
+      }, 500);
+      return () => { clearInterval(timer); clearInterval(checkRotate); };
+    } else {
+      // For single-page routes, navigate to next panel
+      const checkRotate = setInterval(() => {
+        const s = new Date().getSeconds();
+        if (s === 1 || s === 31) {
+          if (!hasNavigated) {
+            hasNavigated = true;
+            const nextPage = ((active + 1) % panels.length) + 1;
+            navigate(`/${nextPage}`, { replace: true });
+          }
+        } else {
+          hasNavigated = false;
+        }
+      }, 500);
+      return () => { clearInterval(timer); clearInterval(checkRotate); };
+    }
+  }, [active, navigate, sequence, rotationTick]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });

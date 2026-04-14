@@ -17,6 +17,10 @@ const App = () => (
         <div className="dark">
           <Routes>
             <Route path="/" element={<Navigate to="/1" replace />} />
+            <Route path="/t1" element={<SingleDashboard />} />
+            <Route path="/t2" element={<SingleDashboard />} />
+            <Route path="/t3" element={<SingleDashboard />} />
+            <Route path="/t4" element={<SingleDashboard />} />
             <Route path="/:page" element={<SingleDashboard />} />
             <Route path="/dashboard/*" element={<Navigate to="/1" replace />} />
             <Route path="*" element={<NotFound />} />
