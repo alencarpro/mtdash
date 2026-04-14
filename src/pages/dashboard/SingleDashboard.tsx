@@ -937,167 +937,101 @@ const ProgressRing = ({ value, size = 90, label }: { value: number; size?: numbe
   );
 };
 
-const PanelObras = () => (
-  <div className="flex flex-col gap-2 h-full overflow-auto">
-    {/* KPIs */}
-    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
-      <KPI title="Obras" value={`${obrasSummary.totalObras}`} sub="obras estratégicas" color={C.teal} delay={0} icon={HardHat} />
-      <KPI title="Investimento" value={obrasSummary.investimentoTotal} sub="valor total contratos" color={C.blue} delay={120} icon={CircleDollarSign} />
-      <KPI title="Câmeras" value={`${obrasSummary.totalCameras}`} sub="monitoramento ao vivo" color={C.purple} delay={240} icon={Camera} />
-      <KPI title="Concluída" value={`${obrasSummary.obraConcluida}`} sub="obra finalizada" color={C.green} delay={360} icon={CheckCircle2} />
-    </div>
-
-    {/* Progress rings por obra */}
+/* Shared obra card with cameras */
+const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
+  const shortName =
+    o.obraId === 1 ? "BRT Cuiabá/VG" :
+    o.obraId === 2 ? "Cplx. Viário Leblon" :
+    o.obraId === 3 ? "Hosp. Júlio Muller" :
+    "Ponte Rio Juruena";
+  const pct = parseFloat(o.contrato.percentualExecutado.replace("%", "").replace(",", "."));
+  return (
     <div
-      className="flex-shrink-0 rounded-lg p-3 sm:p-4"
+      className="rounded-lg p-3 sm:p-4 flex flex-col gap-2"
       style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
     >
-      <p className="text-[12px] sm:text-[14px] uppercase tracking-wider font-semibold mb-3" style={{ color: 'rgba(226,232,240,0.72)' }}>
-        Percentual Executado por Obra
-      </p>
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
-        {obrasEstrategicasList.map((o) => {
-          const pct = parseFloat(o.contrato.percentualExecutado.replace("%", "").replace(",", "."));
-          const shortName =
-            o.obraId === 1 ? "BRT Cuiabá/VG" :
-            o.obraId === 2 ? "Cplx. Leblon" :
-            o.obraId === 3 ? "Hosp. J. Muller" :
-            "Ponte Juruena";
-          return <ProgressRing key={o.obraId} value={pct} label={shortName} />;
-        })}
+      <div className="flex items-center gap-2">
+        <HardHat className="w-4 h-4 flex-shrink-0" style={{ color: C.teal }} />
+        <p className="text-[13px] sm:text-[15px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
+        <span className="ml-auto text-[10px] px-2 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.12)', color: 'rgba(226,232,240,0.72)' }}>
+          {o.contrato.percentualExecutado} executado
+        </span>
       </div>
+      <div className="flex items-center gap-3">
+        <ProgressRing value={pct} size={70} label="" />
+        <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px] sm:text-[11px] flex-1" style={{ color: 'rgba(226,232,240,0.72)' }}>
+          <span>Valor Total:</span><span className="font-semibold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
+          <span>Contrato:</span><span className="text-right">{o.contrato.contrato}</span>
+          <span>Situação:</span><span className="text-right">{o.contrato.situacao}</span>
+          <span>Pago:</span><span className="font-semibold text-right" style={{ color: C.yellow }}>{o.contrato.percentualPago}</span>
+        </div>
+      </div>
+      {o.cameras.length > 0 && (
+        <div className="mt-1 flex flex-col gap-1.5">
+          <p className="text-[11px] font-semibold flex items-center gap-1" style={{ color: C.teal }}>
+            <Camera className="w-3.5 h-3.5" /> Câmeras ao vivo ({o.cameras.length})
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {o.cameras.map((cam, ci) => (
+              <div key={ci} className="flex flex-col gap-1">
+                <div
+                  className="rounded overflow-hidden"
+                  style={{ border: '1px solid rgba(141,243,219,0.15)', aspectRatio: '16/9' }}
+                >
+                  <iframe
+                    src={cam.link}
+                    title={cam.tpObra || cam.nome}
+                    className="w-full h-full"
+                    style={{ border: 'none', background: '#000' }}
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin"
+                  />
+                </div>
+                <span className="text-[9px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
+                  {cam.tpObra || cam.nome}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
+  );
+};
 
-    {/* Valores por obra (bar chart) */}
-    <div className="flex-shrink-0" style={{ height: 280 }}>
-      <Chart title="Valores por Obra (R$ milhões)">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={obrasValorChart} margin={{ top: 10, right: 4, bottom: 14, left: -10 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-            <XAxis dataKey="nome" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} />
-            <YAxis hide />
-            <Legend content={renderLegend} />
-            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="total" name="Valor Total" fill={C.blue} radius={[2, 2, 0, 0]} animationDuration={1500}>
-              <LabelList dataKey="total" position="top" fontSize={9} fill={C.label} />
-            </Bar>
-            <Bar dataKey="executado" name="Executado" fill={C.teal} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={200}>
-              <LabelList dataKey="executado" position="top" fontSize={9} fill={C.label} />
-            </Bar>
-            <Bar dataKey="pago" name="Pago" fill={C.yellow} radius={[2, 2, 0, 0]} animationDuration={1500} animationBegin={400}>
-              <LabelList dataKey="pago" position="top" fontSize={9} fill={C.label} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </Chart>
+const obrasGroup1 = obrasEstrategicasList.filter(o => o.obraId <= 2);
+const obrasGroup2 = obrasEstrategicasList.filter(o => o.obraId >= 3);
+
+/* ═══════════════════════════════════════════════════════════
+   PANEL 7 — OBRAS: BRT Cuiabá + Cplx. Leblon
+   ═══════════════════════════════════════════════════════════ */
+const PanelObras = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="BRT Cuiabá" value="27,26%" sub="R$ 485,7 Mi total" color={C.teal} delay={0} icon={HardHat} />
+      <KPI title="Cplx. Leblon" value="50,94%" sub="R$ 105,0 Mi total" color={C.blue} delay={120} icon={HardHat} />
+      <KPI title="Câmeras" value={`${obrasGroup1.reduce((s, o) => s + o.cameras.length, 0)}`} sub="monitoramento ao vivo" color={C.purple} delay={240} icon={Camera} />
+      <KPI title="Investimento" value="R$ 590,7 Mi" sub="obras neste painel" color={C.green} delay={360} icon={CircleDollarSign} />
     </div>
-
-    {/* Execução % (bar horizontal) */}
-    <div className="flex-shrink-0" style={{ height: 240 }}>
-      <Chart title="Execução Física (%)">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={obrasExecucaoChart} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
-            <XAxis type="number" domain={[0, 100]} hide />
-            <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={95} tick={WrappedYAxisTick} />
-            <Tooltip content={<CustomTooltip unit="%" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="executado" name="Executado" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800}>
-              <LabelList dataKey="executado" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `${v}%`} />
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </Chart>
+    <div className="grid grid-cols-1 gap-3 flex-shrink-0">
+      {obrasGroup1.map(o => <ObraCard key={o.obraId} o={o} />)}
     </div>
   </div>
 );
 
 /* ═══════════════════════════════════════════════════════════
-   PANEL 8 — OBRAS ESTRATÉGICAS — CÂMERAS AO VIVO
+   PANEL 8 — OBRAS: Hosp. J. Muller + Ponte Juruena
    ═══════════════════════════════════════════════════════════ */
 const PanelObrasCameras = () => (
   <div className="flex flex-col gap-2 h-full overflow-auto">
-    {/* KPIs */}
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
-      <KPI title="Obras" value={`${obrasSummary.totalObras}`} sub="obras estratégicas" color={C.teal} delay={0} icon={HardHat} />
-      <KPI title="Câmeras" value={`${obrasSummary.totalCameras}`} sub="monitoramento ao vivo" color={C.purple} delay={120} icon={Camera} />
-      <KPI title="Investimento" value={obrasSummary.investimentoTotal} sub="valor total contratos" color={C.blue} delay={240} icon={CircleDollarSign} />
-      <KPI title="Concluída" value={`${obrasSummary.obraConcluida}`} sub="obra finalizada" color={C.green} delay={360} icon={CheckCircle2} />
+      <KPI title="Hosp. J. Muller" value="100,00%" sub="R$ 247,1 Mi total" color={C.green} delay={0} icon={HardHat} />
+      <KPI title="Ponte Juruena" value="59,43%" sub="R$ 309,1 Mi total" color={C.blue} delay={120} icon={HardHat} />
+      <KPI title="Câmeras" value={`${obrasGroup2.reduce((s, o) => s + o.cameras.length, 0)}`} sub="monitoramento ao vivo" color={C.purple} delay={240} icon={Camera} />
+      <KPI title="Investimento" value="R$ 556,2 Mi" sub="obras neste painel" color={C.teal} delay={360} icon={CircleDollarSign} />
     </div>
-
-    {/* Cards por obra com câmeras em iframe */}
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 flex-shrink-0">
-      {obrasEstrategicasList.map((o) => {
-        const shortName =
-          o.obraId === 1 ? "BRT Cuiabá/VG" :
-          o.obraId === 2 ? "Cplx. Viário Leblon" :
-          o.obraId === 3 ? "Hosp. Júlio Muller" :
-          "Ponte Rio Juruena";
-        return (
-          <div
-            key={o.obraId}
-            className="rounded-lg p-3 sm:p-4 flex flex-col gap-2"
-            style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
-          >
-            <div className="flex items-center gap-2">
-              <HardHat className="w-4 h-4 flex-shrink-0" style={{ color: C.teal }} />
-              <p className="text-[13px] sm:text-[14px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
-              <span className="ml-auto text-[10px] px-2 py-0.5 rounded" style={{ background: 'rgba(141,243,219,0.12)', color: 'rgba(226,232,240,0.72)' }}>
-                {o.contrato.percentualExecutado} executado
-              </span>
-            </div>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-0.5 text-[10px] sm:text-[11px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
-              <span>Valor Total:</span><span className="font-semibold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
-              <span>Contrato:</span><span className="text-right">{o.contrato.contrato}</span>
-            </div>
-            {o.cameras.length > 0 && (
-              <div className="mt-1 flex flex-col gap-1.5">
-                <p className="text-[10px] font-semibold flex items-center gap-1" style={{ color: C.teal }}>
-                  <Camera className="w-3 h-3" /> Câmeras ao vivo ({o.cameras.length})
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {o.cameras.slice(0, 4).map((cam, ci) => (
-                    <div key={ci} className="flex flex-col gap-1">
-                      <div
-                        className="rounded overflow-hidden"
-                        style={{ border: '1px solid rgba(141,243,219,0.15)', aspectRatio: '16/9' }}
-                      >
-                        <iframe
-                          src={cam.link}
-                          title={cam.tpObra || cam.nome}
-                          className="w-full h-full"
-                          style={{ border: 'none', background: '#000' }}
-                          loading="lazy"
-                          sandbox="allow-scripts allow-same-origin"
-                        />
-                      </div>
-                      <span className="text-[9px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
-                        {cam.tpObra || cam.nome}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                {o.cameras.length > 4 && (
-                  <div className="flex flex-wrap gap-1 mt-1">
-                    {o.cameras.slice(4).map((cam, ci) => (
-                      <a
-                        key={ci}
-                        href={cam.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[9px] sm:text-[10px] px-2 py-0.5 rounded hover:opacity-80 transition-opacity truncate max-w-[180px]"
-                        style={{ background: 'rgba(141,243,219,0.10)', color: 'rgba(141,243,219,0.9)', border: '1px solid rgba(141,243,219,0.2)' }}
-                        title={cam.nome}
-                      >
-                        {cam.tpObra || cam.nome}
-                      </a>
-                    ))}
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        );
-      })}
+    <div className="grid grid-cols-1 gap-3 flex-shrink-0">
+      {obrasGroup2.map(o => <ObraCard key={o.obraId} o={o} />)}
     </div>
   </div>
 );
@@ -1199,7 +1133,7 @@ const SingleDashboard = () => {
   const active = isNaN(idx) ? 0 : idx;
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras Estratégicas", "Obras — Câmeras ao Vivo", "Benefícios de Controle"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
   const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#102041", "#102041", "#102041"];
 
