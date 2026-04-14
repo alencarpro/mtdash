@@ -989,7 +989,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                   <iframe
                     src={cam.link}
                     title={cam.tpObra || cam.nome}
-                    style={{ border: 'none', background: '#0a111e', position: 'absolute', top: '-10%', left: '-2%', width: '104%', height: '120%' }}
+                    style={{ border: 'none', background: '#0a111e', position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin"
                     allow="autoplay"
