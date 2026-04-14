@@ -88,7 +88,11 @@ const EconomyPage = () => {
               <XAxis type="number" stroke="hsl(220 10% 46%)" fontSize={12} />
               <YAxis type="category" dataKey="cultura" stroke="hsl(220 10% 46%)" fontSize={11} width={70} />
               <Tooltip contentStyle={{ backgroundColor: "hsl(220 25% 12%)", border: "1px solid hsl(220 20% 18%)", borderRadius: 8, color: "hsl(220 10% 92%)" }} formatter={(value: number) => [`${value} M ton`, ""]} />
-              <Bar dataKey="producao" name="Produção" fill="hsl(174 72% 40%)" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="producao" name="Produção" radius={[0, 4, 4, 0]}>
+                {producaoAgricola.map((entry, index) => (
+                  <Cell key={index} fill={entry.fill} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </ChartCard>
