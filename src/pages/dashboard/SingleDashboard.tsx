@@ -1302,7 +1302,6 @@ const SingleDashboard = () => {
   // Edge hover navigation for /tX routes
   const [edgeHoverEnabled, setEdgeHoverEnabled] = useState(false);
   const [edgeHoverVisible, setEdgeHoverVisible] = useState(false);
-  const edgeTimeoutRef = useState<ReturnType<typeof setTimeout> | null>(null);
 
   const handleEdgeHover = (direction: 'prev' | 'next') => {
     if (!sequence || !edgeHoverEnabled) return;
