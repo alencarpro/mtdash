@@ -1010,7 +1010,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
     <div
       id={`obra-card-${o.obraId}`}
       className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
-      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+      style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)' }}
     >
       {/* Header row: title + badge */}
       <div className="flex items-center gap-3">
@@ -1044,14 +1044,14 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
                 <div
                   data-camera-frame-index={ci}
                   className="rounded-md overflow-hidden relative group/cam w-full"
-                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
+                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: 'var(--card-bg, #0a111e)' }}
                 >
                   <iframe
                     src={cam.link}
                     title={cam.tpObra || cam.nome}
                     style={{
                       border: 'none',
-                      background: '#0a111e',
+                      background: 'var(--card-bg, #0a111e)',
                       position: 'absolute',
                       top: '50%',
                       left: '50%',
@@ -1236,18 +1236,18 @@ const SingleDashboard = () => {
 
   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#070738", "#070738", "#070738", "#070738", "#5D6D7E", "#5D6D7E", "#003366", "#003366", "#5D6D7E"];
+  const panelHeaderBgs = ["#070738", "#070738", "#070738", "#070738", "#5D6D7E", "#5D6D7E", "#111184", "#111184", "#5D6D7E"];
   const panelBodyBgs = [
-    "#070738", "#070738", "#070738", "#070738", // Painéis 1-4
-    "#5D6D7E", "#5D6D7E", "#003366", "#003366", "#5D6D7E" // Painéis 5-9
+    "#070738", "#070738", "#070738", "#070738",
+    "#5D6D7E", "#5D6D7E", "#111184", "#111184", "#5D6D7E"
   ];
   const panelCardBgs = [
     'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)', 'rgba(7,7,56,0.85)',
-    'rgba(93,109,126,0.85)', 'rgba(93,109,126,0.85)', 'rgba(0,51,102,0.85)', 'rgba(0,51,102,0.85)', 'rgba(93,109,126,0.85)'
+    'rgba(93,109,126,0.85)', 'rgba(93,109,126,0.85)', 'rgba(17,17,132,0.85)', 'rgba(17,17,132,0.85)', 'rgba(93,109,126,0.85)'
   ];
   const panelCardBgHovers = [
     'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)', 'rgba(7,7,56,0.95)',
-    'rgba(93,109,126,0.95)', 'rgba(93,109,126,0.95)', 'rgba(0,51,102,0.95)', 'rgba(0,51,102,0.95)', 'rgba(93,109,126,0.95)'
+    'rgba(93,109,126,0.95)', 'rgba(93,109,126,0.95)', 'rgba(17,17,132,0.95)', 'rgba(17,17,132,0.95)', 'rgba(93,109,126,0.95)'
   ];
   const defaultBg = `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`;
 
