@@ -282,7 +282,10 @@ const PanelEconomia = () => (
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="cultura" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={70} />
             <Tooltip content={<CustomTooltip unit="M ton" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="producao" fill={C.teal} radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
+            <Bar dataKey="producao" radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
+              {producaoAgricola.map((entry, index) => (
+                <Cell key={index} fill={entry.fill} />
+              ))}
               <LabelList dataKey="producao" position="right" fontSize={14} fill={C.label} />
             </Bar>
           </BarChart>
