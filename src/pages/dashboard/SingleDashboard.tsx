@@ -1357,7 +1357,9 @@ const SingleDashboard = () => {
       className="h-dvh w-full flex flex-col overflow-hidden relative"
       style={{
         background: panelBodyBgs[effectiveActive] || defaultBg,
-      }}
+        '--card-bg': panelCardBgs[effectiveActive],
+        '--card-bg-hover': panelCardBgHovers[effectiveActive],
+      } as React.CSSProperties}
     >
       {/* Edge hover zones for /tX routes */}
       {sequence && edgeHoverVisible && (
