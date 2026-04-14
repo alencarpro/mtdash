@@ -1334,11 +1334,34 @@ const SingleDashboard = () => {
 
   return (
     <div
-      className="h-dvh w-full flex flex-col overflow-hidden"
+      className={`h-dvh w-full flex flex-col overflow-hidden relative${hoverDisabled ? ' hover-disabled' : ''}`}
       style={{
         background: `radial-gradient(circle at top left, rgba(96,165,250,0.18), transparent 24%), radial-gradient(circle at top right, rgba(45,212,191,0.15), transparent 20%), linear-gradient(180deg, #02060d 0%, #040b15 100%)`,
       }}
     >
+      {/* Edge hover zones for /tX routes */}
+      {sequence && (
+        <>
+          <div
+            className="absolute left-0 top-0 bottom-0 w-16 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'linear-gradient(90deg, rgba(141,243,219,0.12), transparent)' }}
+            onClick={goPrev}
+          >
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+            </div>
+          </div>
+          <div
+            className="absolute right-0 top-0 bottom-0 w-16 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+            style={{ background: 'linear-gradient(-90deg, rgba(96,165,250,0.12), transparent)' }}
+            onClick={goNext}
+          >
+            <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center backdrop-blur-sm">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 6 15 12 9 18" /></svg>
+            </div>
+          </div>
+        </>
+      )}
       {/* Header */}
       <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
