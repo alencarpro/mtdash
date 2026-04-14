@@ -1010,7 +1010,7 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
     <div
       id={`obra-card-${o.obraId}`}
       className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
-      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+      style={{ background: 'var(--card-bg, rgba(10,17,30,0.78))', border: '1px solid rgba(148,163,184,0.15)' }}
     >
       {/* Header row: title + badge */}
       <div className="flex items-center gap-3">
