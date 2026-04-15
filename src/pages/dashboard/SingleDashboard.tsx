@@ -1383,11 +1383,26 @@ const SingleDashboard = () => {
   const [manualIndex, setManualIndex] = useState<number | null>(null);
   // Hover idle: disable hover effects after 5s of no mouse movement
   const [hoverDisabled, setHoverDisabled] = useState(false);
+  // Pause auto-rotation
+  const [paused, setPaused] = useState(false);
 
   // Reset manual override when rotation tick changes (auto-advance)
   useEffect(() => {
-    setManualIndex(null);
-  }, [rotationTick]);
+    if (!paused) setManualIndex(null);
+  }, [rotationTick, paused]);
+
+  // Toggle pause with Space or P key
+  useEffect(() => {
+    if (!sequence) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        setPaused(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [sequence]);
 
   // Mouse idle timer: after 5s without movement, disable hover
   useEffect(() => {
@@ -1436,6 +1451,9 @@ const SingleDashboard = () => {
   const [now, setNow] = useState(new Date());
   const [progress, setProgress] = useState(0);
 
+  // Store progress when paused
+  const [pausedProgress, setPausedProgress] = useState(0);
+
   useEffect(() => {
     let hasNavigated = false;
     let rafId: number;
@@ -1450,16 +1468,20 @@ const SingleDashboard = () => {
 
     const tick = () => {
       setNow(new Date());
-      const elapsedMs = getElapsedMs();
-      setProgress((elapsedMs / (ROTATE_INTERVAL * 1000)) * 100);
+      if (!paused) {
+        const elapsedMs = getElapsedMs();
+        const p = (elapsedMs / (ROTATE_INTERVAL * 1000)) * 100;
+        setProgress(p);
+        setPausedProgress(p);
+      }
       rafId = requestAnimationFrame(tick);
     };
 
     rafId = requestAnimationFrame(tick);
 
     if (sequence) {
-      // For rotation routes, just force re-render at boundaries
       const checkRotate = setInterval(() => {
+        if (paused) return;
         const s = new Date().getSeconds();
         if (s === 1 || s === 31) {
           if (!hasNavigated) {
@@ -1472,8 +1494,8 @@ const SingleDashboard = () => {
       }, 500);
       return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     } else {
-      // For single-page routes, navigate to next panel
       const checkRotate = setInterval(() => {
+        if (paused) return;
         const s = new Date().getSeconds();
         if (s === 1 || s === 31) {
           if (!hasNavigated) {
@@ -1487,7 +1509,7 @@ const SingleDashboard = () => {
       }, 500);
       return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     }
-  }, [active, navigate, sequence, rotationTick]);
+  }, [active, navigate, sequence, rotationTick, paused]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
@@ -1522,6 +1544,17 @@ const SingleDashboard = () => {
           </div>
         </>
       )}
+      {/* Pause indicator */}
+      {sequence && paused && (
+        <div
+          className="absolute top-20 right-4 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer select-none"
+          style={{ background: 'rgba(10,17,30,0.9)', border: '1px solid rgba(251,191,36,0.4)', animation: 'subtleFloat 3s ease-in-out infinite' }}
+          onClick={() => setPaused(false)}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fbbf24"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
+          <span className="text-sm font-semibold" style={{ color: '#fbbf24' }}>PAUSADO</span>
+        </div>
+      )}
       {/* Header */}
       <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
@@ -1532,9 +1565,9 @@ const SingleDashboard = () => {
         <div
           className="h-full"
           style={{
-            width: `${progress}%`,
-            background: 'linear-gradient(90deg, #8df3db, #60a5fa)',
-            boxShadow: '0 0 6px rgba(141,243,219,0.4)',
+            width: `${paused ? pausedProgress : progress}%`,
+            background: paused ? 'linear-gradient(90deg, #fbbf24, #f59e0b)' : 'linear-gradient(90deg, #8df3db, #60a5fa)',
+            boxShadow: paused ? '0 0 6px rgba(251,191,36,0.4)' : '0 0 6px rgba(141,243,219,0.4)',
           }}
         />
       </div>
