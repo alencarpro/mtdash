@@ -1544,21 +1544,22 @@ const SingleDashboard = () => {
           </div>
         </>
       )}
-      {/* Pause indicator */}
-      {sequence && paused && (
-        <div
-          className="absolute top-20 right-4 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer select-none"
-          style={{ background: 'rgba(10,17,30,0.9)', border: '1px solid rgba(251,191,36,0.4)', animation: 'subtleFloat 3s ease-in-out infinite' }}
-          onClick={() => setPaused(false)}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fbbf24"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
-          <span className="text-sm font-semibold" style={{ color: '#fbbf24' }}>PAUSADO</span>
-        </div>
-      )}
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
-        <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
-        <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>{panelTitles[active]}</span>
+      <header
+        className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 select-none"
+        style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active], cursor: sequence ? 'pointer' : 'default' }}
+        onClick={() => { if (sequence) setPaused(prev => !prev); }}
+      >
+        <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain pointer-events-none" />
+        <div className="flex items-center gap-3">
+          {sequence && paused && (
+            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-semibold" style={{ background: 'rgba(251,191,36,0.15)', color: '#fbbf24', border: '1px solid rgba(251,191,36,0.3)' }}>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="#fbbf24"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
+              PAUSADO
+            </span>
+          )}
+          <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>{panelTitles[active]}</span>
+        </div>
       </header>
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
