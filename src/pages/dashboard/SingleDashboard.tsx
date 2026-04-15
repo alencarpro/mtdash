@@ -1544,6 +1544,17 @@ const SingleDashboard = () => {
           </div>
         </>
       )}
+      {/* Pause indicator */}
+      {sequence && paused && (
+        <div
+          className="absolute top-20 right-4 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer select-none"
+          style={{ background: 'rgba(10,17,30,0.9)', border: '1px solid rgba(251,191,36,0.4)', animation: 'subtleFloat 3s ease-in-out infinite' }}
+          onClick={() => setPaused(false)}
+        >
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fbbf24"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
+          <span className="text-sm font-semibold" style={{ color: '#fbbf24' }}>PAUSADO</span>
+        </div>
+      )}
       {/* Header */}
       <header className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3" style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active] }}>
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain" />
@@ -1554,9 +1565,9 @@ const SingleDashboard = () => {
         <div
           className="h-full"
           style={{
-            width: `${progress}%`,
-            background: 'linear-gradient(90deg, #8df3db, #60a5fa)',
-            boxShadow: '0 0 6px rgba(141,243,219,0.4)',
+            width: `${paused ? pausedProgress : progress}%`,
+            background: paused ? 'linear-gradient(90deg, #fbbf24, #f59e0b)' : 'linear-gradient(90deg, #8df3db, #60a5fa)',
+            boxShadow: paused ? '0 0 6px rgba(251,191,36,0.4)' : '0 0 6px rgba(141,243,219,0.4)',
           }}
         />
       </div>
