@@ -178,15 +178,19 @@
   }
 }
 
-/* Disable all hover effects when idle */
+/* Disable all hover effects and hide cursor when idle */
+.hover-disabled {
+  cursor: none !important;
+}
+.hover-disabled * {
+  cursor: none !important;
+  transition: none !important;
+}
 .hover-disabled *:hover {
   transform: none !important;
   box-shadow: none !important;
   filter: none !important;
   border-color: inherit !important;
-}
-.hover-disabled * {
-  transition: none !important;
 }
 .hover-disabled .absolute.left-0.w-16,
 .hover-disabled .absolute.right-0.w-16 {
