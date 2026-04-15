@@ -1276,15 +1276,15 @@ const PanelOrcamentoPTA = () => (
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-      <Chart title="Orçamento por Órgão (R$ mi)">
+      <Chart title="Orçamento por UO (R$ mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={orcamentoOrgao} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
+          <BarChart data={orcamentoUO} layout="vertical" margin={{ top: 4, right: 30, bottom: 4, left: 10 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="sigla" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={70} />
+            <YAxis type="category" dataKey="sigla" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={100} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valor" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
-              {orcamentoOrgao.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              {orcamentoUO.map((e, i) => <Cell key={i} fill={e.fill} />)}
               <LabelList dataKey="valor" position="right" fontSize={11} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
             </Bar>
           </BarChart>
