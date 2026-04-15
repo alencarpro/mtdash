@@ -40,16 +40,16 @@ export const topSubfuncoes = [
 ];
 
 export const orcamentoUO = [
-  { sigla: "FUNDO ESTADUAL DE SAÚDE", valor: 4792, fill: "#8df3db" },
-  { sigla: "SEDUC", valor: 3985, fill: "#60a5fa" },
-  { sigla: "FUNDO EST. SEG. PÚBLICA", valor: 3210, fill: "#f87171" },
-  { sigla: "FUNDO PREV. DO ESTADO", valor: 2840, fill: "#a78bfa" },
-  { sigla: "SINFRA", valor: 2650, fill: "#fbbf24" },
-  { sigla: "ENC. GERAIS DO ESTADO", valor: 2180, fill: "#fb923c" },
-  { sigla: "FUNDO EST. ASSIST. SOCIAL", valor: 1520, fill: "#86efac" },
-  { sigla: "SEPLAG", valor: 1436, fill: "#c084fc" },
-  { sigla: "FUNDO PENITENCIÁRIO", valor: 964, fill: "#34d399" },
-  { sigla: "SEFAZ", valor: 890, fill: "#22d3ee" },
+  { sigla: "SEDUC", valor: 5813, fill: "#60a5fa" },
+  { sigla: "MTPREV", valor: 5335, fill: "#a78bfa" },
+  { sigla: "FES", valor: 4792, fill: "#8df3db" },
+  { sigla: "SESP", valor: 4405, fill: "#f87171" },
+  { sigla: "SINFRA", valor: 3449, fill: "#fbbf24" },
+  { sigla: "EGE/SEFAZ", valor: 1299, fill: "#fb923c" },
+  { sigla: "SEFAZ", valor: 1102, fill: "#22d3ee" },
+  { sigla: "SEJUS", valor: 945, fill: "#86efac" },
+  { sigla: "PGE", valor: 727, fill: "#c084fc" },
+  { sigla: "SEAF", valor: 673, fill: "#34d399" },
 ];
 
 export const modalidadeAplicacao = [
@@ -96,12 +96,12 @@ export const radarOrcamento = [
 
 /* Stacked area — composição corrente vs capital por top 6 funções */
 export const composicaoFuncao = [
-  { funcao: "Prev. Social", corrente: 6200, capital: 178 },
-  { funcao: "Educação", corrente: 5300, capital: 794 },
-  { funcao: "Saúde", corrente: 3800, capital: 895 },
-  { funcao: "Segurança", corrente: 4100, capital: 531 },
-  { funcao: "Transporte", corrente: 596, capital: 2550 },
-  { funcao: "Administração", corrente: 2400, capital: 459 },
+  { funcao: "Prev. Social", corrente: 6377, capital: 1 },
+  { funcao: "Educação", corrente: 5785, capital: 310 },
+  { funcao: "Saúde", corrente: 4277, capital: 418 },
+  { funcao: "Segurança", corrente: 4528, capital: 104 },
+  { funcao: "Transporte", corrente: 705, capital: 2441 },
+  { funcao: "Administração", corrente: 2449, capital: 410 },
 ];
 
 export const ticInvestimento = [
