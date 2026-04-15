@@ -1438,21 +1438,24 @@ const SingleDashboard = () => {
 
   useEffect(() => {
     let hasNavigated = false;
+    let rafId: number;
 
-    const getElapsedInWindow = () => {
-      const s = new Date().getSeconds();
-      return ((s - 1 + 60) % 60) % 30;
+    const getElapsedMs = () => {
+      const d = new Date();
+      const s = d.getSeconds();
+      const ms = d.getMilliseconds();
+      const totalMs = (((s - 1 + 60) % 60) % 30) * 1000 + ms;
+      return totalMs;
     };
 
     const tick = () => {
       setNow(new Date());
-      const elapsed = getElapsedInWindow();
-      setProgress((elapsed / ROTATE_INTERVAL) * 100);
+      const elapsedMs = getElapsedMs();
+      setProgress((elapsedMs / (ROTATE_INTERVAL * 1000)) * 100);
+      rafId = requestAnimationFrame(tick);
     };
 
-    tick();
-
-    const timer = setInterval(tick, 1000);
+    rafId = requestAnimationFrame(tick);
 
     if (sequence) {
       // For rotation routes, just force re-render at boundaries
@@ -1467,7 +1470,7 @@ const SingleDashboard = () => {
           hasNavigated = false;
         }
       }, 500);
-      return () => { clearInterval(timer); clearInterval(checkRotate); };
+      return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     } else {
       // For single-page routes, navigate to next panel
       const checkRotate = setInterval(() => {
@@ -1482,7 +1485,7 @@ const SingleDashboard = () => {
           hasNavigated = false;
         }
       }, 500);
-      return () => { clearInterval(timer); clearInterval(checkRotate); };
+      return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     }
   }, [active, navigate, sequence, rotationTick]);
 
@@ -1527,7 +1530,7 @@ const SingleDashboard = () => {
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
         <div
-          className="h-full transition-all duration-1000 ease-linear"
+          className="h-full"
           style={{
             width: `${progress}%`,
             background: 'linear-gradient(90deg, #8df3db, #60a5fa)',
