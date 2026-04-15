@@ -1597,11 +1597,14 @@ const SingleDashboard = () => {
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-          {active === 8 ? (
-            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
-              Fonte: Relatório Executivo - Benefícios do Controle - 2025
-            </span>
-          ) : active === 4 || active === 5 ? (
+           {active === 8 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: Relatório Executivo - Benefícios do Controle - 2025
+             </span>
+           ) : active >= 9 && active <= 11 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: PTA 2026 — Governo do Estado de Mato Grosso
+             </span>
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: Balanço de Gestão 2025 — CGE-MT
             </span>
