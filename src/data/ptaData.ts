@@ -55,8 +55,8 @@ export const orcamentoUO = [
 export const modalidadeAplicacao = [
   { name: "Aplicações Diretas", value: 84.5, fill: "#8df3db" },
   { name: "Op. entre Órgãos", value: 8.3, fill: "#60a5fa" },
-  { name: "Inst. Priv. s/ fins", value: 2.2, fill: "#a78bfa" },
   { name: "Transf. Municípios", value: 3.7, fill: "#fbbf24" },
+  { name: "Inst. Priv. s/ fins", value: 2.2, fill: "#a78bfa" },
   { name: "Outras", value: 1.3, fill: "#f87171" },
 ];
 
