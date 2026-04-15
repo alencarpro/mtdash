@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
 import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto, naturezaBeneficios, unidadesDetalhadas } from "@/data/beneficiosControleData";
+import { ptaSummary, orcamentoFuncao, categoriaEconomica, topSubfuncoes, orcamentoOrgao, modalidadeAplicacao, pacoteDespesa, elementoDespesa, ticInvestimento } from "@/data/ptaData";
+import { Landmark, Building2, Receipt, Wallet, PiggyBank, BadgeDollarSign } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
   PieChart, Pie, Cell, AreaChart, Area, LineChart, Line, LabelList,
@@ -1246,8 +1248,162 @@ const PanelBeneficios = () => (
   </div>
 );
 
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"];
+/* ═══════════════════════════════════════════════════════════
+   PANEL 10 — ORÇAMENTO POR FUNÇÃO (PTA 2026)
+   ═══════════════════════════════════════════════════════════ */
+const PanelOrcamentoFuncao = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Orçamento Total" value={ptaSummary.totalOrcamento} sub="PTA 2026" color={C.teal} delay={0} icon={Landmark} />
+      <KPI title="Desp. Corrente" value={ptaSummary.totalCorrente} sub="85,3% do total" color={C.blue} delay={120} icon={Wallet} />
+      <KPI title="Desp. Capital" value={ptaSummary.totalCapital} sub="14,7% do total" color={C.yellow} delay={240} icon={PiggyBank} />
+      <KPI title="Funções" value={String(ptaSummary.totalFuncoes)} sub="áreas de atuação" color={C.purple} delay={360} icon={Layers} />
+    </div>
+    <div className="flex-shrink-0" style={{ height: 380 }}>
+      <Chart title="Orçamento por Função (R$ milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={orcamentoFuncao} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="funcao" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={110} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800} animationEasing="ease-out">
+              {orcamentoFuncao.map((entry, i) => <Cell key={i} fill={entry.fill} />)}
+              <LabelList dataKey="valor" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `${v.toLocaleString('pt-BR')}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 280 }}>
+      <Chart title="Categoria Econômica">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={categoriaEconomica} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+              {categoriaEconomica.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Top Subfunções (R$ milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={topSubfuncoes} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="subfuncao" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={110} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {topSubfuncoes.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              <LabelList dataKey="valor" position="right" fontSize={11} fill={C.label} formatter={(v: number) => `${v.toLocaleString('pt-BR')}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════════
+   PANEL 11 — ORÇAMENTO POR ÓRGÃO (PTA 2026)
+   ═══════════════════════════════════════════════════════════ */
+const PanelOrcamentoOrgao = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Maior Órgão" value="SEPLAG" sub="R$ 6,22 bi" color={C.purple} delay={0} icon={Building2} />
+      <KPI title="Educação" value="R$ 5,81 bi" sub="SEDUC" color={C.blue} delay={120} icon={GraduationCap} />
+      <KPI title="Segurança" value="R$ 4,80 bi" sub="SESP" color={C.red} delay={240} icon={Shield} />
+      <KPI title="Saúde" value="R$ 4,79 bi" sub="SES" color={C.teal} delay={360} icon={Hospital} />
+    </div>
+    <div className="flex-shrink-0" style={{ height: 400 }}>
+      <Chart title="Orçamento por Órgão (R$ milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={orcamentoOrgao} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="sigla" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={70} />
+            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {orcamentoOrgao.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              <LabelList dataKey="valor" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `${v.toLocaleString('pt-BR')}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    <div className="flex-shrink-0" style={{ height: 240 }}>
+      <Chart title="Modalidade de Aplicação">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={modalidadeAplicacao} cx="50%" cy="50%" innerRadius="20%" outerRadius="48%" paddingAngle={2} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+              {modalidadeAplicacao.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════════════════
+   PANEL 12 — DESPESAS DETALHADAS (PTA 2026)
+   ═══════════════════════════════════════════════════════════ */
+const PanelDespesas = () => (
+  <div className="flex flex-col gap-2 h-full overflow-auto">
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Pessoal Ativo" value="R$ 8,82 bi" sub="26% do orçamento" color={C.blue} delay={0} icon={Users} />
+      <KPI title="Obras e Instal." value="R$ 3,36 bi" sub="9,9% do orçamento" color={C.yellow} delay={120} icon={HardHat} />
+      <KPI title="Serv. Terceiros" value="R$ 3,68 bi" sub="Pessoa Jurídica" color={C.teal} delay={240} icon={Receipt} />
+      <KPI title="Investim. TIC" value="R$ 0,65 bi" sub="1,9% do total" color={C.green} delay={360} icon={BadgeDollarSign} />
+    </div>
+    <div className="flex-shrink-0" style={{ height: 360 }}>
+      <Chart title="Pacote da Despesa (R$ milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={pacoteDespesa} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="pacote" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={110} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {pacoteDespesa.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              <LabelList dataKey="valor" position="right" fontSize={11} fill={C.label} formatter={(v: number) => `${v.toLocaleString('pt-BR')}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+    <div className="grid grid-cols-2 gap-2 flex-shrink-0" style={{ height: 280 }}>
+      <Chart title="Elementos de Despesa (R$ milhões)">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={elementoDespesa} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 5 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+            <XAxis type="number" hide />
+            <YAxis type="category" dataKey="elemento" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={100} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
+              {elementoDespesa.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              <LabelList dataKey="valor" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v.toLocaleString('pt-BR')}`} />
+            </Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </Chart>
+      <Chart title="Investimento em TIC">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={ticInvestimento} cx="50%" cy="50%" innerRadius="25%" outerRadius="50%" paddingAngle={3} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+              {ticInvestimento.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            </Pie>
+            <Tooltip content={<PieTooltip />} />
+          </PieChart>
+        </ResponsiveContainer>
+      </Chart>
+    </div>
+  </div>
+);
+
+const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoFuncao, PanelOrcamentoOrgao, PanelDespesas];
+const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12"];
 
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
@@ -1325,9 +1481,9 @@ const SingleDashboard = () => {
 
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle"];
-  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041"];
+  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento por Função", "Orçamento por Órgão", "Despesas Detalhadas"];
+  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#0a1628", "#0a1628", "#0a1628"];
 
   const ROTATE_INTERVAL = 30;
   const [now, setNow] = useState(new Date());
@@ -1441,15 +1597,19 @@ const SingleDashboard = () => {
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
            {formattedDate} — {formattedTime}
          </span>
-          {active === 8 ? (
-            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
-              Fonte: Relatório Executivo - Benefícios do Controle - 2025
-            </span>
-          ) : active === 4 || active === 5 ? (
-            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
-              Fonte: Balanço de Gestão 2025 — CGE-MT
-            </span>
-          ) : active === 6 || active === 7 ? (
+           {active === 8 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: Relatório Executivo - Benefícios do Controle - 2025
+             </span>
+           ) : active >= 9 && active <= 11 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: PTA 2026 — Governo do Estado de Mato Grosso
+             </span>
+           ) : active === 4 || active === 5 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: Balanço de Gestão 2025 — CGE-MT
+             </span>
+           ) : active === 6 || active === 7 ? (
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: SINFRA-MT — Obras Estratégicas
             </span>
