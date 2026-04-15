@@ -1257,7 +1257,7 @@ const PanelOrcamentoFuncao = () => (
       <KPI title="Orçamento Total" value={ptaSummary.totalOrcamento} sub="PTA 2026" color={C.teal} delay={0} icon={Landmark} />
       <KPI title="Desp. Corrente" value={ptaSummary.totalCorrente} sub="85,3% do total" color={C.blue} delay={120} icon={Wallet} />
       <KPI title="Desp. Capital" value={ptaSummary.totalCapital} sub="14,7% do total" color={C.yellow} delay={240} icon={PiggyBank} />
-      <KPI title="Funções" value={ptaSummary.totalFuncoes} sub="áreas de atuação" color={C.purple} delay={360} icon={Layers} />
+      <KPI title="Funções" value={String(ptaSummary.totalFuncoes)} sub="áreas de atuação" color={C.purple} delay={360} icon={Layers} />
     </div>
     <div className="flex-shrink-0" style={{ height: 380 }}>
       <Chart title="Orçamento por Função (R$ milhões)">
