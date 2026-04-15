@@ -1451,6 +1451,9 @@ const SingleDashboard = () => {
   const [now, setNow] = useState(new Date());
   const [progress, setProgress] = useState(0);
 
+  // Store progress when paused
+  const [pausedProgress, setPausedProgress] = useState(0);
+
   useEffect(() => {
     let hasNavigated = false;
     let rafId: number;
@@ -1465,16 +1468,20 @@ const SingleDashboard = () => {
 
     const tick = () => {
       setNow(new Date());
-      const elapsedMs = getElapsedMs();
-      setProgress((elapsedMs / (ROTATE_INTERVAL * 1000)) * 100);
+      if (!paused) {
+        const elapsedMs = getElapsedMs();
+        const p = (elapsedMs / (ROTATE_INTERVAL * 1000)) * 100;
+        setProgress(p);
+        setPausedProgress(p);
+      }
       rafId = requestAnimationFrame(tick);
     };
 
     rafId = requestAnimationFrame(tick);
 
     if (sequence) {
-      // For rotation routes, just force re-render at boundaries
       const checkRotate = setInterval(() => {
+        if (paused) return;
         const s = new Date().getSeconds();
         if (s === 1 || s === 31) {
           if (!hasNavigated) {
@@ -1487,8 +1494,8 @@ const SingleDashboard = () => {
       }, 500);
       return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     } else {
-      // For single-page routes, navigate to next panel
       const checkRotate = setInterval(() => {
+        if (paused) return;
         const s = new Date().getSeconds();
         if (s === 1 || s === 31) {
           if (!hasNavigated) {
@@ -1502,7 +1509,7 @@ const SingleDashboard = () => {
       }, 500);
       return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     }
-  }, [active, navigate, sequence, rotationTick]);
+  }, [active, navigate, sequence, rotationTick, paused]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
