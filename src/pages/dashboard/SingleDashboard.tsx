@@ -1356,7 +1356,7 @@ const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10"
 const rotationSequences: Record<string, number[]> = {
   t1: [0, 1, 2, 3],   // P1, P2, P3, P4
   t2: [2, 3, 0, 1],   // P3, P4, P1, P2
-  t3: [6, 7],          // P7, P8
+  t3: [6, 7, 9],       // P7, P8, P10
   t4: [4, 5, 8],       // P5, P6, P9
 };
 
