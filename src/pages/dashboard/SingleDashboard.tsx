@@ -1438,21 +1438,24 @@ const SingleDashboard = () => {
 
   useEffect(() => {
     let hasNavigated = false;
+    let rafId: number;
 
-    const getElapsedInWindow = () => {
-      const s = new Date().getSeconds();
-      return ((s - 1 + 60) % 60) % 30;
+    const getElapsedMs = () => {
+      const d = new Date();
+      const s = d.getSeconds();
+      const ms = d.getMilliseconds();
+      const totalMs = (((s - 1 + 60) % 60) % 30) * 1000 + ms;
+      return totalMs;
     };
 
     const tick = () => {
       setNow(new Date());
-      const elapsed = getElapsedInWindow();
-      setProgress((elapsed / ROTATE_INTERVAL) * 100);
+      const elapsedMs = getElapsedMs();
+      setProgress((elapsedMs / (ROTATE_INTERVAL * 1000)) * 100);
+      rafId = requestAnimationFrame(tick);
     };
 
-    tick();
-
-    const timer = setInterval(tick, 1000);
+    rafId = requestAnimationFrame(tick);
 
     if (sequence) {
       // For rotation routes, just force re-render at boundaries
