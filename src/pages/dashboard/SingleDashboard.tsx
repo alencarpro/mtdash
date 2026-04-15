@@ -1254,33 +1254,12 @@ const PanelBeneficios = () => (
 const PanelOrcamentoPTA = () => (
   <div className="grid h-full gap-1" style={{ gridTemplateColumns: '1.3fr 1fr 1fr', gridTemplateRows: 'auto 1fr 1fr' }}>
 
-    {/* ── Row 0: Hero KPIs with glassmorphism ── */}
-    <div className="col-span-3 grid grid-cols-6 gap-1">
-      {[
-        { label: "Orçamento Total", val: ptaSummary.totalOrcamento, sub: "PTA 2026", color: C.teal, icon: Landmark },
-        { label: "Desp. Corrente", val: ptaSummary.totalCorrente, sub: "85,3%", color: C.blue, icon: Wallet },
-        { label: "Desp. Capital", val: ptaSummary.totalCapital, sub: "14,7%", color: C.yellow, icon: PiggyBank },
-        { label: "Pessoal", val: "R$ 8,82 bi", sub: "26% orçam.", color: C.purple, icon: Users },
-        { label: "Obras", val: "R$ 3,36 bi", sub: "9,9% orçam.", color: "#fb923c", icon: HardHat },
-        { label: "Serviços", val: "R$ 3,68 bi", sub: "Terc. PJ", color: C.green, icon: Receipt },
-      ].map((kpi, i) => (
-        <div
-          key={i}
-          className="rounded-lg px-2 py-1.5 relative overflow-hidden opacity-0"
-          style={{
-            background: `linear-gradient(135deg, ${kpi.color}22 0%, rgba(10,17,30,0.9) 80%)`,
-            border: `1px solid ${kpi.color}33`,
-            animation: `cascadeIn 0.7s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms forwards`,
-            backdropFilter: 'blur(12px)',
-          }}
-        >
-          <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-l-lg" style={{ background: `linear-gradient(180deg, ${kpi.color}, ${kpi.color}44)` }} />
-          <kpi.icon size={18} color={kpi.color} strokeWidth={1.5} className="absolute right-2 top-1.5 opacity-30" />
-          <p className="text-[8px] uppercase tracking-widest font-semibold ml-1" style={{ color: `${kpi.color}cc` }}>{kpi.label}</p>
-          <p className="text-[15px] font-black ml-1 leading-tight" style={{ color: '#f8fafc' }}>{kpi.val}</p>
-          <p className="text-[8px] ml-1" style={{ color: 'rgba(226,232,240,0.5)' }}>{kpi.sub}</p>
-        </div>
-      ))}
+    {/* ── Row 0: KPIs — padrão obras ── */}
+    <div className="col-span-3 grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+      <KPI title="Orçamento Total" value={ptaSummary.totalOrcamento} sub="PTA 2026" color={C.teal} delay={0} icon={Landmark} />
+      <KPI title="Desp. Corrente" value={ptaSummary.totalCorrente} sub="85,3% do total" color={C.blue} delay={120} icon={Wallet} />
+      <KPI title="Desp. Capital" value={ptaSummary.totalCapital} sub="14,7% do total" color={C.yellow} delay={240} icon={PiggyBank} />
+      <KPI title="Investimento" value="R$ 8,82 bi" sub="pessoal ativo" color={C.purple} delay={360} icon={Users} />
     </div>
 
     {/* ── Row 1, Col 1: Orçamento por Função — horizontal bars ── */}
