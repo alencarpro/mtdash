@@ -39,17 +39,17 @@ export const topSubfuncoes = [
   { subfuncao: "Produção Agropec.", valor: 680, fill: "#86efac" },
 ];
 
-export const orcamentoOrgao = [
-  { sigla: "SEPLAG", nome: "Planejamento e Gestão", valor: 6216, fill: "#a78bfa" },
-  { sigla: "SEDUC", nome: "Educação", valor: 5813, fill: "#60a5fa" },
-  { sigla: "SESP", nome: "Segurança Pública", valor: 4803, fill: "#f87171" },
-  { sigla: "SES", nome: "Saúde", valor: 4792, fill: "#8df3db" },
-  { sigla: "SINFRA", nome: "Infraestrutura", valor: 3452, fill: "#fbbf24" },
-  { sigla: "EGE", nome: "Encargos Gerais", valor: 1325, fill: "#fb923c" },
-  { sigla: "SEFAZ", nome: "Fazenda", valor: 1102, fill: "#86efac" },
-  { sigla: "SEJUS", nome: "Justiça", valor: 964, fill: "#c084fc" },
-  { sigla: "SEDEC", nome: "Desenv. Econômico", valor: 890, fill: "#34d399" },
-  { sigla: "SECITECI", nome: "Ciência e Tecnologia", valor: 854, fill: "#22d3ee" },
+export const orcamentoUO = [
+  { sigla: "FUNDO ESTADUAL DE SAÚDE", valor: 4792, fill: "#8df3db" },
+  { sigla: "SEDUC", valor: 3985, fill: "#60a5fa" },
+  { sigla: "FUNDO EST. SEG. PÚBLICA", valor: 3210, fill: "#f87171" },
+  { sigla: "FUNDO PREV. DO ESTADO", valor: 2840, fill: "#a78bfa" },
+  { sigla: "SINFRA", valor: 2650, fill: "#fbbf24" },
+  { sigla: "ENC. GERAIS DO ESTADO", valor: 2180, fill: "#fb923c" },
+  { sigla: "FUNDO EST. ASSIST. SOCIAL", valor: 1520, fill: "#86efac" },
+  { sigla: "SEPLAG", valor: 1436, fill: "#c084fc" },
+  { sigla: "FUNDO PENITENCIÁRIO", valor: 964, fill: "#34d399" },
+  { sigla: "SEFAZ", valor: 890, fill: "#22d3ee" },
 ];
 
 export const modalidadeAplicacao = [
