@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
 import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto, naturezaBeneficios, unidadesDetalhadas } from "@/data/beneficiosControleData";
-import { ptaSummary, orcamentoFuncao, categoriaEconomica, topSubfuncoes, orcamentoOrgao, modalidadeAplicacao, pacoteDespesa, elementoDespesa, ticInvestimento } from "@/data/ptaData";
+import { ptaSummary, orcamentoFuncao, categoriaEconomica, topSubfuncoes, orcamentoOrgao, modalidadeAplicacao, pacoteDespesa, elementoDespesa, ticInvestimento, radarOrcamento, composicaoFuncao } from "@/data/ptaData";
 import { Landmark, Building2, Receipt, Wallet, PiggyBank, BadgeDollarSign } from "lucide-react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer,
