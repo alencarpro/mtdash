@@ -1383,11 +1383,26 @@ const SingleDashboard = () => {
   const [manualIndex, setManualIndex] = useState<number | null>(null);
   // Hover idle: disable hover effects after 5s of no mouse movement
   const [hoverDisabled, setHoverDisabled] = useState(false);
+  // Pause auto-rotation
+  const [paused, setPaused] = useState(false);
 
   // Reset manual override when rotation tick changes (auto-advance)
   useEffect(() => {
-    setManualIndex(null);
-  }, [rotationTick]);
+    if (!paused) setManualIndex(null);
+  }, [rotationTick, paused]);
+
+  // Toggle pause with Space or P key
+  useEffect(() => {
+    if (!sequence) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        setPaused(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [sequence]);
 
   // Mouse idle timer: after 5s without movement, disable hover
   useEffect(() => {
