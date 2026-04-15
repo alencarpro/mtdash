@@ -976,8 +976,87 @@ const ProgressRing = ({ value, size = 90, label }: { value: number; size?: numbe
 };
 
 /* Shared obra card with cameras — optimized layout */
-const CAMERA_VIEWPORT = { width: 430, height: 300 };
+const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; visible?: boolean }) => {
+  const shortName =
+    o.obraId === 1 ? "BRT Cuiabá/VG" :
+    o.obraId === 2 ? "Cplx. Viário Leblon" :
+    o.obraId === 3 ? "Hosp. Júlio Muller" :
+    "Ponte Rio Juruena";
+  const pct = parseFloat(o.contrato.percentualExecutado.replace("%", "").replace(",", "."));
+  const camCount = o.cameras.length;
+  const camCols = camCount <= 2 ? 'grid-cols-2' : 'grid-cols-3';
 
+  return (
+    <div
+      id={`obra-card-${o.obraId}`}
+      className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
+      style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
+    >
+      {/* Header row: title + badge */}
+      <div className="flex items-center gap-3">
+        <HardHat className="w-7 h-7 flex-shrink-0" style={{ color: C.teal }} />
+        <p className="text-[18px] sm:text-[22px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
+        <span className="ml-auto text-[14px] sm:text-[16px] px-3 py-1.5 rounded-md font-semibold" style={{ background: pct >= 100 ? 'rgba(134,239,172,0.2)' : 'rgba(141,243,219,0.12)', color: pct >= 100 ? C.green : 'rgba(226,232,240,0.9)' }}>
+          {o.contrato.percentualExecutado} executado
+        </span>
+      </div>
+
+      {/* Info row: ring + details centered */}
+      <div className="flex items-center justify-center gap-6">
+        <ProgressRing value={pct} size={100} label="" />
+        <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[15px] sm:text-[17px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+          <span>Valor Total:</span><span className="font-bold text-right" style={{ color: '#f8fafc' }}>{o.contrato.valorTotal}</span>
+          <span>Contrato:</span><span className="text-right">{o.contrato.contrato}</span>
+          <span>Situação:</span><span className="text-right font-semibold" style={{ color: o.contrato.situacao === 'Vigente' ? C.green : C.red }}>{o.contrato.situacao}</span>
+          <span>Pago:</span><span className="font-bold text-right" style={{ color: C.yellow }}>{o.contrato.percentualPago}</span>
+        </div>
+      </div>
+
+      {/* Cameras */}
+      {camCount > 0 && (
+        <div className="flex flex-col gap-2 mt-1">
+          <p className="text-[14px] sm:text-[16px] font-semibold flex items-center gap-1.5" style={{ color: C.teal }}>
+            <Camera className="w-5 h-5" /> Câmeras ao vivo ({camCount})
+          </p>
+          <div className={`grid ${camCols} gap-2`}>
+            {o.cameras.map((cam, ci) => (
+              <div key={ci} className="flex flex-col gap-1">
+                <div
+                  className="rounded-md overflow-hidden relative w-full"
+                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
+                >
+                  {visible ? (
+                    <iframe
+                      src={cam.link}
+                      title={cam.tpObra || cam.nome}
+                      style={{
+                        border: 'none',
+                        background: '#0a111e',
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      loading="eager"
+                      allow="autoplay; encrypted-media"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ color: 'rgba(226,232,240,0.4)' }}>
+                      <Camera className="w-8 h-8" />
+                    </div>
+                  )}
+                </div>
+                <span className="text-[12px] sm:text-[14px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
+                  {cam.tpObra || cam.nome}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
   const shortName =
     o.obraId === 1 ? "BRT Cuiabá/VG" :
