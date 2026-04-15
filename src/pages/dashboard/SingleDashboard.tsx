@@ -1605,10 +1605,11 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
-              Fonte: Balanço de Gestão 2025 — CGE-MT
-            </span>
-          ) : active === 6 || active === 7 ? (
+           ) : active === 4 || active === 5 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: Balanço de Gestão 2025 — CGE-MT
+             </span>
+           ) : active === 6 || active === 7 ? (
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: SINFRA-MT — Obras Estratégicas
             </span>
