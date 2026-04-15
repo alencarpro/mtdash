@@ -1530,7 +1530,7 @@ const SingleDashboard = () => {
       {/* Reload progress bar */}
       <div className="flex-shrink-0 w-full h-[2px]" style={{ background: 'rgba(148,163,184,0.1)' }}>
         <div
-          className="h-full transition-all duration-1000 ease-linear"
+          className="h-full"
           style={{
             width: `${progress}%`,
             background: 'linear-gradient(90deg, #8df3db, #60a5fa)',
