@@ -997,10 +997,22 @@ const CameraFrame = ({ cam, visible, staggerMs = 0 }: { cam: typeof obrasEstrate
 
   // Staggered mount: delay iframe creation to avoid burst of connections
   useEffect(() => {
-    if (!visible || staggerMs === 0) { setMounted(visible); return; }
-    const t = setTimeout(() => setMounted(true), staggerMs);
-    return () => { clearTimeout(t); setMounted(false); };
-  }, [visible, staggerMs]);
+    const canMount = visible && pageVisible;
+
+    if (!canMount) {
+      setMounted(false);
+      return;
+    }
+
+    if (staggerMs === 0) {
+      setMounted(true);
+      return;
+    }
+
+    setMounted(false);
+    const t = window.setTimeout(() => setMounted(true), staggerMs);
+    return () => window.clearTimeout(t);
+  }, [visible, pageVisible, staggerMs]);
 
   const shouldRender = visible && mounted && pageVisible;
 
@@ -1400,24 +1412,12 @@ const SingleDashboard = () => {
   const [hoverDisabled, setHoverDisabled] = useState(false);
   // Pause auto-rotation
   const [paused, setPaused] = useState(false);
+  const [pausedActivePanel, setPausedActivePanel] = useState<number | null>(null);
 
   // Reset manual override when rotation tick changes (auto-advance)
   useEffect(() => {
     if (!paused) setManualIndex(null);
   }, [rotationTick, paused]);
-
-  // Toggle pause with Space or P key
-  useEffect(() => {
-    if (!sequence) return;
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.code === 'Space' || e.key === 'p' || e.key === 'P') {
-        e.preventDefault();
-        setPaused(prev => !prev);
-      }
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [sequence]);
 
   // Mouse idle timer: after 5s without movement, disable hover
   useEffect(() => {
@@ -1435,8 +1435,14 @@ const SingleDashboard = () => {
     };
   }, []);
 
+  const autoSeqIndex = sequence ? getRotationIndex() % sequence.length : 0;
+
   const active = sequence
-    ? (manualIndex !== null ? sequence[manualIndex % sequence.length] : sequence[getRotationIndex() % sequence.length])
+    ? (manualIndex !== null
+        ? sequence[manualIndex % sequence.length]
+        : paused && pausedActivePanel !== null
+          ? pausedActivePanel
+          : sequence[autoSeqIndex])
     : (() => {
         const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
         return isNaN(idx) ? 0 : idx;
@@ -1444,8 +1450,29 @@ const SingleDashboard = () => {
 
   // Current sequence index for edge navigation
   const currentSeqIndex = sequence
-    ? (manualIndex !== null ? manualIndex % sequence.length : getRotationIndex() % sequence.length)
+    ? (manualIndex !== null
+        ? manualIndex % sequence.length
+        : paused && pausedActivePanel !== null
+          ? Math.max(0, sequence.indexOf(pausedActivePanel))
+          : autoSeqIndex)
     : 0;
+
+  // Toggle pause with Space or P key
+  useEffect(() => {
+    if (!sequence) return;
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.code === 'Space' || e.key === 'p' || e.key === 'P') {
+        e.preventDefault();
+        setPaused(prev => {
+          const next = !prev;
+          setPausedActivePanel(next ? active : null);
+          return next;
+        });
+      }
+    };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [active, sequence]);
 
   const goNext = () => {
     if (!sequence) return;
@@ -1471,7 +1498,6 @@ const SingleDashboard = () => {
 
   useEffect(() => {
     let hasNavigated = false;
-    let rafId: number;
 
     const getElapsedMs = () => {
       const d = new Date();
@@ -1489,10 +1515,10 @@ const SingleDashboard = () => {
         setProgress(p);
         setPausedProgress(p);
       }
-      rafId = requestAnimationFrame(tick);
     };
 
-    rafId = requestAnimationFrame(tick);
+    tick();
+    const clockTick = window.setInterval(tick, 250);
 
     if (sequence) {
       const checkRotate = setInterval(() => {
@@ -1507,7 +1533,7 @@ const SingleDashboard = () => {
           hasNavigated = false;
         }
       }, 500);
-      return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
+      return () => { clearInterval(clockTick); clearInterval(checkRotate); };
     } else {
       const checkRotate = setInterval(() => {
         if (paused) return;
@@ -1522,7 +1548,7 @@ const SingleDashboard = () => {
           hasNavigated = false;
         }
       }, 500);
-      return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
+      return () => { clearInterval(clockTick); clearInterval(checkRotate); };
     }
   }, [active, navigate, sequence, rotationTick, paused]);
 
@@ -1563,7 +1589,14 @@ const SingleDashboard = () => {
       <header
         className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 select-none"
         style={{ borderBottom: '1px solid rgba(148,163,184,0.18)', background: panelHeaderBgs[active], cursor: sequence ? 'pointer' : 'default' }}
-        onClick={() => { if (sequence) setPaused(prev => !prev); }}
+        onClick={() => {
+          if (!sequence) return;
+          setPaused(prev => {
+            const next = !prev;
+            setPausedActivePanel(next ? active : null);
+            return next;
+          });
+        }}
       >
         <img src={tituloImg} alt="Título" className="h-12 sm:h-[60px] object-contain pointer-events-none" />
         <div className="flex items-center gap-3">
