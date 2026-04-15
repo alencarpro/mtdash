@@ -1302,8 +1302,12 @@ const PanelOrcamentoPTA = () => (
             <YAxis hide />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="corrente" name="Corrente" stackId="a" fill="url(#gCorr)" radius={[0, 0, 0, 0]} animationDuration={1800} />
-            <Bar dataKey="capital" name="Capital" stackId="a" fill="url(#gCap)" radius={[3, 3, 0, 0]} animationDuration={1800} animationBegin={300} />
+            <Bar dataKey="corrente" name="Corrente" stackId="a" fill="url(#gCorr)" radius={[0, 0, 0, 0]} animationDuration={1800}>
+              <LabelList dataKey="corrente" position="inside" fontSize={8} fill="#f8fafc" formatter={(v: number) => v >= 1000 ? `${(v/1000).toFixed(1)}k` : v.toLocaleString('pt-BR')} />
+            </Bar>
+            <Bar dataKey="capital" name="Capital" stackId="a" fill="url(#gCap)" radius={[3, 3, 0, 0]} animationDuration={1800} animationBegin={300}>
+              <LabelList dataKey="capital" position="inside" fontSize={7} fill="#f8fafc" formatter={(v: number) => v >= 100 ? v.toLocaleString('pt-BR') : ''} />
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
@@ -1325,7 +1329,9 @@ const PanelOrcamentoPTA = () => (
             <XAxis dataKey="subfuncao" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} interval={0} angle={-30} textAnchor="end" height={45} />
             <YAxis hide />
             <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ stroke: C.teal, strokeDasharray: '3 3' }} />
-            <Area type="monotone" dataKey="valor" stroke={C.teal} strokeWidth={2} fill="url(#gAreaSub)" animationDuration={2200} animationEasing="ease-out" dot={{ r: 3, fill: C.teal, strokeWidth: 0 }} />
+            <Area type="monotone" dataKey="valor" stroke={C.teal} strokeWidth={2} fill="url(#gAreaSub)" animationDuration={2200} animationEasing="ease-out" dot={{ r: 3, fill: C.teal, strokeWidth: 0 }}>
+              <LabelList dataKey="valor" position="top" fontSize={8} fill={C.label} formatter={(v: number) => v >= 1000 ? `${(v/1000).toFixed(1)}k` : String(v)} offset={6} />
+            </Area>
           </AreaChart>
         </ResponsiveContainer>
       </Chart>
