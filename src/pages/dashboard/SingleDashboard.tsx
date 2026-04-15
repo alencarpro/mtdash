@@ -1098,7 +1098,7 @@ const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; v
           </p>
           <div className={`grid ${camCols} gap-2`}>
             {o.cameras.map((cam, ci) => (
-              <CameraFrame key={ci} cam={cam} visible={visible} />
+              <CameraFrame key={ci} cam={cam} visible={visible} staggerMs={ci * 800} />
             ))}
           </div>
         </div>
