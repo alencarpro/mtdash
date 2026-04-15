@@ -976,9 +976,7 @@ const ProgressRing = ({ value, size = 90, label }: { value: number; size?: numbe
 };
 
 /* Shared obra card with cameras — optimized layout */
-const CAMERA_VIEWPORT = { width: 430, height: 300 };
-
-const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
+const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; visible?: boolean }) => {
   const shortName =
     o.obraId === 1 ? "BRT Cuiabá/VG" :
     o.obraId === 2 ? "Cplx. Viário Leblon" :
@@ -987,40 +985,6 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
   const pct = parseFloat(o.contrato.percentualExecutado.replace("%", "").replace(",", "."));
   const camCount = o.cameras.length;
   const camCols = camCount <= 2 ? 'grid-cols-2' : 'grid-cols-3';
-  const [cameraScales, setCameraScales] = useState<Record<number, number>>({});
-
-  useEffect(() => {
-    if (!camCount || typeof ResizeObserver === "undefined") return;
-
-    const root = document.getElementById(`obra-card-${o.obraId}`);
-    if (!root) return;
-
-    const cameraFrames = Array.from(root.querySelectorAll<HTMLElement>("[data-camera-frame-index]"));
-    if (!cameraFrames.length) return;
-
-    const measureFrame = (element: HTMLElement) => {
-      const index = Number(element.dataset.cameraFrameIndex);
-      const { width, height } = element.getBoundingClientRect();
-
-      if (!width || !height || Number.isNaN(index)) return;
-
-      const nextScale = Math.min(width / CAMERA_VIEWPORT.width, height / CAMERA_VIEWPORT.height);
-
-      setCameraScales((prev) => (
-        prev[index] === nextScale ? prev : { ...prev, [index]: nextScale }
-      ));
-    };
-
-    cameraFrames.forEach(measureFrame);
-
-    const observer = new ResizeObserver((entries) => {
-      entries.forEach((entry) => measureFrame(entry.target as HTMLElement));
-    });
-
-    cameraFrames.forEach((frame) => observer.observe(frame));
-
-    return () => observer.disconnect();
-  }, [camCount, o.obraId]);
 
   return (
     <div
@@ -1058,29 +1022,29 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
             {o.cameras.map((cam, ci) => (
               <div key={ci} className="flex flex-col gap-1">
                 <div
-                  data-camera-frame-index={ci}
-                  className="rounded-md overflow-hidden relative group/cam w-full"
+                  className="rounded-md overflow-hidden relative w-full"
                   style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
                 >
-                  <iframe
-                    src={cam.link}
-                    title={cam.tpObra || cam.nome}
-                    style={{
-                      border: 'none',
-                      background: '#0a111e',
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      width: `${CAMERA_VIEWPORT.width}px`,
-                      height: `${CAMERA_VIEWPORT.height}px`,
-                      transform: `translate(-50%, -50%) scale(${cameraScales[ci] ?? 1})`,
-                      transformOrigin: 'center center',
-                      willChange: 'transform',
-                    }}
-                    loading="lazy"
-                    sandbox="allow-scripts allow-same-origin"
-                    allow="autoplay"
-                  />
+                  {visible ? (
+                    <iframe
+                      src={cam.link}
+                      title={cam.tpObra || cam.nome}
+                      style={{
+                        border: 'none',
+                        background: '#0a111e',
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                      }}
+                      loading="eager"
+                      allow="autoplay; encrypted-media"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center" style={{ color: 'rgba(226,232,240,0.4)' }}>
+                      <Camera className="w-8 h-8" />
+                    </div>
+                  )}
                 </div>
                 <span className="text-[12px] sm:text-[14px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
                   {cam.tpObra || cam.nome}
@@ -1093,6 +1057,8 @@ const ObraCard = ({ o }: { o: typeof obrasEstrategicasList[0] }) => {
     </div>
   );
 };
+
+
 
 const obrasGroup1 = obrasEstrategicasList.filter(o => o.obraId <= 2);
 const obrasGroup2 = obrasEstrategicasList.filter(o => o.obraId >= 3);
