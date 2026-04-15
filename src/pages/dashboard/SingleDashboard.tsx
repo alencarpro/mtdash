@@ -1124,7 +1124,7 @@ const PanelObras = () => (
       <KPI title="Investimento" value="R$ 590,7 Mi" sub="obras neste painel" color={C.green} delay={360} icon={CircleDollarSign} />
     </div>
     <div className="grid grid-cols-1 gap-2 flex-1 min-h-0">
-      {obrasGroup1.map(o => <ObraCard key={o.obraId} o={o} />)}
+      {obrasGroup1.map(o => <ObraCard key={o.obraId} o={o} visible={true} />)}
     </div>
   </div>
 );
@@ -1141,7 +1141,7 @@ const PanelObrasCameras = () => (
       <KPI title="Investimento" value="R$ 556,2 Mi" sub="obras neste painel" color={C.teal} delay={360} icon={CircleDollarSign} />
     </div>
     <div className="grid grid-cols-1 gap-2 flex-1 min-h-0">
-      {obrasGroup2.map(o => <ObraCard key={o.obraId} o={o} />)}
+      {obrasGroup2.map(o => <ObraCard key={o.obraId} o={o} visible={true} />)}
     </div>
   </div>
 );
