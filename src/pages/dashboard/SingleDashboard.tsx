@@ -975,6 +975,65 @@ const ProgressRing = ({ value, size = 90, label }: { value: number; size?: numbe
   );
 };
 
+/* Camera frame with dynamic scaling to fit container */
+const CameraFrame = ({ cam, visible }: { cam: typeof obrasEstrategicasList[0]['cameras'][0]; visible: boolean }) => {
+  const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(1);
+  const INTERNAL_W = 430;
+  const INTERNAL_H = 300;
+
+  useEffect(() => {
+    if (!containerEl || !visible) return;
+    const measure = () => {
+      const { width, height } = containerEl.getBoundingClientRect();
+      if (width && height) {
+        setScale(Math.min(width / INTERNAL_W, height / INTERNAL_H));
+      }
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(containerEl);
+    return () => ro.disconnect();
+  }, [containerEl, visible]);
+
+  return (
+    <div className="flex flex-col gap-1">
+      <div
+        ref={setContainerEl}
+        className="rounded-md overflow-hidden relative w-full"
+        style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
+      >
+        {visible ? (
+          <iframe
+            src={cam.link}
+            title={cam.tpObra || cam.nome}
+            style={{
+              border: 'none',
+              background: '#0a111e',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: `${INTERNAL_W}px`,
+              height: `${INTERNAL_H}px`,
+              transform: `translate(-50%, -50%) scale(${scale})`,
+              transformOrigin: 'center center',
+            }}
+            loading="eager"
+            allow="autoplay; encrypted-media"
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center" style={{ color: 'rgba(226,232,240,0.4)' }}>
+            <Camera className="w-8 h-8" />
+          </div>
+        )}
+      </div>
+      <span className="text-[12px] sm:text-[14px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
+        {cam.tpObra || cam.nome}
+      </span>
+    </div>
+  );
+};
+
 /* Shared obra card with cameras — optimized layout */
 const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; visible?: boolean }) => {
   const shortName =
@@ -992,7 +1051,6 @@ const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; v
       className="rounded-lg p-4 sm:p-5 flex flex-col gap-3"
       style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)' }}
     >
-      {/* Header row: title + badge */}
       <div className="flex items-center gap-3">
         <HardHat className="w-7 h-7 flex-shrink-0" style={{ color: C.teal }} />
         <p className="text-[18px] sm:text-[22px] font-bold leading-snug" style={{ color: '#f8fafc' }}>{shortName}</p>
@@ -1001,7 +1059,6 @@ const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; v
         </span>
       </div>
 
-      {/* Info row: ring + details centered */}
       <div className="flex items-center justify-center gap-6">
         <ProgressRing value={pct} size={100} label="" />
         <div className="grid grid-cols-2 gap-x-6 gap-y-2 text-[15px] sm:text-[17px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
@@ -1012,7 +1069,6 @@ const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; v
         </div>
       </div>
 
-      {/* Cameras */}
       {camCount > 0 && (
         <div className="flex flex-col gap-2 mt-1">
           <p className="text-[14px] sm:text-[16px] font-semibold flex items-center gap-1.5" style={{ color: C.teal }}>
@@ -1020,36 +1076,7 @@ const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; v
           </p>
           <div className={`grid ${camCols} gap-2`}>
             {o.cameras.map((cam, ci) => (
-              <div key={ci} className="flex flex-col gap-1">
-                <div
-                  className="rounded-md overflow-hidden relative w-full"
-                  style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
-                >
-                  {visible ? (
-                    <iframe
-                      src={cam.link}
-                      title={cam.tpObra || cam.nome}
-                      style={{
-                        border: 'none',
-                        background: '#0a111e',
-                        position: 'absolute',
-                        inset: 0,
-                        width: '100%',
-                        height: '100%',
-                      }}
-                      loading="eager"
-                      allow="autoplay; encrypted-media"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center" style={{ color: 'rgba(226,232,240,0.4)' }}>
-                      <Camera className="w-8 h-8" />
-                    </div>
-                  )}
-                </div>
-                <span className="text-[12px] sm:text-[14px] text-center truncate" style={{ color: 'rgba(226,232,240,0.72)' }} title={cam.nome}>
-                  {cam.tpObra || cam.nome}
-                </span>
-              </div>
+              <CameraFrame key={ci} cam={cam} visible={visible} />
             ))}
           </div>
         </div>
