@@ -1470,7 +1470,7 @@ const SingleDashboard = () => {
           hasNavigated = false;
         }
       }, 500);
-      return () => { clearInterval(timer); clearInterval(checkRotate); };
+      return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     } else {
       // For single-page routes, navigate to next panel
       const checkRotate = setInterval(() => {
