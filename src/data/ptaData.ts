@@ -8,7 +8,6 @@ export const ptaSummary = {
   totalOrgaos: 30,
 };
 
-/* Painel 10 — Orçamento por Função */
 export const orcamentoFuncao = [
   { funcao: "Previdência Social", valor: 6378, fill: "#a78bfa" },
   { funcao: "Educação", valor: 6094, fill: "#60a5fa" },
@@ -40,7 +39,6 @@ export const topSubfuncoes = [
   { subfuncao: "Produção Agropec.", valor: 680, fill: "#86efac" },
 ];
 
-/* Painel 11 — Orçamento por Órgão */
 export const orcamentoOrgao = [
   { sigla: "SEPLAG", nome: "Planejamento e Gestão", valor: 6216, fill: "#a78bfa" },
   { sigla: "SEDUC", nome: "Educação", valor: 5813, fill: "#60a5fa" },
@@ -52,8 +50,6 @@ export const orcamentoOrgao = [
   { sigla: "SEJUS", nome: "Justiça", valor: 964, fill: "#c084fc" },
   { sigla: "SEDEC", nome: "Desenv. Econômico", valor: 890, fill: "#34d399" },
   { sigla: "SECITECI", nome: "Ciência e Tecnologia", valor: 854, fill: "#22d3ee" },
-  { sigla: "SEAF", nome: "Agric. Familiar", valor: 827, fill: "#f472b6" },
-  { sigla: "PGE", nome: "Procuradoria Geral", valor: 727, fill: "#a3e635" },
 ];
 
 export const modalidadeAplicacao = [
@@ -64,7 +60,6 @@ export const modalidadeAplicacao = [
   { name: "Outras", value: 1.3, fill: "#f87171" },
 ];
 
-/* Painel 12 — Despesas Detalhadas */
 export const pacoteDespesa = [
   { pacote: "Pessoal Ativo", valor: 8825, fill: "#60a5fa" },
   { pacote: "Pessoal Aposentado", valor: 4402, fill: "#a78bfa" },
@@ -74,8 +69,6 @@ export const pacoteDespesa = [
   { pacote: "Serviços Saúde", valor: 1258, fill: "#86efac" },
   { pacote: "Transf. Municípios", valor: 1163, fill: "#fb923c" },
   { pacote: "Pessoal Pensionista", valor: 864, fill: "#c084fc" },
-  { pacote: "Manut. Imóveis", valor: 817, fill: "#34d399" },
-  { pacote: "Indeniz. e Restit.", valor: 729, fill: "#22d3ee" },
 ];
 
 export const elementoDespesa = [
@@ -87,8 +80,28 @@ export const elementoDespesa = [
   { elemento: "Contrat. Temporária", valor: 1620, fill: "#86efac" },
   { elemento: "Contribuições", valor: 1510, fill: "#fb923c" },
   { elemento: "Venc. Fixos Militar", valor: 1470, fill: "#c084fc" },
-  { elemento: "Indenizações", valor: 920, fill: "#34d399" },
-  { elemento: "Pensões", valor: 850, fill: "#f472b6" },
+];
+
+/* Radar — distribuição percentual por macro-área */
+export const radarOrcamento = [
+  { area: "Educação", pct: 18 },
+  { area: "Saúde", pct: 14 },
+  { area: "Segurança", pct: 14 },
+  { area: "Previdência", pct: 19 },
+  { area: "Transporte", pct: 9 },
+  { area: "Administração", pct: 8 },
+  { area: "Social", pct: 7 },
+  { area: "Outros", pct: 11 },
+];
+
+/* Stacked area — composição corrente vs capital por top 6 funções */
+export const composicaoFuncao = [
+  { funcao: "Prev. Social", corrente: 6200, capital: 178 },
+  { funcao: "Educação", corrente: 5300, capital: 794 },
+  { funcao: "Saúde", corrente: 3800, capital: 895 },
+  { funcao: "Segurança", corrente: 4100, capital: 531 },
+  { funcao: "Transporte", corrente: 596, capital: 2550 },
+  { funcao: "Administração", corrente: 2400, capital: 459 },
 ];
 
 export const ticInvestimento = [
