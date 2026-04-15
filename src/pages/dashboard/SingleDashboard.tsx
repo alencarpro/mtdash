@@ -1309,23 +1309,24 @@ const PanelOrcamentoPTA = () => (
       </Chart>
     </div>
 
-    {/* ── Row 1, Col 3: Radar — distribuição % por macro-área ── */}
+    {/* ── Row 1, Col 3: Top Subfunções — Area chart ── */}
     <div className="min-h-0">
-      <Chart title="Distribuição % por Área">
+      <Chart title="Top Subfunções (R$ mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <RadarChart data={radarOrcamento} cx="50%" cy="50%" outerRadius="60%">
+          <AreaChart data={topSubfuncoes} margin={{ top: 8, right: 8, bottom: 30, left: -10 }}>
             <defs>
-              <linearGradient id="gRadarPta" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor={C.teal} stopOpacity={0.8} />
-                <stop offset="100%" stopColor={C.blue} stopOpacity={0.3} />
+              <linearGradient id="gAreaSub" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={C.teal} stopOpacity={0.6} />
+                <stop offset="50%" stopColor={C.blue} stopOpacity={0.25} />
+                <stop offset="100%" stopColor={C.purple} stopOpacity={0.05} />
               </linearGradient>
             </defs>
-            <PolarGrid stroke="rgba(148,163,184,0.15)" />
-            <PolarAngleAxis dataKey="area" tick={{ fill: C.axis, fontSize: 9 }} />
-            <PolarRadiusAxis tick={false} axisLine={false} />
-            <Radar name="% Orçamento" dataKey="pct" stroke={C.teal} fill="url(#gRadarPta)" strokeWidth={2} animationDuration={2000} dot={{ r: 3, fill: C.teal, strokeWidth: 0 }} />
-            <Tooltip content={<CustomTooltip unit="%" />} />
-          </RadarChart>
+            <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+            <XAxis dataKey="subfuncao" stroke={C.axis} fontSize={7} tickLine={false} axisLine={false} interval={0} angle={-30} textAnchor="end" height={45} />
+            <YAxis hide />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ stroke: C.teal, strokeDasharray: '3 3' }} />
+            <Area type="monotone" dataKey="valor" stroke={C.teal} strokeWidth={2} fill="url(#gAreaSub)" animationDuration={2200} animationEasing="ease-out" dot={{ r: 3, fill: C.teal, strokeWidth: 0 }} />
+          </AreaChart>
         </ResponsiveContainer>
       </Chart>
     </div>
