@@ -1252,102 +1252,197 @@ const PanelBeneficios = () => (
    PANEL 10 — ORÇAMENTO PTA 2026 (CONSOLIDADO)
    ═══════════════════════════════════════════════════════════ */
 const PanelOrcamentoPTA = () => (
-  <div className="grid h-full gap-1.5" style={{ gridTemplateColumns: '1fr 1fr 1fr', gridTemplateRows: 'auto 1fr 1fr' }}>
-    {/* Row 0: KPIs spanning full width */}
-    <div className="col-span-3 grid grid-cols-4 gap-1.5">
-      <KPI title="Orçamento Total" value={ptaSummary.totalOrcamento} sub="PTA 2026" color={C.teal} delay={0} icon={Landmark} />
-      <KPI title="Desp. Corrente" value={ptaSummary.totalCorrente} sub="85,3% do total" color={C.blue} delay={120} icon={Wallet} />
-      <KPI title="Desp. Capital" value={ptaSummary.totalCapital} sub="14,7% do total" color={C.yellow} delay={240} icon={PiggyBank} />
-      <KPI title="Pessoal Ativo" value="R$ 8,82 bi" sub="26% do orçamento" color={C.purple} delay={360} icon={Users} />
+  <div className="grid h-full gap-1" style={{ gridTemplateColumns: '1.2fr 1fr 1fr', gridTemplateRows: 'auto 1fr 0.85fr' }}>
+    {/* Row 0: KPIs — hero style */}
+    <div className="col-span-3 grid grid-cols-4 gap-1">
+      <div
+        className="rounded-lg px-3 py-2 flex items-center gap-3 relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgba(141,243,219,0.18) 0%, rgba(10,17,30,0.85) 70%)', border: '1px solid rgba(141,243,219,0.25)', animation: 'cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) 0ms forwards, glowBorder 6s ease-in-out infinite' }}
+      >
+        <Landmark size={28} color={C.teal} strokeWidth={1.5} className="opacity-60" />
+        <div>
+          <p className="text-[10px] uppercase tracking-wider font-medium" style={{ color: 'rgba(226,232,240,0.6)' }}>Orçamento Total</p>
+          <p className="text-xl font-extrabold" style={{ color: '#f8fafc' }}>{ptaSummary.totalOrcamento}</p>
+          <p className="text-[10px]" style={{ color: C.teal }}>PTA 2026</p>
+        </div>
+      </div>
+      <div
+        className="rounded-lg px-3 py-2 flex items-center gap-3 relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgba(96,165,250,0.15) 0%, rgba(10,17,30,0.85) 70%)', border: '1px solid rgba(96,165,250,0.2)', animation: 'cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) 120ms forwards, glowBorder 6s ease-in-out 120ms infinite' }}
+      >
+        <Wallet size={28} color={C.blue} strokeWidth={1.5} className="opacity-60" />
+        <div>
+          <p className="text-[10px] uppercase tracking-wider font-medium" style={{ color: 'rgba(226,232,240,0.6)' }}>Desp. Corrente</p>
+          <p className="text-xl font-extrabold" style={{ color: '#f8fafc' }}>{ptaSummary.totalCorrente}</p>
+          <p className="text-[10px]" style={{ color: C.blue }}>85,3% do total</p>
+        </div>
+      </div>
+      <div
+        className="rounded-lg px-3 py-2 flex items-center gap-3 relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgba(251,191,36,0.15) 0%, rgba(10,17,30,0.85) 70%)', border: '1px solid rgba(251,191,36,0.2)', animation: 'cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) 240ms forwards, glowBorder 6s ease-in-out 240ms infinite' }}
+      >
+        <PiggyBank size={28} color={C.yellow} strokeWidth={1.5} className="opacity-60" />
+        <div>
+          <p className="text-[10px] uppercase tracking-wider font-medium" style={{ color: 'rgba(226,232,240,0.6)' }}>Desp. Capital</p>
+          <p className="text-xl font-extrabold" style={{ color: '#f8fafc' }}>{ptaSummary.totalCapital}</p>
+          <p className="text-[10px]" style={{ color: C.yellow }}>14,7% do total</p>
+        </div>
+      </div>
+      <div
+        className="rounded-lg px-3 py-2 flex items-center gap-3 relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, rgba(167,139,250,0.15) 0%, rgba(10,17,30,0.85) 70%)', border: '1px solid rgba(167,139,250,0.2)', animation: 'cascadeIn 0.8s cubic-bezier(0.16,1,0.3,1) 360ms forwards, glowBorder 6s ease-in-out 360ms infinite' }}
+      >
+        <Users size={28} color={C.purple} strokeWidth={1.5} className="opacity-60" />
+        <div>
+          <p className="text-[10px] uppercase tracking-wider font-medium" style={{ color: 'rgba(226,232,240,0.6)' }}>Pessoal Ativo</p>
+          <p className="text-xl font-extrabold" style={{ color: '#f8fafc' }}>R$ 8,82 bi</p>
+          <p className="text-[10px]" style={{ color: C.purple }}>26% do orçamento</p>
+        </div>
+      </div>
     </div>
+
     {/* Row 1, Col 1: Orçamento por Função */}
     <div className="min-h-0">
       <Chart title="Orçamento por Função (R$ mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={orcamentoFuncao} layout="vertical" margin={{ top: 2, right: 38, bottom: 0, left: 0 }}>
+          <BarChart data={orcamentoFuncao} layout="vertical" margin={{ top: 2, right: 36, bottom: 0, left: 0 }}>
+            <defs>
+              {orcamentoFuncao.map((e, i) => (
+                <linearGradient key={i} id={`gFunc${i}`} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={e.fill} stopOpacity={0.7} />
+                  <stop offset="100%" stopColor={e.fill} stopOpacity={1} />
+                </linearGradient>
+              ))}
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="funcao" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={95} tick={WrappedYAxisTick} />
-            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {orcamentoFuncao.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            <YAxis type="category" dataKey="funcao" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={90} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 4, 4, 0]} animationDuration={1800} animationEasing="ease-out">
+              {orcamentoFuncao.map((_, i) => <Cell key={i} fill={`url(#gFunc${i})`} />)}
               <LabelList dataKey="valor" position="right" fontSize={9} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
     </div>
+
     {/* Row 1, Col 2: Orçamento por Órgão */}
     <div className="min-h-0">
       <Chart title="Orçamento por Órgão (R$ mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={orcamentoOrgao} layout="vertical" margin={{ top: 2, right: 38, bottom: 0, left: 0 }}>
+          <BarChart data={orcamentoOrgao} layout="vertical" margin={{ top: 2, right: 36, bottom: 0, left: 0 }}>
+            <defs>
+              {orcamentoOrgao.map((e, i) => (
+                <linearGradient key={i} id={`gOrg${i}`} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={e.fill} stopOpacity={0.7} />
+                  <stop offset="100%" stopColor={e.fill} stopOpacity={1} />
+                </linearGradient>
+              ))}
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="sigla" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={65} />
-            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {orcamentoOrgao.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            <YAxis type="category" dataKey="sigla" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={60} />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 4, 4, 0]} animationDuration={1800}>
+              {orcamentoOrgao.map((_, i) => <Cell key={i} fill={`url(#gOrg${i})`} />)}
               <LabelList dataKey="valor" position="right" fontSize={9} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
     </div>
+
     {/* Row 1, Col 3: Pacote da Despesa */}
     <div className="min-h-0">
       <Chart title="Pacote da Despesa (R$ mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={pacoteDespesa} layout="vertical" margin={{ top: 2, right: 38, bottom: 0, left: 0 }}>
+          <BarChart data={pacoteDespesa} layout="vertical" margin={{ top: 2, right: 36, bottom: 0, left: 0 }}>
+            <defs>
+              {pacoteDespesa.map((e, i) => (
+                <linearGradient key={i} id={`gPac${i}`} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={e.fill} stopOpacity={0.7} />
+                  <stop offset="100%" stopColor={e.fill} stopOpacity={1} />
+                </linearGradient>
+              ))}
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="pacote" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={95} tick={WrappedYAxisTick} />
-            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {pacoteDespesa.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            <YAxis type="category" dataKey="pacote" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={90} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 4, 4, 0]} animationDuration={1800}>
+              {pacoteDespesa.map((_, i) => <Cell key={i} fill={`url(#gPac${i})`} />)}
               <LabelList dataKey="valor" position="right" fontSize={9} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
     </div>
-    {/* Row 2, Col 1: Categoria Econômica */}
+
+    {/* Row 2, Col 1: Categoria Econômica — donut with center label */}
     <div className="min-h-0">
       <Chart title="Categoria Econômica">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={categoriaEconomica} cx="50%" cy="50%" innerRadius="20%" outerRadius="48%" paddingAngle={3} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
-              {categoriaEconomica.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            <defs>
+              <linearGradient id="gCatCorr" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#60a5fa" /><stop offset="100%" stopColor="#3b82f6" /></linearGradient>
+              <linearGradient id="gCatCap" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#fbbf24" /><stop offset="100%" stopColor="#f59e0b" /></linearGradient>
+            </defs>
+            <Pie data={categoriaEconomica} cx="50%" cy="50%" innerRadius="30%" outerRadius="52%" paddingAngle={4} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} strokeWidth={0}>
+              <Cell fill="url(#gCatCorr)" />
+              <Cell fill="url(#gCatCap)" />
             </Pie>
             <Tooltip content={<PieTooltip />} />
+            <text x="50%" y="48%" textAnchor="middle" dominantBaseline="central" fill={C.label} fontSize={13} fontWeight={700}>R$ 33,9 bi</text>
+            <text x="50%" y="56%" textAnchor="middle" dominantBaseline="central" fill="rgba(226,232,240,0.5)" fontSize={9}>Total</text>
           </PieChart>
         </ResponsiveContainer>
       </Chart>
     </div>
+
     {/* Row 2, Col 2: Modalidade de Aplicação */}
     <div className="min-h-0">
       <Chart title="Modalidade de Aplicação">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={modalidadeAplicacao} cx="50%" cy="50%" innerRadius="20%" outerRadius="48%" paddingAngle={2} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
-              {modalidadeAplicacao.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            <defs>
+              {modalidadeAplicacao.map((e, i) => (
+                <linearGradient key={i} id={`gMod${i}`} x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stopColor={e.fill} stopOpacity={0.85} />
+                  <stop offset="100%" stopColor={e.fill} />
+                </linearGradient>
+              ))}
+            </defs>
+            <Pie data={modalidadeAplicacao} cx="50%" cy="50%" innerRadius="30%" outerRadius="52%" paddingAngle={3} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800} strokeWidth={0}>
+              {modalidadeAplicacao.map((_, i) => <Cell key={i} fill={`url(#gMod${i})`} />)}
             </Pie>
             <Tooltip content={<PieTooltip />} />
+            <text x="50%" y="48%" textAnchor="middle" dominantBaseline="central" fill={C.label} fontSize={11} fontWeight={700}>84,5%</text>
+            <text x="50%" y="56%" textAnchor="middle" dominantBaseline="central" fill="rgba(226,232,240,0.5)" fontSize={8}>Ap. Diretas</text>
           </PieChart>
         </ResponsiveContainer>
       </Chart>
     </div>
+
     {/* Row 2, Col 3: Elementos de Despesa */}
     <div className="min-h-0">
       <Chart title="Elementos de Despesa (R$ mi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={elementoDespesa} layout="vertical" margin={{ top: 2, right: 38, bottom: 0, left: 0 }}>
+          <BarChart data={elementoDespesa} layout="vertical" margin={{ top: 2, right: 36, bottom: 0, left: 0 }}>
+            <defs>
+              {elementoDespesa.map((e, i) => (
+                <linearGradient key={i} id={`gElem${i}`} x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor={e.fill} stopOpacity={0.7} />
+                  <stop offset="100%" stopColor={e.fill} stopOpacity={1} />
+                </linearGradient>
+              ))}
+            </defs>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
-            <YAxis type="category" dataKey="elemento" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={95} tick={WrappedYAxisTick} />
-            <Tooltip content={<CustomTooltip unit="M" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {elementoDespesa.map((e, i) => <Cell key={i} fill={e.fill} />)}
+            <YAxis type="category" dataKey="elemento" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={90} tick={WrappedYAxisTick} />
+            <Tooltip content={<CustomTooltip unit="R$ mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+            <Bar dataKey="valor" radius={[0, 4, 4, 0]} animationDuration={1800}>
+              {elementoDespesa.map((_, i) => <Cell key={i} fill={`url(#gElem${i})`} />)}
               <LabelList dataKey="valor" position="right" fontSize={9} fill={C.label} formatter={(v: number) => v.toLocaleString('pt-BR')} />
             </Bar>
           </BarChart>
@@ -1356,7 +1451,6 @@ const PanelOrcamentoPTA = () => (
     </div>
   </div>
 );
-
 const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA];
 const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10"];
 
