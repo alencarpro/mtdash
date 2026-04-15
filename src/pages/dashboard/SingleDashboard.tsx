@@ -1485,7 +1485,7 @@ const SingleDashboard = () => {
           hasNavigated = false;
         }
       }, 500);
-      return () => { clearInterval(timer); clearInterval(checkRotate); };
+      return () => { cancelAnimationFrame(rafId); clearInterval(checkRotate); };
     }
   }, [active, navigate, sequence, rotationTick]);
 
