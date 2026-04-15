@@ -1544,17 +1544,6 @@ const SingleDashboard = () => {
           </div>
         </>
       )}
-      {/* Pause indicator */}
-      {sequence && paused && (
-        <div
-          className="absolute top-20 right-4 z-50 flex items-center gap-2 px-3 py-1.5 rounded-full cursor-pointer select-none"
-          style={{ background: 'rgba(10,17,30,0.9)', border: '1px solid rgba(251,191,36,0.4)', animation: 'subtleFloat 3s ease-in-out infinite' }}
-          onClick={() => setPaused(false)}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="#fbbf24"><rect x="6" y="4" width="4" height="16" rx="1" /><rect x="14" y="4" width="4" height="16" rx="1" /></svg>
-          <span className="text-sm font-semibold" style={{ color: '#fbbf24' }}>PAUSADO</span>
-        </div>
-      )}
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center justify-between px-3 sm:px-4 py-2 sm:py-3 select-none"
