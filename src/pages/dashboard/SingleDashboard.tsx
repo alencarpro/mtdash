@@ -1556,7 +1556,7 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: Relatório Executivo - Benefícios do Controle - 2025
              </span>
-           ) : active >= 9 && active <= 11 ? (
+           ) : active === 9 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
