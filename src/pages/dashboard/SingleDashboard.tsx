@@ -975,15 +975,37 @@ const ProgressRing = ({ value, size = 90, label }: { value: number; size?: numbe
   );
 };
 
-/* Camera frame with dynamic scaling to fit container */
-const CameraFrame = ({ cam, visible }: { cam: typeof obrasEstrategicasList[0]['cameras'][0]; visible: boolean }) => {
+/* Hook: Page Visibility — unmount iframes when tab/window is hidden */
+const usePageVisible = () => {
+  const [visible, setVisible] = useState(!document.hidden);
+  useEffect(() => {
+    const handler = () => setVisible(!document.hidden);
+    document.addEventListener('visibilitychange', handler);
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, []);
+  return visible;
+};
+
+/* Camera frame with dynamic scaling + staggered mount + visibility awareness */
+const CameraFrame = ({ cam, visible, staggerMs = 0 }: { cam: typeof obrasEstrategicasList[0]['cameras'][0]; visible: boolean; staggerMs?: number }) => {
   const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null);
   const [scale, setScale] = useState(1);
+  const [mounted, setMounted] = useState(staggerMs === 0);
+  const pageVisible = usePageVisible();
   const INTERNAL_W = 430;
   const INTERNAL_H = 300;
 
+  // Staggered mount: delay iframe creation to avoid burst of connections
   useEffect(() => {
-    if (!containerEl || !visible) return;
+    if (!visible || staggerMs === 0) { setMounted(visible); return; }
+    const t = setTimeout(() => setMounted(true), staggerMs);
+    return () => { clearTimeout(t); setMounted(false); };
+  }, [visible, staggerMs]);
+
+  const shouldRender = visible && mounted && pageVisible;
+
+  useEffect(() => {
+    if (!containerEl || !shouldRender) return;
     const measure = () => {
       const { width, height } = containerEl.getBoundingClientRect();
       if (width && height) {
@@ -994,7 +1016,7 @@ const CameraFrame = ({ cam, visible }: { cam: typeof obrasEstrategicasList[0]['c
     const ro = new ResizeObserver(measure);
     ro.observe(containerEl);
     return () => ro.disconnect();
-  }, [containerEl, visible]);
+  }, [containerEl, shouldRender]);
 
   return (
     <div className="flex flex-col gap-1">
@@ -1003,7 +1025,7 @@ const CameraFrame = ({ cam, visible }: { cam: typeof obrasEstrategicasList[0]['c
         className="rounded-md overflow-hidden relative w-full"
         style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
       >
-        {visible ? (
+        {shouldRender ? (
           <iframe
             src={cam.link}
             title={cam.tpObra || cam.nome}
@@ -1076,7 +1098,7 @@ const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; v
           </p>
           <div className={`grid ${camCols} gap-2`}>
             {o.cameras.map((cam, ci) => (
-              <CameraFrame key={ci} cam={cam} visible={visible} />
+              <CameraFrame key={ci} cam={cam} visible={visible} staggerMs={ci * 800} />
             ))}
           </div>
         </div>
