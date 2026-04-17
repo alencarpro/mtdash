@@ -1,0 +1,87 @@
+{
+  "painel": 5,
+  "titulo": "Controle & Eficiência (CGE)",
+  "fonte": "Balanço de Gestão 2025 — CGE-MT",
+  "kpis": [
+    { "campo": "totalAcoes", "titulo": "Total de Ações", "valor": 183 },
+    { "campo": "valorTotal", "titulo": "Valor Total", "valor": "R$ 940,9 mi" },
+    { "campo": "totalBeneficios", "titulo": "Benefícios", "valor": 188 },
+    { "campo": "unidadesAtivas", "titulo": "Unidades Ativas", "valor": 17 }
+  ],
+  "graficos": [
+    {
+      "titulo": "Benefícios Financeiros por Área",
+      "tipo": "BarChart-composto",
+      "campos": ["area", "qtd", "valor", "percentual"],
+      "dados": [
+        { "area": "Executiva e Ações Estratégicas", "qtd": 5, "valor": 814.26, "percentual": 87 },
+        { "area": "Auditoria e Controle", "qtd": 45, "valor": 117.68, "percentual": 12.5 },
+        { "area": "Corregedoria (PARs)", "qtd": 16, "valor": 8.8, "percentual": 0.9 }
+      ]
+    },
+    {
+      "titulo": "Aderência a Recomendações (%)",
+      "tipo": "LineChart",
+      "campos": ["year", "aderencia", "implementacao"],
+      "dados": [
+        { "year": "2019", "aderencia": 65, "implementacao": 35 },
+        { "year": "2020", "aderencia": 75, "implementacao": 50 },
+        { "year": "2021", "aderencia": 85, "implementacao": 65 },
+        { "year": "2022", "aderencia": 90, "implementacao": 75 },
+        { "year": "2023", "aderencia": 95, "implementacao": 85 },
+        { "year": "2024", "aderencia": 95, "implementacao": 85 },
+        { "year": "2025", "aderencia": 94, "implementacao": 82 }
+      ]
+    },
+    {
+      "titulo": "Ouvidoria — Manifestações",
+      "tipo": "PieChart",
+      "campos": ["tipo", "qtd", "percentual"],
+      "dados": [
+        { "tipo": "Solicitação", "qtd": 7728, "percentual": 41.09 },
+        { "tipo": "Reclamação", "qtd": 5392, "percentual": 28.67 },
+        { "tipo": "Denúncia", "qtd": 3473, "percentual": 18.47 },
+        { "tipo": "Informação", "qtd": 1011, "percentual": 5.38 },
+        { "tipo": "Elogio", "qtd": 981, "percentual": 5.22 },
+        { "tipo": "Sugestão", "qtd": 201, "percentual": 1.07 }
+      ]
+    },
+    {
+      "titulo": "CGE Alerta — Variações",
+      "tipo": "BarChart-grouped",
+      "campos": ["tipo", "inicial", "final", "variacao"],
+      "dados": [
+        { "tipo": "Inassiduidade", "inicial": 34, "final": 2, "variacao": -94.1 },
+        { "tipo": "Abandono Cargo", "inicial": 26, "final": 7, "variacao": -73.1 },
+        { "tipo": "Juros/Multa Atraso", "inicial": 15, "final": 9, "variacao": -40.0 },
+        { "tipo": "Licença >24m", "inicial": 229, "final": 193, "variacao": -15.7 }
+      ]
+    },
+    {
+      "titulo": "Áreas Auditadas",
+      "tipo": "BarChart-horizontal",
+      "campos": ["area", "qtd"],
+      "dados": [
+        { "area": "Infraestrutura", "qtd": 12 },
+        { "area": "Saúde", "qtd": 12 },
+        { "area": "Educação", "qtd": 8 },
+        { "area": "Gestão Pessoas", "qtd": 8 },
+        { "area": "Economia", "qtd": 4 },
+        { "area": "Meio Ambiente", "qtd": 4 },
+        { "area": "Receita", "qtd": 4 }
+      ]
+    },
+    {
+      "titulo": "Ranking de Adjuntas",
+      "tipo": "BarChart-composto",
+      "campos": ["nome", "qtdAcoes", "beneficios", "valorTotal"],
+      "dados": [
+        { "nome": "Executiva", "qtdAcoes": 5, "beneficios": 5, "valorTotal": 814259834 },
+        { "nome": "Auditoria", "qtdAcoes": 46, "beneficios": 46, "valorTotal": 117678695.4 },
+        { "nome": "Corregedoria", "qtdAcoes": 111, "beneficios": 111, "valorTotal": 8986467.72 },
+        { "nome": "Ouvidoria", "qtdAcoes": 26, "beneficios": 26, "valorTotal": 0 },
+        { "nome": "Institucional", "qtdAcoes": 0, "beneficios": 0, "valorTotal": 0 }
+      ]
+    }
+  ]
+}

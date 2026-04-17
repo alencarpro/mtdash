@@ -1,0 +1,79 @@
+{
+  "painel": 2,
+  "titulo": "Social",
+  "fonte": "SES-MT, SESP-MT, SETASC, DETRAN-MT, INEP",
+  "kpis": [
+    { "campo": "ideb", "titulo": "IDEB", "valor": "5.5", "subtitulo": "Educação 2023" },
+    { "campo": "leitos", "titulo": "Leitos", "valor": "8450", "subtitulo": "1120 UTI" },
+    { "campo": "coberturaSUS", "titulo": "Cobertura SUS", "valor": "78%", "subtitulo": "população" },
+    { "campo": "cadUnico", "titulo": "CadÚnico", "valor": "485 mil", "subtitulo": "famílias" },
+    { "campo": "bolsaFamilia", "titulo": "Bolsa Família", "valor": "310 mil", "subtitulo": "famílias" },
+    { "campo": "suas", "titulo": "Unidades SUAS", "valor": "385", "subtitulo": "no estado" }
+  ],
+  "graficos": [
+    {
+      "titulo": "Educação — IDEB e Matrículas",
+      "tipo": "ComposedChart",
+      "campos": ["year", "ideb", "matriculas", "escolas"],
+      "dados": [
+        { "year": "2018", "ideb": 4.8, "matriculas": 820000, "escolas": 1450 },
+        { "year": "2019", "ideb": 5.0, "matriculas": 835000, "escolas": 1460 },
+        { "year": "2020", "ideb": 4.9, "matriculas": 828000, "escolas": 1455 },
+        { "year": "2021", "ideb": 5.1, "matriculas": 840000, "escolas": 1465 },
+        { "year": "2022", "ideb": 5.3, "matriculas": 855000, "escolas": 1470 },
+        { "year": "2023", "ideb": 5.5, "matriculas": 862000, "escolas": 1478 }
+      ]
+    },
+    {
+      "titulo": "Segurança Pública",
+      "tipo": "LineChart",
+      "campos": ["year", "ocorrencias", "homicidios"],
+      "dados": [
+        { "year": "2019", "ocorrencias": 42500, "homicidios": 580 },
+        { "year": "2020", "ocorrencias": 38200, "homicidios": 540 },
+        { "year": "2021", "ocorrencias": 40100, "homicidios": 510 },
+        { "year": "2022", "ocorrencias": 39800, "homicidios": 485 },
+        { "year": "2023", "ocorrencias": 38500, "homicidios": 460 }
+      ]
+    },
+    {
+      "titulo": "ICQV por Município",
+      "tipo": "RadarChart",
+      "campos": ["city", "icqv", "saude", "educacao", "economia"],
+      "dados": [
+        { "city": "Cuiabá", "icqv": 0.82, "saude": 0.79, "educacao": 0.85, "economia": 0.83 },
+        { "city": "Várzea Grande", "icqv": 0.71, "saude": 0.68, "educacao": 0.74, "economia": 0.72 },
+        { "city": "Rondonópolis", "icqv": 0.76, "saude": 0.74, "educacao": 0.78, "economia": 0.77 },
+        { "city": "Sinop", "icqv": 0.80, "saude": 0.78, "educacao": 0.83, "economia": 0.80 },
+        { "city": "Tangará", "icqv": 0.69, "saude": 0.66, "educacao": 0.72, "economia": 0.70 },
+        { "city": "Cáceres", "icqv": 0.64, "saude": 0.61, "educacao": 0.67, "economia": 0.65 },
+        { "city": "Sorriso", "icqv": 0.79, "saude": 0.77, "educacao": 0.82, "economia": 0.79 },
+        { "city": "Lucas", "icqv": 0.81, "saude": 0.79, "educacao": 0.84, "economia": 0.81 }
+      ]
+    },
+    {
+      "titulo": "Mortalidade (por 1000 hab.)",
+      "tipo": "LineChart",
+      "campos": ["year", "infantil", "materna", "geral"],
+      "dados": [
+        { "year": "2019", "infantil": 13.8, "materna": 58.2, "geral": 5.2 },
+        { "year": "2020", "infantil": 14.2, "materna": 72.5, "geral": 6.8 },
+        { "year": "2021", "infantil": 13.5, "materna": 65.1, "geral": 7.1 },
+        { "year": "2022", "infantil": 12.8, "materna": 52.3, "geral": 5.5 },
+        { "year": "2023", "infantil": 12.1, "materna": 48.7, "geral": 5.1 }
+      ]
+    },
+    {
+      "titulo": "Trânsito (DETRAN)",
+      "tipo": "ComposedChart",
+      "campos": ["year", "acidentes", "vitimas", "frota"],
+      "dados": [
+        { "year": "2019", "acidentes": 18500, "vitimas": 1250, "frota": 2180000 },
+        { "year": "2020", "acidentes": 15800, "vitimas": 1080, "frota": 2250000 },
+        { "year": "2021", "acidentes": 16900, "vitimas": 1120, "frota": 2340000 },
+        { "year": "2022", "acidentes": 17200, "vitimas": 1150, "frota": 2450000 },
+        { "year": "2023", "acidentes": 17800, "vitimas": 1180, "frota": 2580000 }
+      ]
+    }
+  ]
+}
