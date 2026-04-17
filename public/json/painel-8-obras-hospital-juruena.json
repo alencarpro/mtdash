@@ -1,0 +1,63 @@
+{
+  "painel": 8,
+  "titulo": "Obras Estratégicas — Hospital J. Muller e Ponte Juruena",
+  "fonte": "SINFRA-MT",
+  "kpis": [
+    { "campo": "valorJM", "titulo": "Hosp. J. Muller", "valor": "R$ 247 mi", "subtitulo": "100% executado" },
+    { "campo": "valorJuruena", "titulo": "Ponte Juruena", "valor": "R$ 309 mi", "subtitulo": "59,43% executado" },
+    { "campo": "areaJM", "titulo": "Área Hospital", "valor": "58.000 m²" },
+    { "campo": "extensaoPonte", "titulo": "Extensão Ponte", "valor": "1.360 m" }
+  ],
+  "graficos": [
+    {
+      "titulo": "Execução x Pagamento (%)",
+      "tipo": "BarChart-grouped",
+      "campos": ["nome", "executado", "pago"],
+      "dados": [
+        { "nome": "Hosp. J. Muller", "executado": 100.0, "pago": 95.67 },
+        { "nome": "Ponte Juruena", "executado": 59.43, "pago": 59.04 }
+      ]
+    },
+    {
+      "titulo": "Valores em Milhões (R$)",
+      "tipo": "BarChart-grouped",
+      "campos": ["nome", "total", "executado", "pago"],
+      "dados": [
+        { "nome": "Hosp. J. Muller", "total": 247, "executado": 271, "pago": 259 },
+        { "nome": "Ponte Juruena", "total": 309, "executado": 184, "pago": 182 }
+      ]
+    }
+  ],
+  "obras": [
+    {
+      "obraId": 3,
+      "nome": "Hospital Universitário Júlio Muller",
+      "contrato": "051/2020/SINFRA",
+      "situacao": "Vigente",
+      "dataInicio": "20/01/2021",
+      "dataFim": "2º semestre de 2026",
+      "valorTotal": "R$ 247.148.259,14",
+      "valorExecutado": "R$ 270.724.721,81",
+      "valorPago": "R$ 258.985.210,41",
+      "percentualExecutado": "100,00%",
+      "percentualPago": "95,67%",
+      "execucaoConcluida": "58.000 m²",
+      "cameras": 2
+    },
+    {
+      "obraId": 4,
+      "nome": "Construção de Ponte sobre o Rio Juruena (MT-208)",
+      "contrato": "002/2023/SINFRA",
+      "situacao": "Vigente",
+      "dataInicio": "13/04/2023",
+      "dataFim": "2º semestre de 2026",
+      "valorTotal": "R$ 309.065.364,91",
+      "valorExecutado": "R$ 183.666.402,03",
+      "valorPago": "R$ 182.476.967,61",
+      "percentualExecutado": "59,43%",
+      "percentualPago": "59,04%",
+      "execucaoConcluida": "1.410 m²",
+      "cameras": 2
+    }
+  ]
+}

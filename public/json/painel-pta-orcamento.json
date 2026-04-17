@@ -1,0 +1,129 @@
+{
+  "painel": "PTA",
+  "titulo": "PTA 2026 — Orçamento do Estado de Mato Grosso",
+  "fonte": "SEPLAG-MT — PTA 2026",
+  "kpis": [
+    { "campo": "totalOrcamento", "titulo": "Orçamento Total", "valor": "R$ 33,91 bi" },
+    { "campo": "totalCorrente", "titulo": "Despesa Corrente", "valor": "R$ 28,92 bi" },
+    { "campo": "totalCapital", "titulo": "Despesa Capital", "valor": "R$ 4,99 bi" },
+    { "campo": "totalFuncoes", "titulo": "Funções", "valor": 22 },
+    { "campo": "totalOrgaos", "titulo": "Órgãos", "valor": 30 }
+  ],
+  "graficos": [
+    {
+      "titulo": "Orçamento por Função (R$ mi)",
+      "tipo": "BarChart-horizontal",
+      "campos": ["funcao", "valor"],
+      "dados": [
+        { "funcao": "Previdência Social", "valor": 6378 },
+        { "funcao": "Educação", "valor": 6094 },
+        { "funcao": "Saúde", "valor": 4695 },
+        { "funcao": "Segurança Pública", "valor": 4631 },
+        { "funcao": "Transporte", "valor": 3146 },
+        { "funcao": "Administração", "valor": 2859 },
+        { "funcao": "Encargos Especiais", "valor": 1995 },
+        { "funcao": "Agricultura", "valor": 1128 },
+        { "funcao": "Dir. Cidadania", "valor": 1006 },
+        { "funcao": "Gestão Ambiental", "valor": 379 },
+        { "funcao": "Assist. Social", "valor": 336 },
+        { "funcao": "Urbanismo", "valor": 200 }
+      ]
+    },
+    {
+      "titulo": "Categoria Econômica (%)",
+      "tipo": "PieChart",
+      "campos": ["name", "value"],
+      "dados": [
+        { "name": "Despesa Corrente", "value": 85.3 },
+        { "name": "Despesa Capital", "value": 14.7 }
+      ]
+    },
+    {
+      "titulo": "Top Subfunções (R$ mi)",
+      "tipo": "BarChart-horizontal",
+      "campos": ["subfuncao", "valor"],
+      "dados": [
+        { "subfuncao": "Administração Geral", "valor": 11050 },
+        { "subfuncao": "Prev. Reg. Estatutário", "valor": 5570 },
+        { "subfuncao": "Ensino Fundamental", "valor": 4510 },
+        { "subfuncao": "Assist. Hosp. Ambul.", "valor": 3190 },
+        { "subfuncao": "Transp. Rodoviário", "valor": 2970 },
+        { "subfuncao": "Enc. Especiais", "valor": 850 },
+        { "subfuncao": "Prev. Especial", "valor": 750 },
+        { "subfuncao": "Produção Agropec.", "valor": 680 }
+      ]
+    },
+    {
+      "titulo": "Orçamento por UO (R$ mi)",
+      "tipo": "BarChart-horizontal",
+      "campos": ["sigla", "valor"],
+      "dados": [
+        { "sigla": "SEDUC", "valor": 5813 },
+        { "sigla": "MTPREV", "valor": 5335 },
+        { "sigla": "FES", "valor": 4792 },
+        { "sigla": "SESP", "valor": 4405 },
+        { "sigla": "SINFRA", "valor": 3449 },
+        { "sigla": "EGE/SEFAZ", "valor": 1299 },
+        { "sigla": "SEFAZ", "valor": 1102 },
+        { "sigla": "SEJUS", "valor": 945 },
+        { "sigla": "PGE", "valor": 727 },
+        { "sigla": "SEAF", "valor": 673 }
+      ]
+    },
+    {
+      "titulo": "Modalidade de Aplicação (%)",
+      "tipo": "PieChart",
+      "campos": ["name", "value"],
+      "dados": [
+        { "name": "Aplicações Diretas", "value": 84.5 },
+        { "name": "Op. entre Órgãos", "value": 8.3 },
+        { "name": "Transf. Municípios", "value": 3.7 },
+        { "name": "Inst. Priv. s/ fins", "value": 2.2 },
+        { "name": "Outras", "value": 1.3 }
+      ]
+    },
+    {
+      "titulo": "Pacote de Despesa (R$ mi)",
+      "tipo": "BarChart-horizontal",
+      "campos": ["pacote", "valor"],
+      "dados": [
+        { "pacote": "Pessoal Ativo", "valor": 8825 },
+        { "pacote": "Pessoal Aposentado", "valor": 4402 },
+        { "pacote": "Obrig. Patronais", "valor": 3171 },
+        { "pacote": "Vias e Pontes", "valor": 2550 },
+        { "pacote": "Pessoal Temporário", "valor": 1624 },
+        { "pacote": "Serviços Saúde", "valor": 1258 },
+        { "pacote": "Transf. Municípios", "valor": 1163 },
+        { "pacote": "Pessoal Pensionista", "valor": 864 }
+      ]
+    },
+    {
+      "titulo": "Composição por Função (R$ mi)",
+      "tipo": "AreaChart-stacked",
+      "campos": ["funcao", "corrente", "capital"],
+      "dados": [
+        { "funcao": "Prev. Social", "corrente": 6377, "capital": 1 },
+        { "funcao": "Educação", "corrente": 5785, "capital": 310 },
+        { "funcao": "Saúde", "corrente": 4277, "capital": 418 },
+        { "funcao": "Segurança", "corrente": 4528, "capital": 104 },
+        { "funcao": "Transporte", "corrente": 705, "capital": 2441 },
+        { "funcao": "Administração", "corrente": 2449, "capital": 410 }
+      ]
+    },
+    {
+      "titulo": "Distribuição Macro-Área (%)",
+      "tipo": "RadarChart",
+      "campos": ["area", "pct"],
+      "dados": [
+        { "area": "Educação", "pct": 18 },
+        { "area": "Saúde", "pct": 14 },
+        { "area": "Segurança", "pct": 14 },
+        { "area": "Previdência", "pct": 19 },
+        { "area": "Transporte", "pct": 9 },
+        { "area": "Administração", "pct": 8 },
+        { "area": "Social", "pct": 7 },
+        { "area": "Outros", "pct": 11 }
+      ]
+    }
+  ]
+}

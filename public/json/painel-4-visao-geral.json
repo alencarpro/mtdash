@@ -1,0 +1,81 @@
+{
+  "painel": 4,
+  "titulo": "Visão Geral — Mato Grosso",
+  "fonte": "IBGE, SEPLAG-MT",
+  "kpis": [
+    { "campo": "pibTotal", "titulo": "PIB Total", "valor": "R$ 273 bi", "subtitulo": "10° do país" },
+    { "campo": "crescimentoMedio", "titulo": "Crescimento Médio", "valor": "5,2% a.a.", "subtitulo": "2002 a 2023" },
+    { "campo": "pibPerCapita", "titulo": "PIB per Capita", "valor": "R$ 74,6 mil", "subtitulo": "3° do país" },
+    { "campo": "municipios", "titulo": "Municípios", "valor": "141", "subtitulo": "no estado" }
+  ],
+  "graficos": [
+    {
+      "titulo": "Evolução do PIB (R$ bi)",
+      "tipo": "AreaChart",
+      "campos": ["year", "pib", "crescimento"],
+      "dados": [
+        { "year": "2002", "pib": 19.2, "crescimento": 0 },
+        { "year": "2003", "pib": 24.0, "crescimento": 25.0 },
+        { "year": "2004", "pib": 30.0, "crescimento": 25.0 },
+        { "year": "2005", "pib": 28.7, "crescimento": -4.3 },
+        { "year": "2006", "pib": 35.2, "crescimento": 22.6 },
+        { "year": "2007", "pib": 42.7, "crescimento": 21.3 },
+        { "year": "2008", "pib": 53.4, "crescimento": 25.1 },
+        { "year": "2009", "pib": 51.9, "crescimento": -2.8 },
+        { "year": "2010", "pib": 59.6, "crescimento": 14.8 },
+        { "year": "2011", "pib": 71.4, "crescimento": 19.8 },
+        { "year": "2012", "pib": 80.8, "crescimento": 13.2 },
+        { "year": "2013", "pib": 89.1, "crescimento": 10.3 },
+        { "year": "2014", "pib": 101.2, "crescimento": 13.6 },
+        { "year": "2015", "pib": 107.4, "crescimento": 6.1 },
+        { "year": "2016", "pib": 115.4, "crescimento": 7.4 },
+        { "year": "2017", "pib": 123.8, "crescimento": 7.3 },
+        { "year": "2018", "pib": 142.5, "crescimento": 15.1 },
+        { "year": "2019", "pib": 155.0, "crescimento": 8.8 },
+        { "year": "2020", "pib": 170.3, "crescimento": 9.9 },
+        { "year": "2021", "pib": 233.4, "crescimento": 37.1 },
+        { "year": "2022", "pib": 255.5, "crescimento": 9.5 },
+        { "year": "2023", "pib": 273.0, "crescimento": 6.8 }
+      ]
+    },
+    {
+      "titulo": "PIB por Setor (%)",
+      "tipo": "PieChart",
+      "campos": ["name", "value"],
+      "dados": [
+        { "name": "Agropecuária", "value": 38 },
+        { "name": "Serviços", "value": 32 },
+        { "name": "Indústria", "value": 18 },
+        { "name": "Comércio", "value": 12 }
+      ]
+    },
+    {
+      "titulo": "População e PIB Municipal",
+      "tipo": "BarChart-composto",
+      "campos": ["city", "population", "pibMunicipal"],
+      "dados": [
+        { "city": "Cuiabá", "population": 618124, "pibMunicipal": 32.4 },
+        { "city": "Várzea Grande", "population": 287526, "pibMunicipal": 8.7 },
+        { "city": "Rondonópolis", "population": 236042, "pibMunicipal": 14.2 },
+        { "city": "Sinop", "population": 146005, "pibMunicipal": 9.8 },
+        { "city": "Tangará", "population": 103750, "pibMunicipal": 4.1 },
+        { "city": "Cáceres", "population": 94861, "pibMunicipal": 2.8 },
+        { "city": "Sorriso", "population": 92677, "pibMunicipal": 12.5 },
+        { "city": "Lucas", "population": 65849, "pibMunicipal": 8.9 }
+      ]
+    },
+    {
+      "titulo": "Investimento em Infraestrutura (R$ bi)",
+      "tipo": "BarChart",
+      "campos": ["year", "investimento"],
+      "dados": [
+        { "year": "2020", "investimento": 1.8 },
+        { "year": "2021", "investimento": 2.3 },
+        { "year": "2022", "investimento": 3.1 },
+        { "year": "2023", "investimento": 3.8 },
+        { "year": "2024", "investimento": 4.2 },
+        { "year": "2025", "investimento": 4.5 }
+      ]
+    }
+  ]
+}

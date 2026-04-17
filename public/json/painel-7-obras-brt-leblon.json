@@ -1,0 +1,63 @@
+{
+  "painel": 7,
+  "titulo": "Obras Estratégicas — BRT Cuiabá e Complexo Leblon",
+  "fonte": "SINFRA-MT",
+  "kpis": [
+    { "campo": "totalObras", "titulo": "Obras Monitoradas", "valor": 4 },
+    { "campo": "totalCameras", "titulo": "Câmeras ao Vivo", "valor": 12 },
+    { "campo": "investimentoTotal", "titulo": "Investimento Total", "valor": "R$ 1,15 bi" },
+    { "campo": "obraConcluida", "titulo": "Obras Concluídas", "valor": 1 }
+  ],
+  "graficos": [
+    {
+      "titulo": "Execução x Pagamento (%)",
+      "tipo": "BarChart-grouped",
+      "campos": ["nome", "executado", "pago"],
+      "dados": [
+        { "nome": "BRT Cuiabá", "executado": 27.26, "pago": 22.35 },
+        { "nome": "Cplx. Leblon", "executado": 50.94, "pago": 41.87 }
+      ]
+    },
+    {
+      "titulo": "Valores em Milhões (R$)",
+      "tipo": "BarChart-grouped",
+      "campos": ["nome", "total", "executado", "pago"],
+      "dados": [
+        { "nome": "BRT Cuiabá", "total": 486, "executado": 132, "pago": 109 },
+        { "nome": "Cplx. Leblon", "total": 105, "executado": 53, "pago": 44 }
+      ]
+    }
+  ],
+  "obras": [
+    {
+      "obraId": 1,
+      "nome": "Implantação do corredor BRT — Cuiabá e Várzea Grande",
+      "contrato": "052/2022",
+      "situacao": "Vigente",
+      "dataInicio": "25/10/2022",
+      "dataFim": "2º semestre de 2025",
+      "valorTotal": "R$ 485.686.236,59",
+      "valorExecutado": "R$ 132.400.909,26",
+      "valorPago": "R$ 108.557.059,28",
+      "percentualExecutado": "27,26%",
+      "percentualPago": "22,35%",
+      "execucaoConcluida": "586.000 m²",
+      "cameras": 6
+    },
+    {
+      "obraId": 2,
+      "nome": "Complexo viário do Jardim Leblon",
+      "contrato": "012/2024",
+      "situacao": "Vigente",
+      "dataInicio": "15/04/2024",
+      "dataFim": "2º semestre de 2026",
+      "valorTotal": "R$ 105.002.197,97",
+      "valorExecutado": "R$ 53.490.082,31",
+      "valorPago": "R$ 43.960.131,15",
+      "percentualExecutado": "50,94%",
+      "percentualPago": "41,87%",
+      "execucaoConcluida": "5.490 m²",
+      "cameras": 2
+    }
+  ]
+}
