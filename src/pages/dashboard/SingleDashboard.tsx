@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
-import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto, naturezaBeneficios, unidadesDetalhadas } from "@/data/beneficiosControleData";
+ import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto, naturezaBeneficios, unidadesDetalhadas } from "@/data/beneficiosControleData";
+ import { liquidacoesSummary, liquidacoesUnidades, liquidacoesEvolucaoMensal, liquidacoesAlinhamento, liquidacoesFuncaoGoverno, topCredores } from "@/data/liquidacoesData";
 import { ptaSummary, orcamentoFuncao, categoriaEconomica, topSubfuncoes, orcamentoUO, modalidadeAplicacao, pacoteDespesa, elementoDespesa, ticInvestimento, radarOrcamento, composicaoFuncao } from "@/data/ptaData";
 import { Landmark, Building2, Receipt, Wallet, PiggyBank, BadgeDollarSign } from "lucide-react";
 import {
@@ -1377,13 +1378,92 @@ const PanelOrcamentoPTA = () => (
     </div>
   </div>
 );
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10"];
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 11 — LIQUIDAÇÕES 2025
+    ═══════════════════════════════════════════════════════════ */
+ const PanelLiquidacoes = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Total Liquidado" value={liquidacoesSummary.totalLiquidado} sub="Exercício 2025" color={C.teal} delay={0} icon={DollarSign} />
+       <KPI title="Quantidade Liqs" value={liquidacoesSummary.quantidadeLiqs} sub="Janeiro — Dezembro" color={C.blue} delay={120} icon={ClipboardList} />
+       <KPI title="Valor Médio" value={liquidacoesSummary.valorMedioLiq} sub="por Liquidação" color={C.purple} delay={240} icon={Target} />
+       <KPI title="Unidades" value={liquidacoesSummary.unidadesOrcamentarias.toString()} sub="Orçamentárias" color={C.yellow} delay={360} icon={Landmark} />
+     </div>
+ 
+     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[180px]">
+       <Chart title="Evolução Mensal (R$ bi)">
+         <ResponsiveContainer width="100%" height="100%">
+           <AreaChart data={liquidacoesEvolucaoMensal} margin={{ top: 10, right: 8, bottom: 0, left: -10 }}>
+             <defs><linearGradient id="cliq" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor={C.blue} stopOpacity={0.4} /><stop offset="95%" stopColor={C.blue} stopOpacity={0} /></linearGradient></defs>
+             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+             <XAxis dataKey="mes" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} />
+             <YAxis hide />
+             <Tooltip content={<CustomTooltip unit="bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+             <Area type="monotone" dataKey="valor" stroke={C.blue} fill="url(#cliq)" strokeWidth={2} animationDuration={2000}>
+               <LabelList dataKey="valor" position="top" fontSize={12} fill={C.label} />
+             </Area>
+           </AreaChart>
+         </ResponsiveContainer>
+       </Chart>
+       <Chart title="Alinhamento Estratégico">
+         <ResponsiveContainer width="100%" height="100%">
+           <PieChart>
+             <Pie data={liquidacoesAlinhamento} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={2} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
+               {liquidacoesAlinhamento.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+             </Pie>
+             <Tooltip content={<PieTooltip />} />
+           </PieChart>
+         </ResponsiveContainer>
+       </Chart>
+     </div>
+ 
+     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[180px]">
+       <Chart title="Por Unidade Orçamentária (R$ bi)">
+         <ResponsiveContainer width="100%" height="100%">
+           <BarChart data={liquidacoesUnidades} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
+             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+             <XAxis type="number" hide />
+             <YAxis type="category" dataKey="unidade" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={100} tick={WrappedYAxisTick} />
+             <Tooltip content={<CustomTooltip unit="bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
+             <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
+               {liquidacoesUnidades.map((e, i) => <Cell key={i} fill={e.fill} />)}
+               <LabelList dataKey="valor" position="right" fontSize={11} fill={C.label} formatter={(v: number) => `R$ ${v} bi`} />
+             </Bar>
+           </BarChart>
+         </ResponsiveContainer>
+       </Chart>
+       <Chart title="Top 10 Credores (Excl. Pessoal)">
+         <div className="overflow-auto h-full pr-1">
+           <table className="w-full text-left text-[11px] sm:text-[13px]" style={{ color: 'rgba(226,232,240,0.72)' }}>
+             <thead className="sticky top-0 bg-[#0a111e] z-10">
+               <tr>
+                 <th className="py-1 px-1 border-b border-white/10">Credor</th>
+                 <th className="py-1 px-1 border-b border-white/10 text-right">Valor</th>
+               </tr>
+             </thead>
+             <tbody>
+               {topCredores.map((c, i) => (
+                 <tr key={i} className="hover:bg-white/5 transition-colors">
+                   <td className="py-1 px-1 border-b border-white/5 truncate max-w-[120px]" title={c.credor}>{c.credor}</td>
+                   <td className="py-1 px-1 border-b border-white/5 text-right font-semibold text-white">{c.valor}</td>
+                 </tr>
+               ))}
+             </tbody>
+           </table>
+         </div>
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes];
+ const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
   t1: [0, 1, 2, 3],   // P1, P2, P3, P4
   t2: [2, 3, 0, 1],   // P3, P4, P1, P2
-  t3: [6, 7, 9],       // P7, P8, P10
+   t3: [6, 7, 9, 10],       // P7, P8, P10, P11
   t4: [4, 5, 8],       // P5, P6, P9
 };
 
@@ -1485,9 +1565,9 @@ const SingleDashboard = () => {
 
   const ActivePanel = panels[active];
 
-  const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026"];
-  const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-  const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903"];
+   const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025"];
+   const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+   const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#102041"];
 
   const ROTATE_INTERVAL = 30;
   const [now, setNow] = useState(new Date());
@@ -1636,6 +1716,10 @@ const SingleDashboard = () => {
            ) : active === 9 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
+             </span>
+           ) : active === 10 ? (
+             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+               Fonte: Painel de Liquidações — SEFAZ-MT
              </span>
            ) : active === 4 || active === 5 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
