@@ -1,32 +1,38 @@
 /* ─── Dados do Painel de Liquidações 2025 — Mato Grosso ─── */
 
 export const liquidacoesSummary = {
-  totalLiquidado: "R$ 35,21 bi",
-  quantidadeLiqs: "404.019",
-  valorMedioLiq: "R$ 87.158,70",
-  unidadesOrcamentarias: 48,
+  totalLiquidado: "R$ 38,02 bi",
+  quantidadeLiqs: "430.276",
+  valorMedioLiq: "R$ 88.356,65",
+  unidadesOrcamentarias: 51,
 };
 
 export const liquidacoesUnidades = [
-  { unidade: "SECRETARIA DE ESTADO DE EDUCAÇÃO, ESPORTE E LA...", valor: 5.96, fill: "#60a5fa" },
-  { unidade: "FUNDO ESTADUAL DE SAUDE", valor: 5.42, fill: "#8df3db" },
-  { unidade: "SECRETARIA DE ESTADO DE SEGURANÇA", valor: 4.22, fill: "#f87171" },
-  { unidade: "SECRETARIA DE ESTADO DE INFRA-EST...", valor: 3.97, fill: "#fbbf24" },
+  { unidade: "SEDUC", valor: 5.95, fill: "#60a5fa" },
+  { unidade: "FES", valor: 5.40, fill: "#8df3db" },
+  { unidade: "SESP", valor: 4.24, fill: "#f87171" },
+  { unidade: "SINFRA", valor: 3.91, fill: "#fbbf24" },
+  { unidade: "TJ/MT", valor: 2.34, fill: "#a78bfa" },
+  { unidade: "MTPREV", valor: 1.90, fill: "#fb923c" },
+  { unidade: "EGE/SEFAZ", valor: 1.74, fill: "#34d399" },
+  { unidade: "PGJ/MT", valor: 1.10, fill: "#c084fc" },
+  { unidade: "TCE/MT", valor: 1.01, fill: "#86efac" },
+  { unidade: "PGE/MT", valor: 0.99, fill: "#f472b6" },
 ];
 
 export const liquidacoesEvolucaoMensal = [
-  { mes: "Jan", valor: 1.8 },
-  { mes: "Fev", valor: 2.2 },
-  { mes: "Mar", valor: 2.5 },
-  { mes: "Abr", valor: 2.3 },
-  { mes: "Mai", valor: 2.4 },
-  { mes: "Jun", valor: 2.5 },
-  { mes: "Jul", valor: 3.5 },
-  { mes: "Ago", valor: 2.8 },
-  { mes: "Set", valor: 2.8 },
-  { mes: "Out", valor: 2.8 },
-  { mes: "Nov", valor: 2.9 },
-  { mes: "Dez", valor: 5.5 },
+  { mes: "Jan", valor: 2.30 },
+  { mes: "Fev", valor: 2.83 },
+  { mes: "Mar", valor: 3.16 },
+  { mes: "Abr", valor: 2.92 },
+  { mes: "Mai", valor: 3.07 },
+  { mes: "Jun", valor: 2.77 },
+  { mes: "Jul", valor: 3.43 },
+  { mes: "Ago", valor: 2.96 },
+  { mes: "Set", valor: 3.00 },
+  { mes: "Out", valor: 3.02 },
+  { mes: "Nov", valor: 3.05 },
+  { mes: "Dez", valor: 5.52 },
 ];
 
 export const liquidacoesAlinhamento = [
@@ -49,14 +55,14 @@ export const liquidacoesFuncaoGoverno = [
 ];
 
 export const topCredores = [
-  { id: 1, credor: "Banco do Brasil S. A", valor: "R$ 409,6 mi", liqs: 161, modalidade: "ISENTO" },
-  { id: 2, credor: "Lei 9496/97 Governo", valor: "R$ 379,8 mi", liqs: 65, modalidade: "ISENTO" },
-  { id: 3, credor: "Ministério da Fazenda", valor: "R$ 355,6 mi", liqs: 1011, modalidade: "ISENTO" },
-  { id: 4, credor: "CONCESSIONARIA ROTA DO OESTE", valor: "R$ 350,0 mi", liqs: 2, modalidade: "LICITAÇÃO" },
-  { id: 5, credor: "FUNDAÇÃO MT PREVIDENCIA", valor: "R$ 348,1 mi", liqs: 149, modalidade: "ISENTO" },
-  { id: 6, credor: "SEC. ESTADO EDUCAÇÃO", valor: "R$ 279,2 mi", liqs: 341, modalidade: "ISENTO" },
-  { id: 7, credor: "SEC. ESTADO SEGURANÇA", valor: "R$ 261,3 mi", liqs: 1179, modalidade: "ISENTO" },
-  { id: 8, credor: "Tribunal de Justiça MT", valor: "R$ 251,4 mi", liqs: 1052, modalidade: "ISENTO" },
-  { id: 9, credor: "CEF/MT - Contrato", valor: "R$ 193,4 mi", liqs: 156, modalidade: "ISENTO" },
-  { id: 10, credor: "Lotufo Engenharia", valor: "R$ 192,1 mi", liqs: 238, modalidade: "LICITAÇÃO" },
+  { id: 1, credor: "CONCESSIONARIA ROTA DO OESTE S.A.", valor: "R$ 350,0 mi", modalidade: "LICITAÇÃO" },
+  { id: 2, credor: "Lotufo Engenharia e Construcoes Ltda", valor: "R$ 181,6 mi", modalidade: "LICITAÇÃO" },
+  { id: 3, credor: "ENERGISA MATO GROSSO", valor: "R$ 153,0 mi", modalidade: "SERVIÇOS" },
+  { id: 4, credor: "Construtora Tripolo Ltda", valor: "R$ 147,6 mi", modalidade: "LICITAÇÃO" },
+  { id: 5, credor: "HOSPITAL ALBERT EINSTEIN", valor: "R$ 145,1 mi", modalidade: "SAÚDE" },
+  { id: 6, credor: "BANCO SANTANDER (BRASIL) S.A.", valor: "R$ 142,6 mi", modalidade: "FINANCEIRO" },
+  { id: 7, credor: "INSTITUTO SAO LUCAS", valor: "R$ 133,7 mi", modalidade: "SAÚDE" },
+  { id: 8, credor: "Agrimat Engenharia", valor: "R$ 129,4 mi", modalidade: "LICITAÇÃO" },
+  { id: 9, credor: "SEMEC- Semec Serviços", valor: "R$ 117,1 mi", modalidade: "LICITAÇÃO" },
+  { id: 10, credor: "IVG BRASIL LTDA", valor: "R$ 116,1 mi", modalidade: "SERVIÇOS" },
 ];
