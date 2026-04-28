@@ -1736,9 +1736,9 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-           ) : active === 10 ? (
+            ) : active === 10 || active === 12 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
-               Fonte: Painel de Liquidações — SEFAZ-MT
+                Fonte: FIPLAN/SEFAZ
              </span>
            ) : active === 4 || active === 5 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
