@@ -64,7 +64,7 @@ import {
           <KPI title="MT" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
           <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
             <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
@@ -137,7 +137,7 @@ import {
           <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
           <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
             <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
