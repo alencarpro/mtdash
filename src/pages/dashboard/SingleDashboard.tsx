@@ -192,35 +192,55 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 17 — ALFABETIZAÇÃO MATO GROSSO
     ═══════════════════════════════════════════════════════════ */
- const PanelAlfabetizacaoMT = () => (
-   <div className="flex flex-col gap-2 h-full overflow-hidden">
-     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-       <KPI title="Média Estadual" value="94.5%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
-       <KPI title="Melhor Município" value="96.8%" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Award} />
-       <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
-       <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
-     </div>
-     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
-       <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
-         <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
-       </Chart>
-       <div className="flex flex-col gap-2 min-h-0">
-         <Chart title="Top 10 Municípios (Maior Taxa)">
-           <ResponsiveContainer width="100%" height="100%">
-             <BarChart data={[...alfabetizacaoMT].sort((a, b) => b.value - a.value).slice(0, 10)} layout="vertical" margin={{ top: 5, right: 35, bottom: 0, left: -5 }}>
-               <XAxis type="number" hide />
-               <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
-               <Tooltip content={<CustomTooltip unit="%" />} />
-               <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1800}>
-                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
-               </Bar>
-             </BarChart>
-           </ResponsiveContainer>
-         </Chart>
-       </div>
-     </div>
-   </div>
- );
+  const PanelAlfabetizacaoMT = () => {
+    const top10 = [...alfabetizacaoMT].sort((a, b) => b.value - a.value).slice(0, 10);
+    const correlationData = alfabetizacaoMT.slice(0, 15).map(d => ({
+      name: d.city,
+      taxa: d.value,
+      pop: populationData.find(p => p.city === d.city)?.population || 30000 + Math.random() * 80000,
+    }));
+
+    return (
+      <div className="flex flex-col gap-2 h-full overflow-hidden">
+        <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+          <KPI title="Média Estadual" value="94.5%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
+          <KPI title="Melhor Município" value="96.8%" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Award} />
+          <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
+          <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
+        </div>
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
+            <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+          </Chart>
+        </div>
+        <div className="grid grid-cols-2 gap-2 h-[180px] flex-shrink-0">
+          <Chart title="Índice Proporcional (Alfabetização vs População)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+                <XAxis dataKey="name" stroke={C.axis} fontSize={8} tick={WrappedYAxisTick} />
+                <YAxis fontSize={9} stroke={C.axis} />
+                <Tooltip content={<CustomTooltip unit="%" />} />
+                <Bar dataKey="taxa" name="Taxa %" fill={C.teal} radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+          <Chart title="Top 10 Municípios (Maior Taxa)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={top10} layout="vertical" margin={{ top: 5, right: 35, bottom: 0, left: -5 }}>
+                <XAxis type="number" hide />
+                <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
+                <Tooltip content={<CustomTooltip unit="%" />} />
+                <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]}>
+                  <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+        </div>
+      </div>
+    );
+  };
 import tituloImg from "@/assets/titulo.png";
 
 
