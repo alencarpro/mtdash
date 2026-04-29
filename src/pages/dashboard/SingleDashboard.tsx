@@ -1419,29 +1419,29 @@ const PanelLiquidacoes = () => (
     </div>
 
     <div className="grid grid-cols-2 gap-2 flex-1 min-h-[160px]">
-      <Chart title="Por Função de Governo (R$ bi)">
+      <Chart title="Top 5 Por Função de Governo (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={liquidacoesFuncaoGoverno} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
+          <BarChart data={liquidacoesFuncaoGoverno.slice(0, 5)} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="funcao" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={100} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {liquidacoesFuncaoGoverno.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              {liquidacoesFuncaoGoverno.slice(0, 5).map((e, i) => <Cell key={i} fill={e.fill} />)}
               <LabelList dataKey="valor" position="right" fontSize={11} fill={C.label} formatter={(v: number) => `R$ ${v} bi`} />
             </Bar>
           </BarChart>
         </ResponsiveContainer>
       </Chart>
-      <Chart title="Por Unidade Orçamentária (R$ bi)">
+      <Chart title="Top 5 Por Unidade Orçamentária (R$ bi)">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={liquidacoesUnidades} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
+          <BarChart data={liquidacoesUnidades.slice(0, 5)} layout="vertical" margin={{ top: 4, right: 40, bottom: 0, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
             <XAxis type="number" hide />
             <YAxis type="category" dataKey="unidade" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={100} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="bi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valor" radius={[0, 3, 3, 0]} animationDuration={1800}>
-              {liquidacoesUnidades.map((e, i) => <Cell key={i} fill={e.fill} />)}
+              {liquidacoesUnidades.slice(0, 5).map((e, i) => <Cell key={i} fill={e.fill} />)}
               <LabelList dataKey="valor" position="right" fontSize={11} fill={C.label} formatter={(v: number) => `R$ ${v} bi`} />
             </Bar>
           </BarChart>
