@@ -78,6 +78,7 @@ import {
                 <YAxis yAxisId="left" stroke={C.red} fontSize={9} />
                 <YAxis yAxisId="right" orientation="right" stroke={C.blue} fontSize={9} />
                 <Tooltip content={<CustomTooltip />} />
+                <Legend verticalAlign="top" height={36} />
                 <Line yAxisId="left" type="monotone" dataKey="taxa" stroke={C.red} dot={{ r: 3 }} name="Taxa" />
                 <Area yAxisId="right" type="monotone" dataKey="pop" fill={C.blue} stroke="none" opacity={0.1} name="População" />
               </LineChart>
@@ -220,6 +221,7 @@ import {
                 <XAxis dataKey="name" stroke={C.axis} fontSize={8} />
                 <YAxis fontSize={9} stroke={C.axis} />
                 <Tooltip content={<CustomTooltip unit="%" />} />
+                <Legend verticalAlign="top" height={36} />
                 <Area type="monotone" dataKey="taxa" stroke={C.teal} fill={C.teal} fillOpacity={0.2} name="Taxa %" />
               </AreaChart>
             </ResponsiveContainer>
@@ -290,6 +292,7 @@ import {
                 <XAxis dataKey="name" stroke={C.axis} fontSize={8} tick={WrappedYAxisTick} />
                 <YAxis fontSize={9} stroke={C.axis} />
                 <Tooltip content={<CustomTooltip unit="%" />} />
+                <Legend verticalAlign="top" height={36} />
                 <Bar dataKey="taxa" name="Taxa %" fill={C.teal} radius={[2, 2, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
