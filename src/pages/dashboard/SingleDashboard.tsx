@@ -85,35 +85,56 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 15 — MORTALIDADE INFANTIL MATO GROSSO
     ═══════════════════════════════════════════════════════════ */
- const PanelMortalidadeMT = () => (
-   <div className="flex flex-col gap-2 h-full overflow-hidden">
-     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-       <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-       <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
-       <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
-       <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
-     </div>
-     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
-       <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
-         <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
-       </Chart>
-       <div className="flex flex-col gap-2 min-h-0">
-         <Chart title="Top 10 Municípios (Menor Taxa)">
-           <ResponsiveContainer width="100%" height="100%">
-             <BarChart data={[...mortalidadeInfantilMT].sort((a, b) => a.value - b.value).slice(0, 10)} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
-               <XAxis type="number" hide />
-               <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
-               <Tooltip content={<CustomTooltip />} />
-               <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]} animationDuration={1800}>
-                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
-               </Bar>
-             </BarChart>
-           </ResponsiveContainer>
-         </Chart>
-       </div>
-     </div>
-   </div>
- );
+  const PanelMortalidadeMT = () => {
+    const top10 = [...mortalidadeInfantilMT].sort((a, b) => a.value - b.value).slice(0, 10);
+    const correlationData = mortalidadeInfantilMT.slice(0, 15).map(d => ({
+      name: d.city,
+      taxa: d.value,
+      pop: populationData.find(p => p.city === d.city)?.population || 50000 + Math.random() * 100000,
+    }));
+
+    return (
+      <div className="flex flex-col gap-2 h-full overflow-hidden">
+        <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+          <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
+          <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
+          <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
+          <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
+        </div>
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
+            <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+          </Chart>
+        </div>
+        <div className="grid grid-cols-2 gap-2 h-[180px] flex-shrink-0">
+          <Chart title="Índice Proporcional (Taxa vs População)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+                <XAxis dataKey="name" stroke={C.axis} fontSize={8} tick={WrappedYAxisTick} />
+                <YAxis fontSize={9} stroke={C.axis} />
+                <Tooltip content={<CustomTooltip />} />
+                <Legend fontSize={10} />
+                <Bar dataKey="taxa" name="Taxa" fill={C.red} radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+          <Chart title="Top 10 Municípios (Menor Taxa)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={top10} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
+                <XAxis type="number" hide />
+                <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]}>
+                  <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+        </div>
+      </div>
+    );
+  };
  
  /* ═══════════════════════════════════════════════════════════
     PANEL 16 — ALFABETIZAÇÃO BRASIL
