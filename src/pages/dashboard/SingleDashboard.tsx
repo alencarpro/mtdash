@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
+import BrazilMap from "@/components/dashboard/maps/BrazilMap";
+import MTMap from "@/components/dashboard/maps/MTMap";
  import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto, naturezaBeneficios, unidadesDetalhadas } from "@/data/beneficiosControleData";
  import { liquidacoesSummary, liquidacoesUnidades, liquidacoesEvolucaoMensal, liquidacoesAlinhamento, liquidacoesFuncaoGoverno, topCredores } from "@/data/liquidacoesData";
 import { ptaSummary, orcamentoFuncao, categoriaEconomica, topSubfuncoes, orcamentoUO, modalidadeAplicacao, pacoteDespesa, elementoDespesa, ticInvestimento, radarOrcamento, composicaoFuncao } from "@/data/ptaData";
@@ -23,10 +25,87 @@ import {
   beneficiosFinanceiros, aderenciaRecomendacoes, auditoriaControle, ouvidoriaManifestacoes,
   cgeAlerta, areasAuditadas, integridadeNumeros, dosimetriaPenas, capacitacoesCGE,
   tcacs, planejamentoEstrategico, custosServicos,
+  mortalidadeInfantilBrasil, mortalidadeInfantilMT, alfabetizacaoBrasil, alfabetizacaoMT,
 } from "@/data/mockData";
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 14 — MORTALIDADE INFANTIL BRASIL
+    ═══════════════════════════════════════════════════════════ */
+ const PanelMortalidadeBrasil = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
+       <KPI title="Melhor Estado" value="9.2" sub="DF" color={C.green} delay={120} icon={Target} />
+       <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
+       <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
+         <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#8df3db", "#f87171"]} />
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 15 — MORTALIDADE INFANTIL MATO GROSSO
+    ═══════════════════════════════════════════════════════════ */
+ const PanelMortalidadeMT = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
+       <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
+       <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
+       <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
+         <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#8df3db", "#f87171"]} />
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 16 — ALFABETIZAÇÃO BRASIL
+    ═══════════════════════════════════════════════════════════ */
+ const PanelAlfabetizacaoBrasil = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
+       <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
+       <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
+       <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
+         <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} />
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 17 — ALFABETIZAÇÃO MATO GROSSO
+    ═══════════════════════════════════════════════════════════ */
+ const PanelAlfabetizacaoMT = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Estadual" value="94.5%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
+       <KPI title="Melhor Município" value="96.8%" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Award} />
+       <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
+       <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
+         <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} />
+       </Chart>
+     </div>
+   </div>
+ );
 import tituloImg from "@/assets/titulo.png";
 
 
+ 
 /* ─── Paleta ─── */
 const C = {
   teal: "#8df3db",
@@ -1478,14 +1557,14 @@ const PanelLiquidacoes = () => (
   </div>
 );
  
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13"];
+ const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBrasil, PanelMortalidadeMT, PanelAlfabetizacaoBrasil, PanelAlfabetizacaoMT];
+ const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
   t1: [0, 1, 2, 3],   // P1, P2, P3, P4
   t2: [2, 3, 0, 1],   // P3, P4, P1, P2
     t3: [6, 7, 9, 12],       // P7, P8, P10, P13
-    t4: [4, 5, 8],       // P5, P6, P9
+     t4: [4, 5, 8, 13, 14, 15, 16],       // P5, P6, P9, P14, P15, P16, P17
 };
 
 /* ─── Main ─── */
@@ -1586,9 +1665,9 @@ const SingleDashboard = () => {
 
   const ActivePanel = panels[active];
 
-    const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Liquidações Por Unidade", "Despesas Liquidadas 2025"];
-    const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-    const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#102041", "#1C0903"];
+     const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Liquidações Por Unidade", "Despesas Liquidadas 2025", "Mortalidade Infantil — Brasil", "Mortalidade Infantil — Mato Grosso", "Taxa de Alfabetização — Brasil", "Taxa de Alfabetização — Mato Grosso"];
+     const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+     const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#102041", "#1C0903", "#1e2405", "#1e2405", "#1e2405", "#1e2405"];
 
   const ROTATE_INTERVAL = 60;
   const [now, setNow] = useState(new Date());
@@ -1740,7 +1819,7 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-            ) : active === 10 || active === 12 ? (
+            ) : active === 10 || active === 12 || active === 13 || active === 14 || active === 15 || active === 16 || active === 11 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                 Fonte: FIPLAN/SEFAZ
              </span>
