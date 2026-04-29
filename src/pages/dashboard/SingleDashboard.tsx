@@ -156,7 +156,7 @@ import {
           <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
-          <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
+           <Chart title="Mapa de Calor - Alfabetização por Estado">
             <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
@@ -209,7 +209,7 @@ import {
           <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
-          <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
+           <Chart title="Mapa de Calor - Alfabetização por Município (MT)">
             <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
