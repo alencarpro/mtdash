@@ -54,7 +54,8 @@ const renderPieLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name, valu
   const radius = outerRadius + 10;
   const x = cx + radius * Math.cos(-midAngle * RADIAN);
   const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  if ((percent || value / 100) < 0.05) return null;
+  // Show all labels regardless of percentage
+  // if ((percent || value / 100) < 0.05) return null;
   const displayName = name.length > 12 ? name.substring(0, 12) + '…' : name;
   return (
      <text x={x} y={y} fill={C.label} textAnchor={x > cx ? "start" : "end"} dominantBaseline="central" fontSize={11} fontWeight={600}>
@@ -1412,6 +1413,7 @@ const PanelLiquidacoes = () => (
             <Pie data={liquidacoesAlinhamento} cx="50%" cy="50%" innerRadius="20%" outerRadius="45%" paddingAngle={2} dataKey="value" nameKey="name" label={renderPieLabel} labelLine={false} animationDuration={1800}>
               {liquidacoesAlinhamento.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
             </Pie>
+            <Legend content={renderLegend} />
             <Tooltip content={<PieTooltip />} />
           </PieChart>
         </ResponsiveContainer>
