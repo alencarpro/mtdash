@@ -47,6 +47,27 @@ export type Database = {
         }
         Relationships: []
       }
+      external_api_data: {
+        Row: {
+          endpoint: string
+          id: string
+          payload: Json
+          updated_at: string | null
+        }
+        Insert: {
+          endpoint: string
+          id?: string
+          payload: Json
+          updated_at?: string | null
+        }
+        Update: {
+          endpoint?: string
+          id?: string
+          payload?: Json
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       external_dashboard_data: {
         Row: {
           category: string

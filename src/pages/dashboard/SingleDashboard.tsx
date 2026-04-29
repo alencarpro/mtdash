@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+ import { useState, useEffect, useMemo } from "react";
+ import { supabase } from "@/integrations/supabase/client";
 import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
@@ -31,8 +32,25 @@ import {
     PANEL 14 — MORTALIDADE INFANTIL BRASIL
     ═══════════════════════════════════════════════════════════ */
   const PanelMortalidadeBR = () => {
-    const top10 = [...mortalidadeInfantilBrasil].sort((a, b) => a.value - b.value).slice(0, 10);
-    const scatterData = mortalidadeInfantilBrasil.map(d => ({
+    const [apiData, setApiData] = useState<any[]>([]);
+    
+    useEffect(() => {
+      supabase
+        .from('external_api_data')
+        .select('payload')
+        .eq('endpoint', 'mortalidade')
+        .single()
+        .then(({ data }) => {
+          const payload = data?.payload as any;
+          if (payload && Array.isArray(payload.brasil)) {
+            setApiData(payload.brasil);
+          }
+        });
+    }, []);
+
+    const currentData = apiData.length > 0 ? apiData : mortalidadeInfantilBrasil;
+    const top10 = [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
+    const scatterData = currentData.map(d => ({
       name: d.state,
       taxa: d.value,
       pop: populationData.find(p => p.city.includes(d.state))?.population || Math.random() * 10000000 + 1000000,
@@ -48,7 +66,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
-            <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
