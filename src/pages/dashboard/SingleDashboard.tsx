@@ -1502,7 +1502,7 @@ const SingleDashboard = () => {
   const getRotationIndex = () => {
     const now = new Date();
     const totalSeconds = now.getMinutes() * 60 + now.getSeconds();
-    const windowIndex = Math.floor(((totalSeconds - 1 + 3600) % 3600) / 30);
+    const windowIndex = Math.floor(((totalSeconds - 1 + 3600) % 3600) / 45);
     return windowIndex;
   };
 
@@ -1590,7 +1590,7 @@ const SingleDashboard = () => {
     const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
     const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#102041", "#1C0903"];
 
-  const ROTATE_INTERVAL = 30;
+  const ROTATE_INTERVAL = 45;
   const [now, setNow] = useState(new Date());
   const [progress, setProgress] = useState(0);
 
@@ -1604,7 +1604,7 @@ const SingleDashboard = () => {
       const d = new Date();
       const s = d.getSeconds();
       const ms = d.getMilliseconds();
-      const totalMs = (((s - 1 + 60) % 60) % 30) * 1000 + ms;
+      const totalMs = (((s - 1 + 3600) % 3600) % 45) * 1000 + ms;
       return totalMs;
     };
 
@@ -1624,8 +1624,9 @@ const SingleDashboard = () => {
     if (sequence) {
       const checkRotate = setInterval(() => {
         if (paused) return;
-        const s = new Date().getSeconds();
-        if (s === 1 || s === 31) {
+        const d = new Date();
+        const totalSeconds = d.getMinutes() * 60 + d.getSeconds();
+        if ((totalSeconds - 1 + 3600) % 45 === 0) {
           if (!hasNavigated) {
             hasNavigated = true;
             setRotationTick(t => t + 1);
@@ -1638,8 +1639,9 @@ const SingleDashboard = () => {
     } else {
       const checkRotate = setInterval(() => {
         if (paused) return;
-        const s = new Date().getSeconds();
-        if (s === 1 || s === 31) {
+        const d = new Date();
+        const totalSeconds = d.getMinutes() * 60 + d.getSeconds();
+        if ((totalSeconds - 1 + 3600) % 45 === 0) {
           if (!hasNavigated) {
             hasNavigated = true;
             const nextPage = ((active + 1) % panels.length) + 1;
