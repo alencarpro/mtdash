@@ -38,7 +38,7 @@ import {
        <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
        <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
      </div>
-     <div className="grid grid-cols-[1fr_280px] gap-2 flex-1 min-h-0">
+     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
        <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
          <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
        </Chart>
@@ -71,7 +71,7 @@ import {
        <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
        <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
      </div>
-     <div className="grid grid-cols-[1fr_280px] gap-2 flex-1 min-h-0">
+     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
        <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
          <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
        </Chart>
@@ -104,7 +104,7 @@ import {
        <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
        <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
      </div>
-     <div className="grid grid-cols-[1fr_280px] gap-2 flex-1 min-h-0">
+     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
        <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
          <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
        </Chart>
@@ -137,7 +137,7 @@ import {
        <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
        <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
      </div>
-     <div className="grid grid-cols-[1fr_280px] gap-2 flex-1 min-h-0">
+     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
        <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
          <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
        </Chart>
