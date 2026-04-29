@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
 import { obrasEstrategicasList, obrasExecucaoChart, obrasValorChart, obrasSummary } from "@/data/obrasData";
- import BrazilMap from "@/components/dashboard/maps/BrazilMap";
- import MTMap from "@/components/dashboard/maps/MTMap";
+import BrazilMap from "@/components/dashboard/maps/BrazilMap";
+import MTMap from "@/components/dashboard/maps/MTMap";
  import { beneficiosSummary, adjuntasRanking, macrofuncaoStats, topClassesBeneficio, dimensaoImpacto, naturezaBeneficios, unidadesDetalhadas } from "@/data/beneficiosControleData";
  import { liquidacoesSummary, liquidacoesUnidades, liquidacoesEvolucaoMensal, liquidacoesAlinhamento, liquidacoesFuncaoGoverno, topCredores } from "@/data/liquidacoesData";
 import { ptaSummary, orcamentoFuncao, categoriaEconomica, topSubfuncoes, orcamentoUO, modalidadeAplicacao, pacoteDespesa, elementoDespesa, ticInvestimento, radarOrcamento, composicaoFuncao } from "@/data/ptaData";
@@ -105,8 +105,6 @@ import {
 import tituloImg from "@/assets/titulo.png";
 
 
- import BrazilMap from "@/components/dashboard/maps/BrazilMap";
- import MTMap from "@/components/dashboard/maps/MTMap";
  
 /* ─── Paleta ─── */
 const C = {
