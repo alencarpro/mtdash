@@ -69,7 +69,7 @@ import {
             <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
+        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <Chart title="Correlação: Taxa vs População Estimada">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -142,7 +142,7 @@ import {
             <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
+        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <Chart title="Índice Proporcional (Taxa vs População)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -213,7 +213,7 @@ import {
             <BrazilMap data={currentData} title="Alfabetização BR" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
+        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <Chart title="Alfabetização vs Volume Populacional">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -284,7 +284,7 @@ import {
             <MTMap data={currentData} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
+        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
           <Chart title="Índice Proporcional (Alfabetização vs População)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
