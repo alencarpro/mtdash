@@ -104,8 +104,25 @@ import {
     PANEL 15 — MORTALIDADE INFANTIL MATO GROSSO
     ═══════════════════════════════════════════════════════════ */
   const PanelMortalidadeMT_Dashboard = () => {
-    const top10 = [...mortalidadeInfantilMT].sort((a, b) => a.value - b.value).slice(0, 10);
-    const correlationData = mortalidadeInfantilMT.slice(0, 15).map(d => ({
+    const [apiData, setApiData] = useState<any[]>([]);
+    
+    useEffect(() => {
+      supabase
+        .from('external_api_data')
+        .select('payload')
+        .eq('endpoint', 'mortalidade')
+        .single()
+        .then(({ data }) => {
+          const payload = data?.payload as any;
+          if (payload && Array.isArray(payload.mt)) {
+            setApiData(payload.mt);
+          }
+        });
+    }, []);
+
+    const currentData = apiData.length > 0 ? apiData : mortalidadeInfantilMT;
+    const top10 = [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
+    const correlationData = currentData.slice(0, 15).map(d => ({
       name: d.city,
       taxa: d.value,
       pop: populationData.find(p => p.city === d.city)?.population || 50000 + Math.random() * 100000,
@@ -121,7 +138,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
-            <MTMap data={mortalidadeInfantilMT} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
@@ -158,8 +175,25 @@ import {
     PANEL 16 — ALFABETIZAÇÃO BRASIL
     ═══════════════════════════════════════════════════════════ */
   const PanelAlfabetizacaoBR = () => {
-    const top10 = [...alfabetizacaoBrasil].sort((a, b) => b.value - a.value).slice(0, 10);
-    const correlationData = alfabetizacaoBrasil.map(d => ({
+    const [apiData, setApiData] = useState<any[]>([]);
+    
+    useEffect(() => {
+      supabase
+        .from('external_api_data')
+        .select('payload')
+        .eq('endpoint', 'alfabetizacao')
+        .single()
+        .then(({ data }) => {
+          const payload = data?.payload as any;
+          if (payload && Array.isArray(payload.brasil)) {
+            setApiData(payload.brasil);
+          }
+        });
+    }, []);
+
+    const currentData = apiData.length > 0 ? apiData : alfabetizacaoBrasil;
+    const top10 = [...currentData].sort((a, b) => b.value - a.value).slice(0, 10);
+    const correlationData = currentData.map(d => ({
       name: d.state,
       taxa: d.value,
       pop: populationData.find(p => p.city.includes(d.state))?.population || 2000000 + Math.random() * 10000000,
@@ -175,7 +209,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
            <Chart title="Mapa de Calor - Alfabetização por Estado">
-            <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização BR" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+            <BrazilMap data={currentData} title="Alfabetização BR" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
@@ -211,8 +245,25 @@ import {
     PANEL 17 — ALFABETIZAÇÃO MATO GROSSO
     ═══════════════════════════════════════════════════════════ */
   const PanelAlfabetizacaoMT = () => {
-    const top10 = [...alfabetizacaoMT].sort((a, b) => b.value - a.value).slice(0, 10);
-    const correlationData = alfabetizacaoMT.slice(0, 15).map(d => ({
+    const [apiData, setApiData] = useState<any[]>([]);
+    
+    useEffect(() => {
+      supabase
+        .from('external_api_data')
+        .select('payload')
+        .eq('endpoint', 'alfabetizacao')
+        .single()
+        .then(({ data }) => {
+          const payload = data?.payload as any;
+          if (payload && Array.isArray(payload.mt)) {
+            setApiData(payload.mt);
+          }
+        });
+    }, []);
+
+    const currentData = apiData.length > 0 ? apiData : alfabetizacaoMT;
+    const top10 = [...currentData].sort((a, b) => b.value - a.value).slice(0, 10);
+    const correlationData = currentData.slice(0, 15).map(d => ({
       name: d.city,
       taxa: d.value,
       pop: populationData.find(p => p.city === d.city)?.population || 30000 + Math.random() * 80000,
@@ -228,7 +279,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
            <Chart title="Mapa de Calor - Alfabetização por Município (MT)">
-            <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+            <MTMap data={currentData} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
