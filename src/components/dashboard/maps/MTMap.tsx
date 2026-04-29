@@ -3,18 +3,18 @@ import * as d3Geo from 'd3-geo';
 import * as d3Selection from 'd3-selection';
 import * as d3Scale from 'd3-scale';
 
-interface BrazilMapProps {
-  data: { state: string; value: number }[];
+interface MTMapProps {
+  data: { city: string; value: number }[];
   title: string;
   colorScale?: string[];
 }
 
-const BrazilMap: React.FC<BrazilMapProps> = ({ data, title, colorScale = ["#8df3db", "#60a5fa"] }) => {
+const MTMap: React.FC<MTMapProps> = ({ data, title, colorScale = ["#8df3db", "#60a5fa"] }) => {
   const [geoData, setGeoData] = useState<any>(null);
   const svgRef = useRef<SVGSVGElement>(null);
 
   useEffect(() => {
-    fetch('https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson')
+    fetch('https://raw.githubusercontent.com/tbicudo/geojson-brasil/master/cities/mt.json')
       .then(response => response.json())
       .then(json => setGeoData(json));
   }, []);
@@ -44,24 +44,23 @@ const BrazilMap: React.FC<BrazilMapProps> = ({ data, title, colorScale = ["#8df3
       .join('path')
       .attr('d', pathGenerator as any)
       .attr('fill', (d: any) => {
-        const stateData = data.find(item => 
-          item.state === d.properties.name || 
-          item.state === d.properties.sigla
+        const cityData = data.find(item => 
+          item.city.toLowerCase() === d.properties.name.toLowerCase()
         );
-        return stateData ? color(stateData.value) : '#1e293b';
+        return cityData ? color(cityData.value) : '#1e293b';
       })
       .attr('stroke', '#0f172a')
-      .attr('stroke-width', 0.5)
+      .attr('stroke-width', 0.2)
       .style('cursor', 'pointer')
       .on('mouseover', function() {
-        d3Selection.select(this).attr('stroke-width', 1.5).attr('stroke', '#fff');
+        d3Selection.select(this).attr('stroke-width', 1).attr('stroke', '#fff');
       })
       .on('mouseout', function() {
-        d3Selection.select(this).attr('stroke-width', 0.5).attr('stroke', '#0f172a');
+        d3Selection.select(this).attr('stroke-width', 0.2).attr('stroke', '#0f172a');
       });
   }, [geoData, data, colorScale]);
 
   return <svg ref={svgRef} className="w-full h-full" />;
 };
 
-export default BrazilMap;
+export default MTMap;
