@@ -30,7 +30,7 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 14 — MORTALIDADE INFANTIL BRASIL
     ═══════════════════════════════════════════════════════════ */
-  const PanelMortalidadeBrasil = () => {
+  const PanelMortalidadeBR = () => {
     const top10 = [...mortalidadeInfantilBrasil].sort((a, b) => a.value - b.value).slice(0, 10);
     const scatterData = mortalidadeInfantilBrasil.map(d => ({
       name: d.state,
@@ -43,12 +43,12 @@ import {
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
           <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
           <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
-          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
+          <KPI title="MT" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
           <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
-          <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
-            <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+          <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
+            <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
@@ -85,7 +85,7 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 15 — MORTALIDADE INFANTIL MATO GROSSO
     ═══════════════════════════════════════════════════════════ */
-  const PanelMortalidadeMT = () => {
+  const PanelMortalidadeMT_Dashboard = () => {
     const top10 = [...mortalidadeInfantilMT].sort((a, b) => a.value - b.value).slice(0, 10);
     const correlationData = mortalidadeInfantilMT.slice(0, 15).map(d => ({
       name: d.city,
@@ -102,8 +102,8 @@ import {
           <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
-          <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
-            <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+          <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
+            <MTMap data={mortalidadeInfantilMT} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
@@ -139,7 +139,7 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 16 — ALFABETIZAÇÃO BRASIL
     ═══════════════════════════════════════════════════════════ */
-  const PanelAlfabetizacaoBrasil = () => {
+  const PanelAlfabetizacaoBR = () => {
     const top10 = [...alfabetizacaoBrasil].sort((a, b) => b.value - a.value).slice(0, 10);
     const correlationData = alfabetizacaoBrasil.map(d => ({
       name: d.state,
@@ -152,12 +152,12 @@ import {
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
           <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
           <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
-          <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
+          <KPI title="MT" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
           <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
            <Chart title="Mapa de Calor - Alfabetização por Estado">
-            <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+            <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização BR" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
@@ -1696,7 +1696,7 @@ const PanelLiquidacoes = () => (
   </div>
 );
  
- const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBrasil, PanelMortalidadeMT, PanelAlfabetizacaoBrasil, PanelAlfabetizacaoMT];
+ const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBR, PanelMortalidadeMT_Dashboard, PanelAlfabetizacaoBR, PanelAlfabetizacaoMT];
  const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "c04", "b05", "a05", "a06", "a07", "a08"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
