@@ -40,7 +40,7 @@ import {
      </div>
      <div className="flex-1 min-h-0">
        <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
-         <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#8df3db", "#f87171"]} />
+         <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
        </Chart>
      </div>
    </div>
@@ -59,7 +59,7 @@ import {
      </div>
      <div className="flex-1 min-h-0">
        <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
-         <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#8df3db", "#f87171"]} />
+         <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
        </Chart>
      </div>
    </div>
@@ -78,7 +78,7 @@ import {
      </div>
      <div className="flex-1 min-h-0">
        <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
-         <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} />
+         <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
        </Chart>
      </div>
    </div>
@@ -97,7 +97,7 @@ import {
      </div>
      <div className="flex-1 min-h-0">
        <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
-         <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} />
+         <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
        </Chart>
      </div>
    </div>
