@@ -1938,8 +1938,9 @@ const SingleDashboard = () => {
         if (s === 0) {
           if (!hasNavigated) {
             hasNavigated = true;
-            const nextPage = ((active + 1) % panels.length) + 1;
-            navigate(`/${nextPage}`, { replace: true });
+            const nextIdx = (active + 1) % panels.length;
+            const nextLabel = panelLabels[nextIdx];
+            navigate(`/${nextLabel}`, { replace: true });
           }
         } else {
           hasNavigated = false;
