@@ -71,10 +71,24 @@ import {
        <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
        <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
      </div>
-     <div className="flex-1 min-h-0">
+     <div className="grid grid-cols-[1fr_280px] gap-2 flex-1 min-h-0">
        <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
          <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
        </Chart>
+       <div className="flex flex-col gap-2 min-h-0">
+         <Chart title="Top 10 Municípios (Menor Taxa)">
+           <ResponsiveContainer width="100%" height="100%">
+             <BarChart data={[...mortalidadeInfantilMT].sort((a, b) => a.value - b.value).slice(0, 10)} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
+               <XAxis type="number" hide />
+               <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
+               <Tooltip content={<CustomTooltip />} />
+               <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]} animationDuration={1800}>
+                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
+               </Bar>
+             </BarChart>
+           </ResponsiveContainer>
+         </Chart>
+       </div>
      </div>
    </div>
  );
@@ -123,10 +137,24 @@ import {
        <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
        <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
      </div>
-     <div className="flex-1 min-h-0">
+     <div className="grid grid-cols-[1fr_280px] gap-2 flex-1 min-h-0">
        <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
          <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
        </Chart>
+       <div className="flex flex-col gap-2 min-h-0">
+         <Chart title="Top 10 Municípios (Maior Taxa)">
+           <ResponsiveContainer width="100%" height="100%">
+             <BarChart data={[...alfabetizacaoMT].sort((a, b) => b.value - a.value).slice(0, 10)} layout="vertical" margin={{ top: 5, right: 35, bottom: 0, left: -5 }}>
+               <XAxis type="number" hide />
+               <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
+               <Tooltip content={<CustomTooltip unit="%" />} />
+               <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1800}>
+                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
+               </Bar>
+             </BarChart>
+           </ResponsiveContainer>
+         </Chart>
+       </div>
      </div>
    </div>
  );
