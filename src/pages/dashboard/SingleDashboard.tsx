@@ -41,8 +41,9 @@ import {
         .eq('endpoint', 'mortalidade')
         .single()
         .then(({ data }) => {
-          if (data?.payload && Array.isArray(data.payload.brasil)) {
-            setApiData(data.payload.brasil);
+          const payload = data?.payload as any;
+          if (payload && Array.isArray(payload.brasil)) {
+            setApiData(payload.brasil);
           }
         });
     }, []);
