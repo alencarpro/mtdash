@@ -27,6 +27,9 @@ import {
 import tituloImg from "@/assets/titulo.png";
 
 
+ import BrazilMap from "@/components/dashboard/maps/BrazilMap";
+ import MTMap from "@/components/dashboard/maps/MTMap";
+ 
 /* ─── Paleta ─── */
 const C = {
   teal: "#8df3db",
