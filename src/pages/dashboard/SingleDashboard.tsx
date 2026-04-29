@@ -1614,12 +1614,12 @@ const PanelLiquidacoes = () => (
 );
  
  const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBrasil, PanelMortalidadeMT, PanelAlfabetizacaoBrasil, PanelAlfabetizacaoMT];
- const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "c04", "P13", "P14", "P15", "P16", "P17"];
+ const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "c04", "b05", "P14", "P15", "P16", "P17"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
    t1: [0, 1, 2, 3, 13, 14, 15, 16],   // a01, a02, a03, a04, P14, P15, P16, P17
    t2: [2, 3, 0, 1, 13, 14, 15, 16],   // a03, a04, a01, a02, P14, P15, P16, P17
-     t3: [6, 7, 9, 12],       // b01, b02, b03, P13
+     t3: [6, 7, 9, 12],       // b01, b02, b03, b05
       t4: [4, 5, 8, 13, 14, 15, 16],       // c01, c02, c03, P14, P15, P16, P17
 };
 
