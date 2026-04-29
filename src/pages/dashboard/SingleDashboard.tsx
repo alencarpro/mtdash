@@ -1828,16 +1828,20 @@ const SingleDashboard = () => {
 
   const autoSeqIndex = sequence ? getRotationIndex() % sequence.length : 0;
 
-  const active = sequence
-    ? (manualIndex !== null
+  const active = useMemo(() => {
+    if (sequence) {
+      return manualIndex !== null
         ? sequence[manualIndex % sequence.length]
         : paused && pausedActivePanel !== null
           ? pausedActivePanel
-          : sequence[autoSeqIndex])
-    : (() => {
-        const idx = page ? Math.max(0, Math.min(parseInt(page) - 1, panels.length - 1)) : 0;
-        return isNaN(idx) ? 0 : idx;
-      })();
+          : sequence[autoSeqIndex];
+    }
+    
+    if (!page) return 0;
+    const label = page.toLowerCase();
+    const idx = panelLabels.indexOf(label);
+    return idx !== -1 ? idx : 0;
+  }, [sequence, manualIndex, paused, pausedActivePanel, autoSeqIndex, page]);
 
   // Current sequence index for edge navigation
   const currentSeqIndex = sequence
@@ -1934,8 +1938,9 @@ const SingleDashboard = () => {
         if (s === 0) {
           if (!hasNavigated) {
             hasNavigated = true;
-            const nextPage = ((active + 1) % panels.length) + 1;
-            navigate(`/${nextPage}`, { replace: true });
+            const nextIdx = (active + 1) % panels.length;
+            const nextLabel = panelLabels[nextIdx];
+            navigate(`/${nextLabel}`, { replace: true });
           }
         } else {
           hasNavigated = false;
