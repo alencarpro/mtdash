@@ -22,7 +22,7 @@ const OverviewPage = () => {
   const [period, setPeriod] = useState("1y");
 
   return (
-    <DashboardLayout title="Visão Geral — Mato Grosso" subtitle="Indicadores consolidados do Portal de Dados Públicos de MT">
+    <DashboardLayout title="Visão Geral — MT" subtitle="Indicadores consolidados do Portal de Dados Públicos de MT">
       <FilterBar cities={cities} periods={periods} selectedCity={city} selectedPeriod={period} onCityChange={setCity} onPeriodChange={setPeriod} />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">

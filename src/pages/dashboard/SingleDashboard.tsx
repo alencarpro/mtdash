@@ -61,7 +61,7 @@ import {
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
           <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
           <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
-          <KPI title="MT" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
+          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
           <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
@@ -205,7 +205,7 @@ import {
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
           <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
           <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
-          <KPI title="MT" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
+          <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
           <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
@@ -1876,7 +1876,7 @@ const SingleDashboard = () => {
 
   const ActivePanel = panels[active];
 
-     const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Liquidações Por Unidade", "Despesas Liquidadas 2025", "Mortalidade Infantil — Brasil", "Mortalidade Infantil — Mato Grosso", "Taxa de Alfabetização — Brasil", "Taxa de Alfabetização — Mato Grosso"];
+      const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Liquidações Por Unidade", "Despesas Liquidadas 2025", "Mortalidade Inf — BR", "Mortalidade Inf — MT", "Alfabetização — BR", "Alfabetização — MT"];
      const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
      const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#102041", "#1C0903", "#1e2405", "#1e2405", "#1e2405", "#1e2405"];
 
