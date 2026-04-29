@@ -69,7 +69,7 @@ import {
             <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Chart title="Correlação: Taxa vs População Estimada">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
@@ -142,7 +142,7 @@ import {
             <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Chart title="Índice Proporcional (Taxa vs População)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -208,12 +208,12 @@ import {
           <KPI title="MT" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
           <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
         </div>
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
            <Chart title="Mapa de Calor - Alfabetização por Estado">
             <BrazilMap data={currentData} title="Alfabetização BR" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Chart title="Alfabetização vs Volume Populacional">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
@@ -279,12 +279,12 @@ import {
           <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
           <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
         </div>
-        <div className="flex-1 min-h-0 overflow-hidden">
+        <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000">
            <Chart title="Mapa de Calor - Alfabetização por Município (MT)">
             <MTMap data={currentData} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
-        <div className="flex flex-col gap-2 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000">
           <Chart title="Índice Proporcional (Alfabetização vs População)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
