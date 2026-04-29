@@ -46,8 +46,9 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                  let rankText = "";
                  if (stateData) {
                    const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
-                   const rank = sorted.findIndex(item => item.state === stateData.state) + 1;
-                   rankText = ` (${rank}º no Brasil)`;
+                    const rank = sorted.findIndex(item => item.state === stateData.state) + 1;
+                    const status = isLowerBetter ? (stateData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (stateData.value > 90 ? "Índice Positivo" : "Índice Negativo");
+                    rankText = ` (${rank}º no BR - ${status})`;
                  }
  
                 const fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
