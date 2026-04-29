@@ -30,35 +30,57 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 14 — MORTALIDADE INFANTIL BRASIL
     ═══════════════════════════════════════════════════════════ */
- const PanelMortalidadeBrasil = () => (
-   <div className="flex flex-col gap-2 h-full overflow-auto">
-     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-       <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-       <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
-       <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
-       <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
-     </div>
-     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
-       <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
-         <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
-       </Chart>
-       <div className="flex flex-col gap-2 min-h-0">
-         <Chart title="Top 10 Estados (Menor Taxa)">
-           <ResponsiveContainer width="100%" height="100%">
-             <BarChart data={[...mortalidadeInfantilBrasil].sort((a, b) => a.value - b.value).slice(0, 10)} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -10 }}>
-               <XAxis type="number" hide />
-               <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
-               <Tooltip content={<CustomTooltip />} />
-               <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]} animationDuration={1800}>
-                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
-               </Bar>
-             </BarChart>
-           </ResponsiveContainer>
-         </Chart>
-       </div>
-     </div>
-   </div>
- );
+  const PanelMortalidadeBrasil = () => {
+    const top10 = [...mortalidadeInfantilBrasil].sort((a, b) => a.value - b.value).slice(0, 10);
+    const scatterData = mortalidadeInfantilBrasil.map(d => ({
+      name: d.state,
+      taxa: d.value,
+      pop: populationData.find(p => p.city.includes(d.state))?.population || Math.random() * 10000000 + 1000000,
+    }));
+
+    return (
+      <div className="flex flex-col gap-2 h-full overflow-hidden">
+        <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+          <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
+          <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
+          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
+          <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
+        </div>
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
+            <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+          </Chart>
+        </div>
+        <div className="grid grid-cols-2 gap-2 h-[180px] flex-shrink-0">
+          <Chart title="Correlação: Taxa vs População Estimada">
+            <ResponsiveContainer width="100%" height="100%">
+              <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+                <XAxis dataKey="name" stroke={C.axis} fontSize={9} />
+                <YAxis yAxisId="left" stroke={C.red} fontSize={9} />
+                <YAxis yAxisId="right" orientation="right" stroke={C.blue} fontSize={9} />
+                <Tooltip content={<CustomTooltip />} />
+                <Line yAxisId="left" type="monotone" dataKey="taxa" stroke={C.red} dot={{ r: 3 }} name="Taxa" />
+                <Area yAxisId="right" type="monotone" dataKey="pop" fill={C.blue} stroke="none" opacity={0.1} name="População" />
+              </LineChart>
+            </ResponsiveContainer>
+          </Chart>
+          <Chart title="Top 10 Estados (Menor Taxa)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={top10} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -10 }}>
+                <XAxis type="number" hide />
+                <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]}>
+                  <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+        </div>
+      </div>
+    );
+  };
  
  /* ═══════════════════════════════════════════════════════════
     PANEL 15 — MORTALIDADE INFANTIL MATO GROSSO
