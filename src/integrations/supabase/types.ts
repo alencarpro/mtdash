@@ -47,6 +47,36 @@ export type Database = {
         }
         Relationships: []
       }
+      external_dashboard_data: {
+        Row: {
+          category: string
+          id: string
+          region_code: string | null
+          region_name: string
+          region_type: string
+          updated_at: string | null
+          value: number
+        }
+        Insert: {
+          category: string
+          id?: string
+          region_code?: string | null
+          region_name: string
+          region_type: string
+          updated_at?: string | null
+          value: number
+        }
+        Update: {
+          category?: string
+          id?: string
+          region_code?: string | null
+          region_name?: string
+          region_type?: string
+          updated_at?: string | null
+          value?: number
+        }
+        Relationships: []
+      }
       kpis: {
         Row: {
           category: string
