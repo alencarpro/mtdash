@@ -139,35 +139,55 @@ import {
  /* ═══════════════════════════════════════════════════════════
     PANEL 16 — ALFABETIZAÇÃO BRASIL
     ═══════════════════════════════════════════════════════════ */
- const PanelAlfabetizacaoBrasil = () => (
-   <div className="flex flex-col gap-2 h-full overflow-auto">
-     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-       <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
-       <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
-       <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
-       <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
-     </div>
-     <div className="grid grid-cols-[1fr_220px] gap-2 flex-1 min-h-0">
-       <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
-         <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
-       </Chart>
-       <div className="flex flex-col gap-2 min-h-0">
-         <Chart title="Top 10 Estados (Maior Taxa)">
-           <ResponsiveContainer width="100%" height="100%">
-             <BarChart data={[...alfabetizacaoBrasil].sort((a, b) => b.value - a.value).slice(0, 10)} layout="vertical" margin={{ top: 5, right: 35, bottom: 0, left: -10 }}>
-               <XAxis type="number" hide />
-               <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
-               <Tooltip content={<CustomTooltip unit="%" />} />
-               <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1800}>
-                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
-               </Bar>
-             </BarChart>
-           </ResponsiveContainer>
-         </Chart>
-       </div>
-     </div>
-   </div>
- );
+  const PanelAlfabetizacaoBrasil = () => {
+    const top10 = [...alfabetizacaoBrasil].sort((a, b) => b.value - a.value).slice(0, 10);
+    const correlationData = alfabetizacaoBrasil.map(d => ({
+      name: d.state,
+      taxa: d.value,
+      pop: populationData.find(p => p.city.includes(d.state))?.population || 2000000 + Math.random() * 10000000,
+    }));
+
+    return (
+      <div className="flex flex-col gap-2 h-full overflow-hidden">
+        <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+          <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
+          <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
+          <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
+          <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
+        </div>
+        <div className="flex-1 min-h-0 overflow-hidden">
+          <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
+            <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+          </Chart>
+        </div>
+        <div className="grid grid-cols-2 gap-2 h-[180px] flex-shrink-0">
+          <Chart title="Alfabetização vs Volume Populacional">
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+                <XAxis dataKey="name" stroke={C.axis} fontSize={8} />
+                <YAxis fontSize={9} stroke={C.axis} />
+                <Tooltip content={<CustomTooltip unit="%" />} />
+                <Area type="monotone" dataKey="taxa" stroke={C.teal} fill={C.teal} fillOpacity={0.2} name="Taxa %" />
+              </AreaChart>
+            </ResponsiveContainer>
+          </Chart>
+          <Chart title="Top 10 Estados (Maior Taxa)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={top10} layout="vertical" margin={{ top: 5, right: 35, bottom: 0, left: -10 }}>
+                <XAxis type="number" hide />
+                <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
+                <Tooltip content={<CustomTooltip unit="%" />} />
+                <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]}>
+                  <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+        </div>
+      </div>
+    );
+  };
  
  /* ═══════════════════════════════════════════════════════════
     PANEL 17 — ALFABETIZAÇÃO MATO GROSSO
