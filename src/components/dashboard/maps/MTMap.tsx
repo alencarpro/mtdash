@@ -40,9 +40,15 @@ const MTMap: React.FC<MTMapProps> = ({
             {({ geographies }) =>
               geographies.map((geo) => {
                 const cityName = geo.properties.name;
-                const cityData = data.find(item => 
-                  item.city.toLowerCase() === cityName.toLowerCase()
-                );
+                 const cityData = data.find(item => item.city.toLowerCase() === cityName.toLowerCase());
+ 
+                 let rankText = "";
+                 if (cityData) {
+                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
+                   const rank = sorted.findIndex(item => item.city.toLowerCase() === cityData.city.toLowerCase()) + 1;
+                   rankText = ` (${rank}º em MT)`;
+                 }
+ 
                 const fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
 
                 return (
@@ -53,7 +59,7 @@ const MTMap: React.FC<MTMapProps> = ({
                       setTooltip({
                         x: event.clientX,
                         y: event.clientY,
-                        text: `${cityName}: ${cityData ? cityData.value + unit : 'Sem dados'}`,
+                         text: `${cityName}: ${cityData ? cityData.value + unit + rankText : 'Sem dados'}`,
                         visible: true
                       });
                     }}
