@@ -32,8 +32,24 @@ import {
     PANEL 14 — MORTALIDADE INFANTIL BRASIL
     ═══════════════════════════════════════════════════════════ */
   const PanelMortalidadeBR = () => {
-    const top10 = [...mortalidadeInfantilBrasil].sort((a, b) => a.value - b.value).slice(0, 10);
-    const scatterData = mortalidadeInfantilBrasil.map(d => ({
+    const [apiData, setApiData] = useState<any[]>([]);
+    
+    useEffect(() => {
+      supabase
+        .from('external_api_data')
+        .select('payload')
+        .eq('endpoint', 'mortalidade')
+        .single()
+        .then(({ data }) => {
+          if (data?.payload && Array.isArray(data.payload.brasil)) {
+            setApiData(data.payload.brasil);
+          }
+        });
+    }, []);
+
+    const currentData = apiData.length > 0 ? apiData : mortalidadeInfantilBrasil;
+    const top10 = [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
+    const scatterData = currentData.map(d => ({
       name: d.state,
       taxa: d.value,
       pop: populationData.find(p => p.city.includes(d.state))?.population || Math.random() * 10000000 + 1000000,
@@ -49,7 +65,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
-            <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-2 h-[360px] flex-shrink-0">
