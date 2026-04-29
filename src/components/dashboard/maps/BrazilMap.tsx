@@ -41,9 +41,15 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
               geographies.map((geo) => {
                 const stateName = geo.properties.name;
                 const stateSigla = geo.properties.sigla;
-                const stateData = data.find(item => 
-                  item.state === stateName || item.state === stateSigla
-                );
+                 const stateData = data.find(item => item.state === stateName || item.state === stateSigla);
+                 
+                 let rankText = "";
+                 if (stateData) {
+                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
+                   const rank = sorted.findIndex(item => item.state === stateData.state) + 1;
+                   rankText = ` (${rank}º no Brasil)`;
+                 }
+ 
                 const fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
 
                 return (
@@ -54,7 +60,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                       setTooltip({
                         x: event.clientX,
                         y: event.clientY,
-                        text: `${stateName}: ${stateData ? stateData.value + unit : 'Sem dados'}`,
+                         text: `${stateName}: ${stateData ? stateData.value + unit + rankText : 'Sem dados'}`,
                         visible: true
                       });
                     }}
