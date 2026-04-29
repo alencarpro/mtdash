@@ -1557,8 +1557,8 @@ const PanelLiquidacoes = () => (
   </div>
 );
  
-const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes];
-const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13"];
+ const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBrasil, PanelMortalidadeMT, PanelAlfabetizacaoBrasil, PanelAlfabetizacaoMT];
+ const panelLabels = ["P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9", "P10", "P11", "P12", "P13", "P14", "P15", "P16", "P17"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
   t1: [0, 1, 2, 3],   // P1, P2, P3, P4
