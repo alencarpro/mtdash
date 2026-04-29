@@ -31,16 +31,29 @@ import {
     PANEL 14 — MORTALIDADE INFANTIL BRASIL
     ═══════════════════════════════════════════════════════════ */
  const PanelMortalidadeBrasil = () => (
-   <div className="flex flex-col gap-2 h-full overflow-hidden">
+   <div className="flex flex-col gap-2 h-full overflow-auto">
      <div className="grid grid-cols-4 gap-2 flex-shrink-0">
        <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-       <KPI title="Melhor Estado" value="9.2" sub="DF" color={C.green} delay={120} icon={Target} />
+       <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
        <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
        <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
      </div>
-     <div className="flex-1 min-h-0">
+     <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 flex-1 min-h-[400px]">
        <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
          <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+       </Chart>
+       <Chart title="Top 5 Estados (Menor Mortalidade)">
+         <ResponsiveContainer width="100%" height="100%">
+           <BarChart data={[...mortalidadeInfantilBrasil].sort((a, b) => a.value - b.value).slice(0, 5)} layout="vertical" margin={{ top: 10, right: 40, bottom: 0, left: 10 }}>
+             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+             <XAxis type="number" hide />
+             <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={40} />
+             <Tooltip content={<CustomTooltip />} />
+             <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 4, 4, 0]} animationDuration={1800}>
+               <LabelList dataKey="value" position="right" fontSize={14} fill={C.label} />
+             </Bar>
+           </BarChart>
+         </ResponsiveContainer>
        </Chart>
      </div>
    </div>
@@ -69,16 +82,29 @@ import {
     PANEL 16 — ALFABETIZAÇÃO BRASIL
     ═══════════════════════════════════════════════════════════ */
  const PanelAlfabetizacaoBrasil = () => (
-   <div className="flex flex-col gap-2 h-full overflow-hidden">
+   <div className="flex flex-col gap-2 h-full overflow-auto">
      <div className="grid grid-cols-4 gap-2 flex-shrink-0">
        <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
        <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
        <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
        <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
      </div>
-     <div className="flex-1 min-h-0">
+     <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 flex-1 min-h-[400px]">
        <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
          <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+       </Chart>
+       <Chart title="Top 5 Estados (Maior Alfabetização)">
+         <ResponsiveContainer width="100%" height="100%">
+           <BarChart data={[...alfabetizacaoBrasil].sort((a, b) => b.value - a.value).slice(0, 5)} layout="vertical" margin={{ top: 10, right: 40, bottom: 0, left: 10 }}>
+             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} horizontal={false} />
+             <XAxis type="number" hide />
+             <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={14} tickLine={false} axisLine={false} width={40} />
+             <Tooltip content={<CustomTooltip unit="%" />} />
+             <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 4, 4, 0]} animationDuration={1800}>
+               <LabelList dataKey="value" position="right" fontSize={14} fill={C.label} formatter={(v: number) => `${v}%`} />
+             </Bar>
+           </BarChart>
+         </ResponsiveContainer>
        </Chart>
      </div>
    </div>
