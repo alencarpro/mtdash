@@ -23,7 +23,83 @@ import {
   beneficiosFinanceiros, aderenciaRecomendacoes, auditoriaControle, ouvidoriaManifestacoes,
   cgeAlerta, areasAuditadas, integridadeNumeros, dosimetriaPenas, capacitacoesCGE,
   tcacs, planejamentoEstrategico, custosServicos,
+  mortalidadeInfantilBrasil, mortalidadeInfantilMT, alfabetizacaoBrasil, alfabetizacaoMT,
 } from "@/data/mockData";
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 14 — MORTALIDADE INFANTIL BRASIL
+    ═══════════════════════════════════════════════════════════ */
+ const PanelMortalidadeBrasil = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
+       <KPI title="Melhor Estado" value="9.2" sub="DF" color={C.green} delay={120} icon={Target} />
+       <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
+       <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Mortalidade Infantil por Estado">
+         <BrazilMap data={mortalidadeInfantilBrasil} title="Mortalidade Infantil Brasil" colorScale={["#8df3db", "#f87171"]} />
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 15 — MORTALIDADE INFANTIL MATO GROSSO
+    ═══════════════════════════════════════════════════════════ */
+ const PanelMortalidadeMT = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
+       <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
+       <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
+       <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Mortalidade Infantil por Município (MT)">
+         <MTMap data={mortalidadeInfantilMT} title="Mortalidade Infantil MT" colorScale={["#8df3db", "#f87171"]} />
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 16 — ALFABETIZAÇÃO BRASIL
+    ═══════════════════════════════════════════════════════════ */
+ const PanelAlfabetizacaoBrasil = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Nacional" value="93.0%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
+       <KPI title="Melhor Estado" value="97.8%" sub="SC / DF" color={C.green} delay={120} icon={Award} />
+       <KPI title="Mato Grosso" value="94.5%" sub="Ranking 12º" color={C.blue} delay={240} icon={GraduationCap} />
+       <KPI title="Meta PNE" value="100%" sub="Erradicar Analfabetismo" color={C.purple} delay={360} icon={Target} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Taxa de Alfabetização por Estado">
+         <BrazilMap data={alfabetizacaoBrasil} title="Alfabetização Brasil" colorScale={["#f87171", "#86efac"]} />
+       </Chart>
+     </div>
+   </div>
+ );
+ 
+ /* ═══════════════════════════════════════════════════════════
+    PANEL 17 — ALFABETIZAÇÃO MATO GROSSO
+    ═══════════════════════════════════════════════════════════ */
+ const PanelAlfabetizacaoMT = () => (
+   <div className="flex flex-col gap-2 h-full overflow-hidden">
+     <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+       <KPI title="Média Estadual" value="94.5%" sub="população 15+" color={C.teal} delay={0} icon={BookOpen} />
+       <KPI title="Melhor Município" value="96.8%" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Award} />
+       <KPI title="Cuiabá" value="96.5%" sub="Capital" color={C.blue} delay={240} icon={GraduationCap} />
+       <KPI title="Evolução" value="+1.2%" sub="em relação a 2022" color={C.purple} delay={360} icon={TrendingUp} />
+     </div>
+     <div className="flex-1 min-h-0">
+       <Chart title="Mapa de Calor - Taxa de Alfabetização por Município (MT)">
+         <MTMap data={alfabetizacaoMT} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} />
+       </Chart>
+     </div>
+   </div>
+ );
 import tituloImg from "@/assets/titulo.png";
 
 
