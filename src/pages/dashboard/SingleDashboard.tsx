@@ -1564,7 +1564,7 @@ const rotationSequences: Record<string, number[]> = {
   t1: [0, 1, 2, 3],   // P1, P2, P3, P4
   t2: [2, 3, 0, 1],   // P3, P4, P1, P2
     t3: [6, 7, 9, 12],       // P7, P8, P10, P13
-    t4: [4, 5, 8],       // P5, P6, P9
+     t4: [4, 5, 8, 13, 14, 15, 16],       // P5, P6, P9, P14, P15, P16, P17
 };
 
 /* ─── Main ─── */
