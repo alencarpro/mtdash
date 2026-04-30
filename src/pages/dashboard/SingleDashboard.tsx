@@ -131,13 +131,9 @@ import {
     const top20Piores = useMemo(() => {
       return [...currentData].sort((a, b) => b.value - a.value).slice(0, 20);
     }, [currentData]);
-    
-    const correlationData = useMemo(() => {
-      return currentData.map(d => ({
-      name: d.city,
-      taxa: d.value,
-      pop: populationData.find(p => p.city === d.city)?.population || 50000 + Math.random() * 100000,
-      }));
+
+    const top10Melhores = useMemo(() => {
+      return [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
     }, [currentData]);
 
     return (
@@ -154,19 +150,7 @@ import {
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
-          <Chart title="Índice Proporcional (Taxa vs População)">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={correlationData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-                <XAxis dataKey="name" stroke={C.axis} fontSize={8} tick={WrappedYAxisTick} />
-                <YAxis fontSize={9} stroke={C.axis} />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend fontSize={10} />
-                <Bar dataKey="taxa" name="Taxa" fill={C.red} radius={[2, 2, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Chart>
-          <Chart title="Top 20 Municípios (Maior Taxa)">
+          <Chart title="Top 20 Municípios (Maior Taxa - Piores)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={top20Piores} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
                 <XAxis type="number" hide />
@@ -175,6 +159,21 @@ import {
                 <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
                   {top20Piores.map((_, index) => (
                     <Cell key={`cell-${index}`} fill={index < 10 ? TOP_COLORS[index] : "#8AEAAA"} />
+                  ))}
+                  <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </Chart>
+          <Chart title="Top 10 Municípios (Menor Taxa - Melhores)">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={top10Melhores} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
+                <XAxis type="number" hide />
+                <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
+                  {top10Melhores.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
                   ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
                 </Bar>
