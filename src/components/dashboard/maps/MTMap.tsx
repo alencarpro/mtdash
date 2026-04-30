@@ -83,19 +83,19 @@ const MTMap: React.FC<MTMapProps> = ({
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
-                    {rankVal > 0 && rankVal <= 20 && (
+                    {rankVal > 0 && rankVal <= 30 && (
                       <Marker coordinates={centroid}>
-                        <g transform="translate(-6, -6)">
-                          <circle r="5" fill="rgba(10,17,30,0.8)" stroke="rgba(141,243,219,0.5)" strokeWidth="0.3" />
+                        <g transform="translate(0, 0)">
                           <text
                             textAnchor="middle"
-                            y="2.5"
+                            dominantBaseline="middle"
                             style={{ 
-                              fontSize: "5px", 
-                              fill: "#fff", 
+                              fontSize: "7px", 
+                              fill: "#000", 
                               fontWeight: "bold",
                               fontFamily: "monospace",
-                              pointerEvents: "none"
+                              pointerEvents: "none",
+                              textShadow: "0 0 1px rgba(255,255,255,0.5)"
                             }}
                           >
                             {rankVal}
