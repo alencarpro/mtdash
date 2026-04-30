@@ -132,10 +132,10 @@ import {
       return [...currentData].sort((a, b) => b.value - a.value).slice(0, 20);
     }, [currentData]);
 
-    // Generate gradient colors for top 20 piores: from pure red (#ff0000) to soft red (#F17874)
+    // Generate gradient colors for top 20 piores: from #FC1918 to #F17874
     const pioresColors = useMemo(() => {
-      const start = { r: 255, g: 0, b: 0 };
-      const end = { r: 241, g: 120, b: 116 };
+      const start = { r: 252, g: 25, b: 24 }; // #FC1918
+      const end = { r: 241, g: 120, b: 116 }; // #F17874
       return Array.from({ length: 20 }, (_, i) => {
         const ratio = i / 19;
         const r = Math.round(start.r + (end.r - start.r) * ratio);
@@ -165,9 +165,17 @@ import {
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
           <Chart title="Top 20 Municípios (Maior Taxa - Piores)">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={top20Piores} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <BarChart data={top20Piores} margin={{ top: 20, right: 10, left: -20, bottom: 60 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
-                <XAxis dataKey="city" stroke={C.axis} fontSize={8} tick={WrappedYAxisTick} />
+                <XAxis 
+                  dataKey="city" 
+                  stroke={C.axis} 
+                  fontSize={9} 
+                  interval={0} 
+                  angle={-45} 
+                  textAnchor="end"
+                  height={60}
+                />
                 <YAxis fontSize={9} stroke={C.axis} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="value" name="Taxa" radius={[2, 2, 0, 0]}>
