@@ -87,7 +87,7 @@ const MTMap: React.FC<MTMapProps> = ({
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
-                    {rankVal > 0 && rankVal <= 30 && (
+                    {rankVal > 0 && (
                       <Marker coordinates={centroid}>
                         <g transform="translate(0, 0)">
                           <text
@@ -102,7 +102,7 @@ const MTMap: React.FC<MTMapProps> = ({
                               textShadow: "0 0 1px rgba(255,255,255,0.5)"
                             }}
                           >
-                            {rankVal}
+                            {rankVal}º
                           </text>
                         </g>
                       </Marker>
