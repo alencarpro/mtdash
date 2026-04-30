@@ -312,7 +312,10 @@ import {
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
                 <Tooltip content={<CustomTooltip unit="%" />} />
-                <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]}>
+                <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
+                  {top10.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                  ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
                 </Bar>
               </BarChart>
