@@ -19,7 +19,9 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
   unit = "", 
   isLowerBetter = false 
 }) => {
-  const [tooltip, setTooltip] = useState<{ x: number, y: number, text: string, visible: boolean }>({ x: 0, y: 0, text: '', visible: false });
+  const [tooltip, setTooltip] = useState<{ x: number, y: number, name: string, value: string, rank: string, status: string, visible: boolean }>({ 
+    x: 0, y: 0, name: '', value: '', rank: '', status: '', visible: false 
+  });
 
   const values = data.map(d => d.value);
   const min = values.length ? Math.min(...values) : 0;
@@ -44,12 +46,12 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                 const stateSigla = geo.properties.sigla;
                  const stateData = data.find(item => item.state === stateName || item.state === stateSigla);
                  
-                 let rankText = "";
+                  let rank = 0;
+                  let status = "";
                  if (stateData) {
                    const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
-                    const rank = sorted.findIndex(item => item.state === stateData.state) + 1;
-                    const status = isLowerBetter ? (stateData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (stateData.value > 90 ? "Índice Positivo" : "Índice Negativo");
-                    rankText = ` (${rank}º no BR - ${status})`;
+                    rank = sorted.findIndex(item => item.state === stateData.state) + 1;
+                    status = isLowerBetter ? (stateData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (stateData.value > 90 ? "Índice Positivo" : "Índice Negativo");
                  }
  
                 const fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
@@ -65,14 +67,17 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                   <React.Fragment key={geo.rsmKey}>
                     <Geography
                       geography={geo}
-                      onMouseEnter={(event) => {
-                        setTooltip({
-                          x: event.clientX,
-                          y: event.clientY,
-                          text: `${stateName}: ${stateData ? stateData.value + unit + rankText : 'Sem dados'}`,
-                          visible: true
-                        });
-                      }}
+                    onMouseEnter={(event) => {
+                      setTooltip({
+                        x: event.clientX,
+                        y: event.clientY,
+                        name: stateName,
+                        value: stateData ? `${stateData.value}${unit}` : 'Sem dados',
+                        rank: rank > 0 ? `${rank}º no BR` : '',
+                        status: status,
+                        visible: true
+                      });
+                    }}
                       onMouseMove={(event) => {
                         setTooltip(prev => ({ ...prev, x: event.clientX, y: event.clientY }));
                       }}
@@ -144,7 +149,18 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
             boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
           }}
         >
-          {tooltip.text}
+          <div className="flex flex-col gap-1">
+            <div className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">{tooltip.name}</div>
+            <div className="text-[16px] font-bold text-white">{tooltip.value}</div>
+            {tooltip.rank && (
+              <div className="flex items-center gap-2 mt-1 pt-1 border-t border-white/10">
+                <span className="px-1.5 py-0.5 bg-blue-500/20 text-blue-300 rounded text-[10px] font-bold">{tooltip.rank}</span>
+                <span className={`text-[10px] font-bold ${tooltip.status === 'Índice Positivo' ? 'text-green-400' : 'text-red-400'}`}>
+                  {tooltip.status}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
