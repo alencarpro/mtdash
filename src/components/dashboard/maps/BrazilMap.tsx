@@ -84,7 +84,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
-                    {rankVal > 0 && rankVal <= 27 && (
+                    {rankVal > 0 && (
                       <Marker coordinates={centroid}>
                         <g transform="translate(0, 0)">
                           <text
