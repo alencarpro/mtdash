@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+import { geoCentroid } from 'd3-geo';
 import { scaleLinear } from 'd3-scale';
 
 const geoUrl = "https://raw.githubusercontent.com/tbicudo/geojson-brasil/master/cities/mt.json";
@@ -51,31 +52,59 @@ const MTMap: React.FC<MTMapProps> = ({
                  }
  
                 const fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
+                const centroid = geoCentroid(geo);
+
+                let rank = 0;
+                if (cityData) {
+                  const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
+                  rank = sorted.findIndex(item => item.city.toLowerCase() === cityData.city.toLowerCase()) + 1;
+                }
 
                 return (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onMouseEnter={(event) => {
-                      setTooltip({
-                        x: event.clientX,
-                        y: event.clientY,
-                         text: `${cityName}: ${cityData ? cityData.value + unit + rankText : 'Sem dados'}`,
-                        visible: true
-                      });
-                    }}
-                    onMouseMove={(event) => {
-                      setTooltip(prev => ({ ...prev, x: event.clientX, y: event.clientY }));
-                    }}
-                    onMouseLeave={() => {
-                      setTooltip(prev => ({ ...prev, visible: false }));
-                    }}
-                    style={{
-                      default: { fill: fillColor, stroke: "#0f172a", strokeWidth: 0.2, outline: "none" },
-                      hover: { fill: fillColor, stroke: "#fff", strokeWidth: 1, outline: "none", cursor: "pointer" },
-                      pressed: { fill: fillColor, outline: "none" }
-                    }}
-                  />
+                  <React.Fragment key={geo.rsmKey}>
+                    <Geography
+                      geography={geo}
+                      onMouseEnter={(event) => {
+                        setTooltip({
+                          x: event.clientX,
+                          y: event.clientY,
+                          text: `${cityName}: ${cityData ? cityData.value + unit + rankText : 'Sem dados'}`,
+                          visible: true
+                        });
+                      }}
+                      onMouseMove={(event) => {
+                        setTooltip(prev => ({ ...prev, x: event.clientX, y: event.clientY }));
+                      }}
+                      onMouseLeave={() => {
+                        setTooltip(prev => ({ ...prev, visible: false }));
+                      }}
+                      style={{
+                        default: { fill: fillColor, stroke: "#0f172a", strokeWidth: 0.2, outline: "none" },
+                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 1, outline: "none", cursor: "pointer" },
+                        pressed: { fill: fillColor, outline: "none" }
+                      }}
+                    />
+                    {rank > 0 && rank <= 20 && (
+                      <Marker coordinates={centroid}>
+                        <g transform="translate(-6, -6)">
+                          <circle r="5" fill="rgba(10,17,30,0.8)" stroke="rgba(141,243,219,0.5)" strokeWidth="0.3" />
+                          <text
+                            textAnchor="middle"
+                            y="2.5"
+                            style={{ 
+                              fontSize: "5px", 
+                              fill: "#fff", 
+                              fontWeight: "bold",
+                              fontFamily: "monospace",
+                              pointerEvents: "none"
+                            }}
+                          >
+                            {rank}
+                          </text>
+                        </g>
+                      </Marker>
+                    )}
+                  </React.Fragment>
                 );
               })
             }
