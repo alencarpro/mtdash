@@ -1866,10 +1866,10 @@ const PanelLiquidacoes = () => (
  const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "c04", "b05", "a05", "a06", "a07", "a08"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
-   t1: [0, 1, 2, 3, 13, 14, 15, 16],   // a01, a02, a03, a04, a05, a06, a07, a08
-    t2: [13, 14, 15, 16, 0, 1, 2, 3],   // a05, a06, a07, a08, a01, a02, a03, a04
-     t3: [6, 7, 9, 10, 12],       // b01, b02, b03, b04, b05
-      t4: [4, 5, 8, 11],       // c01, c02, c03, c04
+  t1: [0, 1, 2, 3, 13, 14, 15, 16], // a01, a02, a03, a04, a05, a06, a07, a08
+  t2: [13, 14, 15, 16, 0, 1, 2, 3], // a05, a06, a07, a08, a01, a02, a03, a04
+  t3: [6, 7, 9, 10, 12], // b01, b02, b03, b04, b05
+  t4: [4, 5, 8], // c01, c02, c03
 };
 
 /* ─── Main ─── */
@@ -2114,7 +2114,7 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-             ) : active === 10 || active === 11 || active === 12 ? (
+            ) : active === 10 || active === 12 ? (
                <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                   Fonte: FIPLAN/SEFAZ
                </span>
