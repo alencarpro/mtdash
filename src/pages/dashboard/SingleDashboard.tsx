@@ -2064,7 +2064,7 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-            ) : active === 10 || active === 12 || active === 13 || active === 14 || active === 15 || active === 16 || active === 11 ? (
+            ) : active === 10 || active === 11 || active === 12 || active === 15 || active === 16 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                 Fonte: FIPLAN/SEFAZ
              </span>
@@ -2075,6 +2075,10 @@ const SingleDashboard = () => {
            ) : active === 6 || active === 7 ? (
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: SINFRA-MT — Obras Estratégicas
+            </span>
+          ) : active === 13 || active === 14 ? (
+            <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+              Fonte: DATASUS
             </span>
           ) : (
             <a href="https://dados.mt.gov.br/" target="_blank" rel="noopener noreferrer" className="text-[16px] sm:text-[18px] transition-colors" style={{ color: '#8df3db' }}>
