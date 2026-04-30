@@ -46,22 +46,16 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                 const stateSigla = geo.properties.sigla;
                  const stateData = data.find(item => item.state === stateName || item.state === stateSigla);
                  
-                  let rank = 0;
-                  let status = "";
-                 if (stateData) {
-                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
-                    rank = sorted.findIndex(item => item.state === stateData.state) + 1;
-                    status = isLowerBetter ? (stateData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (stateData.value > 90 ? "Índice Positivo" : "Índice Negativo");
-                 }
- 
-                const fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
-                const centroid = geoCentroid(geo);
-                
-                let rank = 0;
+                let rankVal = 0;
+                let statusVal = "";
                 if (stateData) {
                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
-                  rank = sorted.findIndex(item => item.state === stateData.state) + 1;
+                  rankVal = sorted.findIndex(item => item.state === stateData.state) + 1;
+                  statusVal = isLowerBetter ? (stateData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (stateData.value > 90 ? "Índice Positivo" : "Índice Negativo");
                 }
+
+                const fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
+                const centroid = geoCentroid(geo);
 
                 return (
                   <React.Fragment key={geo.rsmKey}>
@@ -73,8 +67,8 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                         y: event.clientY,
                         name: stateName,
                         value: stateData ? `${stateData.value}${unit}` : 'Sem dados',
-                        rank: rank > 0 ? `${rank}º no BR` : '',
-                        status: status,
+                        rank: rankVal > 0 ? `${rankVal}º no BR` : '',
+                        status: statusVal,
                         visible: true
                       });
                     }}
@@ -90,7 +84,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
-                    {rank > 0 && (
+                    {rankVal > 0 && (
                       <Marker coordinates={centroid}>
                         <g transform="translate(-10, -10)">
                           <circle r="8" fill="rgba(10,17,30,0.8)" stroke="rgba(141,243,219,0.5)" strokeWidth="0.5" />
@@ -105,7 +99,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                               pointerEvents: "none"
                             }}
                           >
-                            {rank}
+                            {rankVal}
                           </text>
                         </g>
                       </Marker>
