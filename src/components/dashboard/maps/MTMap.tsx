@@ -42,8 +42,12 @@ const MTMap: React.FC<MTMapProps> = ({
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map((geo) => {
-                const cityName = geo.properties.name;
-                 const cityData = data.find(item => item.city.toLowerCase() === cityName.toLowerCase());
+                const cityName = geo.properties.name || geo.properties.description || geo.properties.NM_MUNICIP || geo.properties.NM_MUN;
+                const cityData = data.find(item => {
+                  const itemCity = item.city.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                  const geoCity = cityName.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                  return itemCity === geoCity;
+                });
  
                 let rankVal = 0;
                 let statusVal = "";
