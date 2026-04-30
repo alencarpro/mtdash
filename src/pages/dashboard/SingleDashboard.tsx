@@ -66,7 +66,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado (Fonte: DATASUS)">
-            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#fee2e2", "#f87171", "#991b1b"]} unit="" isLowerBetter={true} />
+            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#7f1d1d", "#ef4444", "#fee2e2"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -150,7 +150,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT) (Fonte: DATASUS)">
-            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#fee2e2", "#f87171", "#991b1b"]} unit="" isLowerBetter={true} />
+            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#7f1d1d", "#ef4444", "#fee2e2"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -762,7 +762,7 @@ const PanelSocial = () => (
           </LineChart>
         </ResponsiveContainer>
       </Chart>
-      <Chart title="Mortalidade (Infantil e Geral)">
+      <Chart title="Mortalidade (Infantil e Geral) - Fonte: DATASUS">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mortalidadeData} margin={{ top: 18, right: 16, bottom: 14, left: 16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
