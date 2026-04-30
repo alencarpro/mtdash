@@ -72,15 +72,15 @@ import {
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
           <Chart title="Correlação: Taxa vs População Estimada">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
                 <XAxis dataKey="name" stroke={C.axis} fontSize={9} />
-                <YAxis yAxisId="left" stroke={C.red} fontSize={9} />
-                <YAxis yAxisId="right" orientation="right" stroke={C.blue} fontSize={9} />
+                <YAxis yAxisId="left" stroke="#16a34a" fontSize={9} />
+                <YAxis yAxisId="right" orientation="right" stroke="#4ade80" fontSize={9} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend verticalAlign="top" height={36} />
-                <Line yAxisId="left" type="monotone" dataKey="taxa" stroke={C.red} dot={{ r: 3 }} name="Taxa" />
-                <Area yAxisId="right" type="monotone" dataKey="pop" fill={C.blue} stroke="none" opacity={0.1} name="População" />
+                <Line yAxisId="left" type="monotone" dataKey="taxa" stroke="#16a34a" dot={{ r: 3 }} name="Taxa" />
+                <Area yAxisId="right" type="monotone" dataKey="pop" fill="#4ade80" stroke="none" opacity={0.1} name="População" />
               </LineChart>
             </ResponsiveContainer>
           </Chart>
@@ -162,7 +162,7 @@ import {
                 <YAxis fontSize={9} stroke={C.axis} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend fontSize={10} />
-                <Bar dataKey="taxa" name="Taxa" fill={C.red} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="taxa" name="Taxa" fill="#16a34a" radius={[2, 2, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Chart>
