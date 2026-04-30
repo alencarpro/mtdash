@@ -701,7 +701,7 @@ const PanelSocial = () => (
             <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip unit="pts" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="value" name="Índice" radius={[0, 4, 4, 0]} animationDuration={1500} animationEasing="ease-in-out">
-              {[...radarAvg].sort((a, b) => b.value - a.value).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              {[...radarAvg].sort((a, b) => b.value - a.value).map((_, i) => <Cell key={i} fill={TOP_COLORS[i % TOP_COLORS.length]} />)}
               <LabelList dataKey="value" position="right" fontSize={18} fill={C.label} />
             </Bar>
           </BarChart>
@@ -1570,8 +1570,8 @@ const PanelBeneficios = () => (
             <YAxis type="category" dataKey="unidade" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={75} />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="acoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1500}>
-              {unidadesDetalhadas.map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {unidadesDetalhadas.map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="acoes" position="right" fontSize={11} fill={C.label} />
             </Bar>
