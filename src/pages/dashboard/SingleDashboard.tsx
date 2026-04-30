@@ -124,13 +124,21 @@ import {
         });
     }, []);
 
-    const currentData = apiData.length > 0 ? apiData : mortalidadeInfantilMT;
-    const top10 = [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
-    const correlationData = currentData.slice(0, 15).map(d => ({
+    const currentData = useMemo(() => {
+      return apiData.length > 0 ? apiData : mortalidadeInfantilMT;
+    }, [apiData]);
+    
+    const top10 = useMemo(() => {
+      return [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
+    }, [currentData]);
+    
+    const correlationData = useMemo(() => {
+      return currentData.map(d => ({
       name: d.city,
       taxa: d.value,
       pop: populationData.find(p => p.city === d.city)?.population || 50000 + Math.random() * 100000,
-    }));
+      }));
+    }, [currentData]);
 
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
@@ -272,13 +280,21 @@ import {
         });
     }, []);
 
-    const currentData = apiData.length > 0 ? apiData : alfabetizacaoMT;
-    const top10 = [...currentData].sort((a, b) => b.value - a.value).slice(0, 10);
-    const correlationData = currentData.slice(0, 15).map(d => ({
+    const currentData = useMemo(() => {
+      return apiData.length > 0 ? apiData : alfabetizacaoMT;
+    }, [apiData]);
+    
+    const top10 = useMemo(() => {
+      return [...currentData].sort((a, b) => b.value - a.value).slice(0, 10);
+    }, [currentData]);
+    
+    const correlationData = useMemo(() => {
+      return currentData.map(d => ({
       name: d.city,
       taxa: d.value,
       pop: populationData.find(p => p.city === d.city)?.population || 30000 + Math.random() * 80000,
-    }));
+      }));
+    }, [currentData]);
 
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
