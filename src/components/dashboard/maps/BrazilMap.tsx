@@ -54,7 +54,24 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                   statusVal = isLowerBetter ? (stateData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (stateData.value > 90 ? "Índice Positivo" : "Índice Negativo");
                 }
 
-                const fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
+                let fillColor = stateData ? colorMapper(stateData.value) : '#1e293b';
+
+                // Different colors for top 10
+                if (rankVal > 0 && rankVal <= 10) {
+                  const topColors = [
+                    "#FFD700", // 1st - Gold
+                    "#C0C0C0", // 2nd - Silver
+                    "#CD7F32", // 3rd - Bronze
+                    "#4ade80", // 4th - Green
+                    "#22d3ee", // 5th - Cyan
+                    "#818cf8", // 6th - Indigo
+                    "#fb7185", // 7th - Rose
+                    "#fb923c", // 8th - Orange
+                    "#c084fc", // 9th - Purple
+                    "#f472b6", // 10th - Pink
+                  ];
+                  fillColor = topColors[rankVal - 1];
+                }
                 const centroid = geoCentroid(geo);
 
                 return (
