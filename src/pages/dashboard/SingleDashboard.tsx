@@ -59,14 +59,14 @@ import {
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-          <KPI title="Média Nacional" value="11.9" sub="Fonte: DATASUS" color={C.red} delay={0} icon={Activity} />
+          <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
           <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
           <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
           <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
-          <Chart title="Mapa de Calor - Mortalidade Inf. por Estado (Fonte: DATASUS)">
-            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#7f1d1d", "#ef4444", "#fee2e2"]} unit="" isLowerBetter={true} />
+          <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
+            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -143,14 +143,14 @@ import {
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-          <KPI title="Média Estadual" value="12.1" sub="Fonte: DATASUS" color={C.red} delay={0} icon={Activity} />
+          <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
           <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
           <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
           <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
-          <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT) (Fonte: DATASUS)">
-            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#7f1d1d", "#ef4444", "#fee2e2"]} unit="" isLowerBetter={true} />
+          <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
+            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -762,7 +762,7 @@ const PanelSocial = () => (
           </LineChart>
         </ResponsiveContainer>
       </Chart>
-      <Chart title="Mortalidade (Infantil e Geral) - Fonte: DATASUS">
+      <Chart title="Mortalidade (Infantil e Geral)">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={mortalidadeData} margin={{ top: 18, right: 16, bottom: 14, left: 16 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />

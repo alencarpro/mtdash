@@ -120,16 +120,16 @@ const MTMap: React.FC<MTMapProps> = ({
         <div className="flex justify-between text-[11px] text-white/90 font-bold mb-0.5 px-0.5">
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[0] }}></span>
-            {isLowerBetter ? (Math.ceil(max)) : (Math.floor(min))}{unit}
+            {isLowerBetter ? max : min}{unit}
           </span>
           <span className="flex items-center gap-1">
-            {isLowerBetter ? (Math.floor(min)) : (Math.ceil(max))}{unit}
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[colorScale.length - 1] }}></span>
+            {isLowerBetter ? min : max}{unit}
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[1] }}></span>
           </span>
         </div>
         <div 
-          className="h-2.5 w-full rounded-full shadow-inner"
-          style={{ background: `linear-gradient(to right, ${colorScale.join(', ')})` }}
+          className="h-2.5 w-full rounded-full shadow-inner" 
+          style={{ background: `linear-gradient(to right, ${colorScale[0]}, ${colorScale[1]})` }}
         />
       </div>
 
