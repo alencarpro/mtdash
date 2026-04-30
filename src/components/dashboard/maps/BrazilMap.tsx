@@ -84,19 +84,19 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
-                    {rankVal > 0 && (
+                    {rankVal > 0 && rankVal <= 27 && (
                       <Marker coordinates={centroid}>
-                        <g transform="translate(-10, -10)">
-                          <circle r="8" fill="rgba(10,17,30,0.8)" stroke="rgba(141,243,219,0.5)" strokeWidth="0.5" />
+                        <g transform="translate(0, 0)">
                           <text
                             textAnchor="middle"
-                            y="4"
+                            dominantBaseline="middle"
                             style={{ 
-                              fontSize: "8px", 
-                              fill: "#fff", 
+                              fontSize: "12px", 
+                              fill: "#000", 
                               fontWeight: "bold",
                               fontFamily: "monospace",
-                              pointerEvents: "none"
+                              pointerEvents: "none",
+                              textShadow: "0 0 2px rgba(255,255,255,0.5)"
                             }}
                           >
                             {rankVal}
