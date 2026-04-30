@@ -53,24 +53,7 @@ const MTMap: React.FC<MTMapProps> = ({
                   statusVal = isLowerBetter ? (cityData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (cityData.value > 95 ? "Índice Positivo" : "Índice Negativo");
                 }
 
-                let fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
-
-                // Different colors for top 10
-                if (rankVal > 0 && rankVal <= 10) {
-                  const topColors = [
-                    "#FFD700", // 1st - Gold
-                    "#C0C0C0", // 2nd - Silver
-                    "#CD7F32", // 3rd - Bronze
-                    "#4ade80", // 4th - Green
-                    "#22d3ee", // 5th - Cyan
-                    "#818cf8", // 6th - Indigo
-                    "#fb7185", // 7th - Rose
-                    "#fb923c", // 8th - Orange
-                    "#c084fc", // 9th - Purple
-                    "#f472b6", // 10th - Pink
-                  ];
-                  fillColor = topColors[rankVal - 1];
-                }
+                const fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
                 const centroid = geoCentroid(geo);
 
                 return (
@@ -128,8 +111,8 @@ const MTMap: React.FC<MTMapProps> = ({
         </ComposableMap>
       </div>
       
-      {/* Legend - Centered with 50% width */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-1/2 flex flex-col gap-1.5 bg-black/40 p-3 rounded-lg backdrop-blur-md border border-white/10">
+      {/* Legend - Below the map */}
+      <div className="mt-4 mx-auto w-1/2 flex flex-col gap-1.5 bg-black/40 p-3 rounded-lg backdrop-blur-md border border-white/10">
         <div className="flex justify-between text-[11px] text-white/90 font-bold mb-0.5 px-0.5">
           <span className="flex items-center gap-1">
             <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[0] }}></span>
