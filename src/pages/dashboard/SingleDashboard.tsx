@@ -330,6 +330,19 @@ const C = {
   label: "#f8fafc",
 };
 const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
+
+const TOP_COLORS = [
+  "#FFD700", // 1st - Gold
+  "#C0C0C0", // 2nd - Silver
+  "#CD7F32", // 3rd - Bronze
+  "#4ade80", // 4th - Green
+  "#22d3ee", // 5th - Cyan
+  "#818cf8", // 6th - Indigo
+  "#fb7185", // 7th - Rose
+  "#fb923c", // 8th - Orange
+  "#c084fc", // 9th - Purple
+  "#f472b6", // 10th - Pink
+];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
 
 const tabs = [
