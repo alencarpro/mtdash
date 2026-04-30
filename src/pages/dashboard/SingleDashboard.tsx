@@ -59,28 +59,28 @@ import {
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-          <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-          <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
-          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
-          <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
+          <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color="#166534" delay={0} icon={Activity} />
+          <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color="#15803d" delay={120} icon={Target} />
+          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color="#16a34a" delay={240} icon={MapPin} />
+          <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color="#22c55e" delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
-            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#166534", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
           <Chart title="Correlação: Taxa vs População Estimada">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <LineChart data={scatterData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
                 <XAxis dataKey="name" stroke={C.axis} fontSize={9} />
-                <YAxis yAxisId="left" stroke={C.red} fontSize={9} />
-                <YAxis yAxisId="right" orientation="right" stroke={C.blue} fontSize={9} />
+                <YAxis yAxisId="left" stroke="#16a34a" fontSize={9} />
+                <YAxis yAxisId="right" orientation="right" stroke="#4ade80" fontSize={9} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend verticalAlign="top" height={36} />
-                <Line yAxisId="left" type="monotone" dataKey="taxa" stroke={C.red} dot={{ r: 3 }} name="Taxa" />
-                <Area yAxisId="right" type="monotone" dataKey="pop" fill={C.blue} stroke="none" opacity={0.1} name="População" />
+                <Line yAxisId="left" type="monotone" dataKey="taxa" stroke="#16a34a" dot={{ r: 3 }} name="Taxa" />
+                <Area yAxisId="right" type="monotone" dataKey="pop" fill="#4ade80" stroke="none" opacity={0.1} name="População" />
               </LineChart>
             </ResponsiveContainer>
           </Chart>
@@ -143,14 +143,14 @@ import {
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-          <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-          <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
-          <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
-          <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
+          <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color="#166534" delay={0} icon={Activity} />
+          <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color="#15803d" delay={120} icon={Target} />
+          <KPI title="Cuiabá" value="11.5" sub="Capital" color="#16a34a" delay={240} icon={Building2} />
+          <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color="#22c55e" delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
-            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#166534", "#86efac"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -162,7 +162,7 @@ import {
                 <YAxis fontSize={9} stroke={C.axis} />
                 <Tooltip content={<CustomTooltip />} />
                 <Legend fontSize={10} />
-                <Bar dataKey="taxa" name="Taxa" fill={C.red} radius={[2, 2, 0, 0]} />
+                <Bar dataKey="taxa" name="Taxa" fill="#16a34a" radius={[2, 2, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </Chart>
@@ -360,16 +360,16 @@ const C = {
 const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
 
 const TOP_COLORS = [
-  "#FFD700", // 1st - Gold
-  "#C0C0C0", // 2nd - Silver
-  "#CD7F32", // 3rd - Bronze
-  "#4ade80", // 4th - Green
-  "#22d3ee", // 5th - Cyan
-  "#818cf8", // 6th - Indigo
-  "#fb7185", // 7th - Rose
-  "#fb923c", // 8th - Orange
-  "#c084fc", // 9th - Purple
-  "#f472b6", // 10th - Pink
+  "#166534", // Green 800
+  "#15803d", // Green 700
+  "#16a34a", // Green 600
+  "#22c55e", // Green 500
+  "#4ade80", // Green 400
+  "#86efac", // Green 300
+  "#bbf7d0", // Green 200
+  "#dcfce7", // Green 100
+  "#f0fdf4", // Green 50
+  "#f7fee7", // Lime 50
 ];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
 
@@ -2064,7 +2064,11 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-            ) : active === 10 || active === 12 || active === 13 || active === 14 || active === 15 || active === 16 || active === 11 ? (
+            ) : active === 13 || active === 14 ? (
+              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+                 Fonte: DataSUS
+              </span>
+            ) : active === 10 || active === 11 || active === 12 || active === 15 || active === 16 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                 Fonte: FIPLAN/SEFAZ
              </span>
