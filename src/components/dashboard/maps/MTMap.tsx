@@ -3,7 +3,7 @@ import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps
 import { geoCentroid } from 'd3-geo';
 import { scaleLinear } from 'd3-scale';
 
-const geoUrl = "https://raw.githubusercontent.com/tbicudo/geojson-brasil/master/cities/mt.json";
+const geoUrl = "/data/mt-municipalities.json";
 
 interface MTMapProps {
   data: { city: string; value: number }[];
