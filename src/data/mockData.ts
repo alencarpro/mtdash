@@ -272,7 +272,7 @@ export const turismoData = {
 
 // ===== SOCIAL - NOVOS INDICADORES =====
 
-// Mortalidade (por 1000 habitantes) - Fonte: SES
+ // Mortalidade (por 1000 habitantes) - Fonte: DATASUS
 export const mortalidadeData = [
   { year: "2019", infantil: 13.8, materna: 58.2, geral: 5.2 },
   { year: "2020", infantil: 14.2, materna: 72.5, geral: 6.8 },
@@ -503,7 +503,7 @@ export const custosServicos = [
   { area: "Ouvidoria e Transparência", percentual: 6 },
 ];
 
-// ===== MORTALIDADE INFANTIL =====
+ // ===== MORTALIDADE INFANTIL (Fonte: DATASUS) =====
 export const mortalidadeInfantilBrasil = [
   { state: "MT", value: 12.1 },
   { state: "SP", value: 10.5 },
