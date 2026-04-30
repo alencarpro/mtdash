@@ -90,7 +90,10 @@ import {
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]}>
+                <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
+                  {top10.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                  ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
                 </Bar>
               </BarChart>
@@ -161,7 +164,10 @@ import {
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
                 <Tooltip content={<CustomTooltip />} />
-                <Bar dataKey="value" name="Taxa" fill={C.green} radius={[0, 2, 2, 0]}>
+                <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
+                  {top10.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                  ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
                 </Bar>
               </BarChart>
@@ -232,7 +238,10 @@ import {
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
                 <Tooltip content={<CustomTooltip unit="%" />} />
-                <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]}>
+                <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
+                  {top10.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                  ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
                 </Bar>
               </BarChart>
@@ -303,7 +312,10 @@ import {
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
                 <Tooltip content={<CustomTooltip unit="%" />} />
-                <Bar dataKey="value" name="Taxa" fill={C.teal} radius={[0, 2, 2, 0]}>
+                <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
+                  {top10.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                  ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => `${v}%`} />
                 </Bar>
               </BarChart>
@@ -330,6 +342,19 @@ const C = {
   label: "#f8fafc",
 };
 const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
+
+const TOP_COLORS = [
+  "#FFD700", // 1st - Gold
+  "#C0C0C0", // 2nd - Silver
+  "#CD7F32", // 3rd - Bronze
+  "#4ade80", // 4th - Green
+  "#22d3ee", // 5th - Cyan
+  "#818cf8", // 6th - Indigo
+  "#fb7185", // 7th - Rose
+  "#fb923c", // 8th - Orange
+  "#c084fc", // 9th - Purple
+  "#f472b6", // 10th - Pink
+];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
 
 const tabs = [
@@ -676,7 +701,7 @@ const PanelSocial = () => (
             <YAxis type="category" dataKey="subject" stroke={C.axis} fontSize={18} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip unit="pts" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="value" name="Índice" radius={[0, 4, 4, 0]} animationDuration={1500} animationEasing="ease-in-out">
-              {[...radarAvg].sort((a, b) => b.value - a.value).map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
+              {[...radarAvg].sort((a, b) => b.value - a.value).map((_, i) => <Cell key={i} fill={TOP_COLORS[i % TOP_COLORS.length]} />)}
               <LabelList dataKey="value" position="right" fontSize={18} fill={C.label} />
             </Bar>
           </BarChart>
@@ -690,13 +715,16 @@ const PanelSocial = () => (
             <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip unit="índice" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-in-out">
+            <Bar dataKey="saude" name="Saúde" radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-in-out">
+              {icqvData.map((_, i) => <Cell key={i} fill={TOP_COLORS[i % TOP_COLORS.length]} />)}
               <LabelList dataKey="saude" position="right" fontSize={8} fill={C.label} />
             </Bar>
-            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+            <Bar dataKey="educacao" name="Educação" radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+              {icqvData.map((_, i) => <Cell key={i} fill={TOP_COLORS[(i + 1) % TOP_COLORS.length]} />)}
               <LabelList dataKey="educacao" position="right" fontSize={8} fill={C.label} />
             </Bar>
-            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+            <Bar dataKey="economia" name="Economia" radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+              {icqvData.map((_, i) => <Cell key={i} fill={TOP_COLORS[(i + 2) % TOP_COLORS.length]} />)}
               <LabelList dataKey="economia" position="right" fontSize={8} fill={C.label} />
             </Bar>
           </BarChart>
@@ -1479,8 +1507,8 @@ const PanelBeneficios = () => (
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip unit="R$ Mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valorMi" name="Valor" radius={[0, 3, 3, 0]} animationDuration={1500}>
-              {adjuntasRanking.filter(a => a.valorTotal > 0).map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {adjuntasRanking.filter(a => a.valorTotal > 0).map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="valorMi" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `R$ ${v} Mi`} />
             </Bar>
@@ -1509,8 +1537,8 @@ const PanelBeneficios = () => (
             <YAxis hide />
             <Tooltip content={<CustomTooltip unit="benefícios" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="beneficios" name="Benefícios" radius={[3, 3, 0, 0]} animationDuration={1500}>
-              {adjuntasRanking.filter(a => a.beneficios > 0).map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {adjuntasRanking.filter(a => a.beneficios > 0).map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="beneficios" position="top" fontSize={12} fill={C.label} />
             </Bar>
@@ -1525,8 +1553,8 @@ const PanelBeneficios = () => (
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={120} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="qtdAcoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1500}>
-              {topClassesBeneficio.map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {topClassesBeneficio.map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="qtdAcoes" position="right" fontSize={11} fill={C.label} />
             </Bar>
@@ -1545,8 +1573,8 @@ const PanelBeneficios = () => (
             <YAxis type="category" dataKey="unidade" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={75} />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="acoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1500}>
-              {unidadesDetalhadas.map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {unidadesDetalhadas.map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="acoes" position="right" fontSize={11} fill={C.label} />
             </Bar>
