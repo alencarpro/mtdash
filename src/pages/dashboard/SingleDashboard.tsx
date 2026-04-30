@@ -1862,13 +1862,13 @@ const PanelLiquidacoes = () => (
   </div>
 );
  
- const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBR, PanelMortalidadeMT_Dashboard, PanelAlfabetizacaoBR, PanelAlfabetizacaoMT];
- const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "c04", "b05", "a05", "a06", "a07", "a08"];
+ const panels = [PanelEconomia, PanelSocial, PanelAmbiental, PanelVisaoGeral, PanelControle, PanelIntegridade, PanelObras, PanelObrasCameras, PanelBeneficios, PanelOrcamentoPTA, PanelLiquidacoes, PanelLiquidacoes, PanelMortalidadeBR, PanelMortalidadeMT_Dashboard, PanelAlfabetizacaoBR, PanelAlfabetizacaoMT];
+ const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "b05", "a05", "a06", "a07", "a08"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
-  t1: [0, 1, 2, 3, 13, 14, 15, 16], // a01, a02, a03, a04, a05, a06, a07, a08
-  t2: [13, 14, 15, 16, 0, 1, 2, 3], // a05, a06, a07, a08, a01, a02, a03, a04
-  t3: [6, 7, 9, 10, 12], // b01, b02, b03, b04, b05
+   t1: [0, 1, 2, 3, 12, 13, 14, 15], // a01, a02, a03, a04, a05, a06, a07, a08
+   t2: [12, 13, 14, 15, 0, 1, 2, 3], // a05, a06, a07, a08, a01, a02, a03, a04
+   t3: [6, 7, 9, 10, 11], // b01, b02, b03, b04, b05
   t4: [4, 5, 8], // c01, c02, c03
 };
 
@@ -1974,9 +1974,9 @@ const SingleDashboard = () => {
 
   const ActivePanel = panels[active];
 
-      const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Liquidações Por Unidade", "Despesas Liquidadas 2025", "Mortalidade Inf — BR", "Mortalidade Inf — MT", "Alfabetização — BR", "Alfabetização — MT"];
-     const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
-     const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#102041", "#1C0903", "#1e2405", "#1e2405", "#1e2405", "#1e2405"];
+      const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Despesas Liquidadas 2025", "Mortalidade Inf — BR", "Mortalidade Inf — MT", "Alfabetização — BR", "Alfabetização — MT"];
+     const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
+     const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#1C0903", "#1e2405", "#1e2405", "#1e2405", "#1e2405"];
 
   const ROTATE_INTERVAL = 60;
   const [now, setNow] = useState(new Date());
@@ -2114,11 +2114,11 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-            ) : active === 10 || active === 12 ? (
+            ) : active === 10 || active === 11 ? (
                <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                   Fonte: FIPLAN/SEFAZ
                </span>
-             ) : active === 15 || active === 16 ? (
+             ) : active === 14 || active === 15 ? (
                <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                  Fonte: IBGE
                </span>
@@ -2130,7 +2130,7 @@ const SingleDashboard = () => {
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: SINFRA-MT — Obras Estratégicas
             </span>
-          ) : active === 13 || active === 14 ? (
+          ) : active === 12 || active === 13 ? (
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: DATASUS
             </span>
