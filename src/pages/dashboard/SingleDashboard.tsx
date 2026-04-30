@@ -360,16 +360,16 @@ const C = {
 const COLORS = [C.teal, C.blue, C.purple, C.yellow, C.red, C.green];
 
 const TOP_COLORS = [
-  "#FFD700", // 1st - Gold
-  "#C0C0C0", // 2nd - Silver
-  "#CD7F32", // 3rd - Bronze
-  "#4ade80", // 4th - Green
-  "#22d3ee", // 5th - Cyan
-  "#818cf8", // 6th - Indigo
-  "#fb7185", // 7th - Rose
-  "#fb923c", // 8th - Orange
-  "#c084fc", // 9th - Purple
-  "#f472b6", // 10th - Pink
+  "#166534", // Green 800
+  "#15803d", // Green 700
+  "#16a34a", // Green 600
+  "#22c55e", // Green 500
+  "#4ade80", // Green 400
+  "#86efac", // Green 300
+  "#bbf7d0", // Green 200
+  "#dcfce7", // Green 100
+  "#f0fdf4", // Green 50
+  "#f7fee7", // Lime 50
 ];
 const BIOMA_COLORS = [C.green, C.yellow, C.blue];
 
@@ -2064,7 +2064,11 @@ const SingleDashboard = () => {
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                Fonte: PTA 2026 — Governo do Estado de Mato Grosso
              </span>
-            ) : active === 10 || active === 12 || active === 13 || active === 14 || active === 15 || active === 16 || active === 11 ? (
+            ) : active === 14 || active === 15 ? (
+              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+                 Fonte: DataSUS
+              </span>
+            ) : active === 10 || active === 12 || active === 13 || active === 16 || active === 11 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                 Fonte: FIPLAN/SEFAZ
              </span>
