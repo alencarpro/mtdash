@@ -715,13 +715,16 @@ const PanelSocial = () => (
             <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={11} tickLine={false} axisLine={false} width={90} />
             <Legend content={renderLegend} />
             <Tooltip content={<CustomTooltip unit="índice" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
-            <Bar dataKey="saude" name="Saúde" fill={C.red} radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-in-out">
+            <Bar dataKey="saude" name="Saúde" radius={[0, 2, 2, 0]} animationDuration={1500} animationEasing="ease-in-out">
+              {icqvData.map((_, i) => <Cell key={i} fill={TOP_COLORS[i % TOP_COLORS.length]} />)}
               <LabelList dataKey="saude" position="right" fontSize={8} fill={C.label} />
             </Bar>
-            <Bar dataKey="educacao" name="Educação" fill={C.blue} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+            <Bar dataKey="educacao" name="Educação" radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+              {icqvData.map((_, i) => <Cell key={i} fill={TOP_COLORS[(i + 1) % TOP_COLORS.length]} />)}
               <LabelList dataKey="educacao" position="right" fontSize={8} fill={C.label} />
             </Bar>
-            <Bar dataKey="economia" name="Economia" fill={C.teal} radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+            <Bar dataKey="economia" name="Economia" radius={[0, 2, 2, 0]} animationDuration={1500} animationBegin={300} animationEasing="ease-in-out">
+              {icqvData.map((_, i) => <Cell key={i} fill={TOP_COLORS[(i + 2) % TOP_COLORS.length]} />)}
               <LabelList dataKey="economia" position="right" fontSize={8} fill={C.label} />
             </Bar>
           </BarChart>
