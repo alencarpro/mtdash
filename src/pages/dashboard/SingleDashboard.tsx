@@ -1915,39 +1915,24 @@ const SingleDashboard = () => {
     tick();
     const clockTick = window.setInterval(tick, 250);
 
-    if (sequence) {
-      const checkRotate = setInterval(() => {
-        if (paused) return;
-        const d = new Date();
-        const s = d.getSeconds();
-        if (s === 0) {
-          if (!hasNavigated) {
-            hasNavigated = true;
-            setRotationTick(t => t + 1);
-          }
-        } else {
-          hasNavigated = false;
+    const checkRotate = setInterval(() => {
+      if (paused || !sequence) return;
+      const d = new Date();
+      const s = d.getSeconds();
+      if (s === 0) {
+        if (!hasNavigated) {
+          hasNavigated = true;
+          setRotationTick(t => t + 1);
         }
-      }, 500);
-      return () => { clearInterval(clockTick); clearInterval(checkRotate); };
-    } else {
-      const checkRotate = setInterval(() => {
-        if (paused) return;
-        const d = new Date();
-        const s = d.getSeconds();
-        if (s === 0) {
-          if (!hasNavigated) {
-            hasNavigated = true;
-            const nextIdx = (active + 1) % panels.length;
-            const nextLabel = panelLabels[nextIdx];
-            navigate(`/${nextLabel}`, { replace: true });
-          }
-        } else {
-          hasNavigated = false;
-        }
-      }, 500);
-      return () => { clearInterval(clockTick); clearInterval(checkRotate); };
-    }
+      } else {
+        hasNavigated = false;
+      }
+    }, 500);
+    
+    return () => { 
+      clearInterval(clockTick); 
+      clearInterval(checkRotate); 
+    };
   }, [active, navigate, sequence, rotationTick, paused]);
 
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
