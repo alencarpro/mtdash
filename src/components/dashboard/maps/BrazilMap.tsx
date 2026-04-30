@@ -99,7 +99,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                               textShadow: "0 0 2px rgba(255,255,255,0.5)"
                             }}
                           >
-                            {rankVal}
+                             {rankVal}º
                           </text>
                         </g>
                       </Marker>
