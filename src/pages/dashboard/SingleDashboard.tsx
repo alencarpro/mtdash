@@ -59,10 +59,10 @@ import {
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-          <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-          <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color={C.green} delay={120} icon={Target} />
-          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color={C.blue} delay={240} icon={MapPin} />
-          <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color={C.teal} delay={360} icon={TrendingUp} />
+          <KPI title="Média Nacional" value="11.9" sub="por 1000 nascidos" color="#166534" delay={0} icon={Activity} />
+          <KPI title="Melhor Estado" value="9.2" sub="Distrito Federal" color="#15803d" delay={120} icon={Target} />
+          <KPI title="Mato Grosso" value="12.1" sub="Ranking 14º" color="#16a34a" delay={240} icon={MapPin} />
+          <KPI title="Meta ODS" value="< 12.0" sub="até 2030" color="#22c55e" delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
@@ -143,10 +143,10 @@ import {
     return (
       <div className="flex flex-col gap-2 h-full overflow-hidden">
         <div className="grid grid-cols-4 gap-2 flex-shrink-0">
-          <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color={C.red} delay={0} icon={Activity} />
-          <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color={C.green} delay={120} icon={Target} />
-          <KPI title="Cuiabá" value="11.5" sub="Capital" color={C.blue} delay={240} icon={Building2} />
-          <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color={C.teal} delay={360} icon={TrendingUp} />
+          <KPI title="Média Estadual" value="12.1" sub="por 1000 nascidos" color="#166534" delay={0} icon={Activity} />
+          <KPI title="Melhor Município" value="10.2" sub="Lucas do Rio Verde" color="#15803d" delay={120} icon={Target} />
+          <KPI title="Cuiabá" value="11.5" sub="Capital" color="#16a34a" delay={240} icon={Building2} />
+          <KPI title="Redução" value="-2.4%" sub="em relação a 2023" color="#22c55e" delay={360} icon={TrendingUp} />
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
