@@ -1507,8 +1507,8 @@ const PanelBeneficios = () => (
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={12} tickLine={false} axisLine={false} width={100} />
             <Tooltip content={<CustomTooltip unit="R$ Mi" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="valorMi" name="Valor" radius={[0, 3, 3, 0]} animationDuration={1500}>
-              {adjuntasRanking.filter(a => a.valorTotal > 0).map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {adjuntasRanking.filter(a => a.valorTotal > 0).map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="valorMi" position="right" fontSize={12} fill={C.label} formatter={(v: number) => `R$ ${v} Mi`} />
             </Bar>
@@ -1537,8 +1537,8 @@ const PanelBeneficios = () => (
             <YAxis hide />
             <Tooltip content={<CustomTooltip unit="benefícios" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="beneficios" name="Benefícios" radius={[3, 3, 0, 0]} animationDuration={1500}>
-              {adjuntasRanking.filter(a => a.beneficios > 0).map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {adjuntasRanking.filter(a => a.beneficios > 0).map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="beneficios" position="top" fontSize={12} fill={C.label} />
             </Bar>
@@ -1553,8 +1553,8 @@ const PanelBeneficios = () => (
             <YAxis type="category" dataKey="nome" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={120} tick={WrappedYAxisTick} />
             <Tooltip content={<CustomTooltip unit="ações" />} cursor={{ fill: "rgba(141,243,219,0.06)" }} />
             <Bar dataKey="qtdAcoes" name="Ações" radius={[0, 3, 3, 0]} animationDuration={1500}>
-              {topClassesBeneficio.map((entry, index) => (
-                <Cell key={index} fill={entry.fill} />
+              {topClassesBeneficio.map((_, index) => (
+                <Cell key={index} fill={TOP_COLORS[index % TOP_COLORS.length]} />
               ))}
               <LabelList dataKey="qtdAcoes" position="right" fontSize={11} fill={C.label} />
             </Bar>
