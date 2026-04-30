@@ -19,7 +19,9 @@ const MTMap: React.FC<MTMapProps> = ({
   unit = "", 
   isLowerBetter = false 
 }) => {
-  const [tooltip, setTooltip] = useState<{ x: number, y: number, text: string, visible: boolean }>({ x: 0, y: 0, text: '', visible: false });
+  const [tooltip, setTooltip] = useState<{ x: number, y: number, name: string, value: string, rank: string, status: string, visible: boolean }>({ 
+    x: 0, y: 0, name: '', value: '', rank: '', status: '', visible: false 
+  });
 
   const values = data.map(d => d.value);
   const min = values.length ? Math.min(...values) : 0;
@@ -43,22 +45,16 @@ const MTMap: React.FC<MTMapProps> = ({
                 const cityName = geo.properties.name;
                  const cityData = data.find(item => item.city.toLowerCase() === cityName.toLowerCase());
  
-                 let rankText = "";
-                 if (cityData) {
-                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
-                    const rank = sorted.findIndex(item => item.city.toLowerCase() === cityData.city.toLowerCase()) + 1;
-                    const status = isLowerBetter ? (cityData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (cityData.value > 95 ? "Índice Positivo" : "Índice Negativo");
-                    rankText = ` (${rank}º em MT - ${status})`;
-                 }
- 
-                const fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
-                const centroid = geoCentroid(geo);
-
-                let rank = 0;
+                let rankVal = 0;
+                let statusVal = "";
                 if (cityData) {
                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
-                  rank = sorted.findIndex(item => item.city.toLowerCase() === cityData.city.toLowerCase()) + 1;
+                  rankVal = sorted.findIndex(item => item.city.toLowerCase() === cityData.city.toLowerCase()) + 1;
+                  statusVal = isLowerBetter ? (cityData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (cityData.value > 95 ? "Índice Positivo" : "Índice Negativo");
                 }
+
+                const fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
+                const centroid = geoCentroid(geo);
 
                 return (
                   <React.Fragment key={geo.rsmKey}>
@@ -68,7 +64,10 @@ const MTMap: React.FC<MTMapProps> = ({
                         setTooltip({
                           x: event.clientX,
                           y: event.clientY,
-                          text: `${cityName}: ${cityData ? cityData.value + unit + rankText : 'Sem dados'}`,
+                          name: cityName,
+                          value: cityData ? `${cityData.value}${unit}` : 'Sem dados',
+                          rank: rankVal > 0 ? `${rankVal}º em MT` : '',
+                          status: statusVal,
                           visible: true
                         });
                       }}
@@ -84,7 +83,7 @@ const MTMap: React.FC<MTMapProps> = ({
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
-                    {rank > 0 && rank <= 20 && (
+                    {rankVal > 0 && rankVal <= 20 && (
                       <Marker coordinates={centroid}>
                         <g transform="translate(-6, -6)">
                           <circle r="5" fill="rgba(10,17,30,0.8)" stroke="rgba(141,243,219,0.5)" strokeWidth="0.3" />
@@ -99,7 +98,7 @@ const MTMap: React.FC<MTMapProps> = ({
                               pointerEvents: "none"
                             }}
                           >
-                            {rank}
+                            {rankVal}
                           </text>
                         </g>
                       </Marker>
@@ -143,7 +142,18 @@ const MTMap: React.FC<MTMapProps> = ({
             boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
           }}
         >
-          {tooltip.text}
+          <div className="flex flex-col gap-1">
+            <div className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">{tooltip.name}</div>
+            <div className="text-[16px] font-bold text-white">{tooltip.value}</div>
+            {tooltip.rank && (
+              <div className="flex items-center gap-2 mt-1 pt-1 border-t border-white/10">
+                <span className="px-1.5 py-0.5 bg-blue-500/20 text-blue-300 rounded text-[10px] font-bold">{tooltip.rank}</span>
+                <span className={`text-[10px] font-bold ${tooltip.status === 'Índice Positivo' ? 'text-green-400' : 'text-red-400'}`}>
+                  {tooltip.status}
+                </span>
+              </div>
+            )}
+          </div>
         </div>
       )}
     </div>
