@@ -112,16 +112,22 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
         </ComposableMap>
       </div>
       
-      {/* Legend */}
-      <div className="absolute bottom-4 left-4 flex flex-col gap-1 bg-black/40 p-2 rounded backdrop-blur-sm border border-white/10">
+      {/* Legend - Centered with 50% width */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-1/2 flex flex-col gap-1.5 bg-black/40 p-3 rounded-lg backdrop-blur-md border border-white/10">
+        <div className="flex justify-between text-[11px] text-white/90 font-bold mb-0.5 px-0.5">
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[0] }}></span>
+            {isLowerBetter ? max : min}{unit}
+          </span>
+          <span className="flex items-center gap-1">
+            {isLowerBetter ? min : max}{unit}
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[1] }}></span>
+          </span>
+        </div>
         <div 
-          className="h-2 w-24 rounded" 
+          className="h-2.5 w-full rounded-full shadow-inner" 
           style={{ background: `linear-gradient(to right, ${colorScale[0]}, ${colorScale[1]})` }}
         />
-        <div className="flex justify-between text-[10px] text-white/80 font-mono">
-          <span>{isLowerBetter ? max : min}{unit}</span>
-          <span>{isLowerBetter ? min : max}{unit}</span>
-        </div>
       </div>
 
       {tooltip.visible && (
