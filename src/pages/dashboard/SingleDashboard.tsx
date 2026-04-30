@@ -128,8 +128,8 @@ import {
       return apiData.length > 0 ? apiData : mortalidadeInfantilMT;
     }, [apiData]);
     
-    const top10 = useMemo(() => {
-      return [...currentData].sort((a, b) => a.value - b.value).slice(0, 10);
+    const top20Piores = useMemo(() => {
+      return [...currentData].sort((a, b) => b.value - a.value).slice(0, 20);
     }, [currentData]);
     
     const correlationData = useMemo(() => {
@@ -166,15 +166,15 @@ import {
               </BarChart>
             </ResponsiveContainer>
           </Chart>
-          <Chart title="Top 10 Municípios (Menor Taxa)">
+          <Chart title="Top 20 Municípios (Maior Taxa)">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={top10} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
+              <BarChart data={top20Piores} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -5 }}>
                 <XAxis type="number" hide />
                 <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
-                  {top10.map((_, index) => (
-                    <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                  {top20Piores.map((_, index) => (
+                    <Cell key={`cell-${index}`} fill={index < 10 ? TOP_COLORS[index] : "#8AEAAA"} />
                   ))}
                   <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} />
                 </Bar>
