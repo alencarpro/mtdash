@@ -853,3 +853,35 @@ export const alfabetizacaoMT = [
   { city: "Várzea Grande", value: 88.5 },
   { city: "Água Boa", value: 89.4 },
 ];
+
+// ===== LEITOS POR HABITANTE (Fonte: CNES/DATASUS) — leitos por 1.000 habitantes =====
+// Valores aproximados; serão substituídos por dados da API quando disponíveis.
+export const leitosPorHabitanteBrasil = [
+  { state: "AC", value: 1.6, leitos: 1450, populacao: 906876 },
+  { state: "AL", value: 1.9, leitos: 6320, populacao: 3365351 },
+  { state: "AP", value: 1.4, leitos: 1120, populacao: 802837 },
+  { state: "AM", value: 1.7, leitos: 6850, populacao: 4144597 },
+  { state: "BA", value: 2.0, leitos: 29800, populacao: 14930634 },
+  { state: "CE", value: 1.9, leitos: 17200, populacao: 9187103 },
+  { state: "DF", value: 2.4, leitos: 6650, populacao: 2982818 },
+  { state: "ES", value: 2.1, leitos: 8400, populacao: 3975100 },
+  { state: "GO", value: 2.3, leitos: 16100, populacao: 7056495 },
+  { state: "MA", value: 1.8, leitos: 12450, populacao: 6800605 },
+  { state: "MT", value: 2.2, leitos: 7700, populacao: 3526220 },
+  { state: "MS", value: 2.5, leitos: 7050, populacao: 2839188 },
+  { state: "MG", value: 2.4, leitos: 50400, populacao: 20539989 },
+  { state: "PA", value: 1.6, leitos: 13100, populacao: 8121025 },
+  { state: "PB", value: 2.1, leitos: 8400, populacao: 3974687 },
+  { state: "PR", value: 2.6, leitos: 30000, populacao: 11444380 },
+  { state: "PE", value: 2.2, leitos: 20800, populacao: 9058931 },
+  { state: "PI", value: 1.9, leitos: 5950, populacao: 3270174 },
+  { state: "RJ", value: 2.7, leitos: 44600, populacao: 16055174 },
+  { state: "RN", value: 2.0, leitos: 6720, populacao: 3302406 },
+  { state: "RS", value: 2.6, leitos: 28800, populacao: 10882965 },
+  { state: "RO", value: 1.8, leitos: 2820, populacao: 1581196 },
+  { state: "RR", value: 1.5, leitos: 950, populacao: 636707 },
+  { state: "SC", value: 2.5, leitos: 19500, populacao: 7610361 },
+  { state: "SP", value: 2.8, leitos: 126500, populacao: 44411238 },
+  { state: "SE", value: 2.0, leitos: 4600, populacao: 2210004 },
+  { state: "TO", value: 1.7, leitos: 2680, populacao: 1577342 },
+];
