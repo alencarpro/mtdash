@@ -2050,8 +2050,8 @@ const PanelLiquidacoes = () => (
   const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "b05", "a05", "a06", "a07", "a08", "a09", "a10"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
-   t1: [0, 1, 2, 3, 12, 13, 14, 15], // a01, a02, a03, a04, a05, a06, a07, a08
-   t2: [12, 13, 14, 15, 0, 1, 2, 3], // a05, a06, a07, a08, a01, a02, a03, a04
+   t1: [0, 1, 2, 3, 12, 13, 14, 15, 16, 17], // a01..a04, a05..a08, a09, a10
+   t2: [12, 13, 14, 15, 16, 17, 0, 1, 2, 3], // a05..a08, a09, a10, a01..a04
    t3: [6, 7, 9, 10, 11], // b01, b02, b03, b04, b05
   t4: [4, 5, 8], // c01, c02, c03
 };
