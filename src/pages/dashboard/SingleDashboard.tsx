@@ -27,6 +27,7 @@ import {
   cgeAlerta, areasAuditadas, integridadeNumeros, dosimetriaPenas, capacitacoesCGE,
   tcacs, planejamentoEstrategico, custosServicos,
   mortalidadeInfantilBrasil, mortalidadeInfantilMT, alfabetizacaoBrasil, alfabetizacaoMT,
+  leitosPorHabitanteBrasil,
 } from "@/data/mockData";
  /* ═══════════════════════════════════════════════════════════
     PANEL 14 — MORTALIDADE INFANTIL BRASIL
