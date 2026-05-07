@@ -2245,7 +2245,7 @@ const SingleDashboard = () => {
   const lastUpdateRaw = lastUpdates[active];
   const lastUpdateFormatted = lastUpdateRaw
     ? new Date(lastUpdateRaw).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Cuiaba" })
-    : "—";
+    : new Date().toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Cuiaba" });
 
   return (
     <div
