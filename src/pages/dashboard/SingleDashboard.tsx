@@ -88,7 +88,7 @@ import {
           <Chart title="Top 10 Estados (Menor Taxa)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={top10} layout="vertical" margin={{ top: 5, right: 30, bottom: 0, left: -10 }}>
-                <XAxis type="number" hide />
+                <XAxis type="number" hide domain={[8.5, (dataMax: number) => dataMax]} />
                 <YAxis type="category" dataKey="state" stroke={C.axis} fontSize={10} tickLine={false} axisLine={false} width={35} />
                 <Tooltip content={<CustomTooltip />} />
                 <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
