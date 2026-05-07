@@ -99,8 +99,8 @@ const MTMap: React.FC<MTMapProps> = ({
                         setTooltip(prev => ({ ...prev, visible: false }));
                       }}
                       style={{
-                        default: { fill: fillColor, stroke: "#0f172a", strokeWidth: 0.2, outline: "none" },
-                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 1, outline: "none", cursor: "pointer" },
+                        default: { fill: fillColor, stroke: "#0f172a", strokeWidth: 0.5, outline: "none" },
+                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 1.5, outline: "none", cursor: "pointer" },
                         pressed: { fill: fillColor, outline: "none" }
                       }}
                     />
@@ -111,12 +111,12 @@ const MTMap: React.FC<MTMapProps> = ({
                             textAnchor="middle"
                             dominantBaseline="middle"
                             style={{ 
-                              fontSize: "7px", 
+                              fontSize: "12px", 
                               fill: "#000", 
                               fontWeight: "bold",
                               fontFamily: "monospace",
                               pointerEvents: "none",
-                              textShadow: "0 0 1px rgba(255,255,255,0.5)"
+                              textShadow: "0 0 2px rgba(255,255,255,0.5)"
                             }}
                           >
                             {rankVal}º
