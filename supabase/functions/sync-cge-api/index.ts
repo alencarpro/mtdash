@@ -8,10 +8,34 @@ const corsHeaders = {
 
 const BASE = "https://mtdash-api.cge.mt.gov.br/api/v1"
 
-async function fetchJson(url: string) {
-  const r = await fetch(url)
-  if (!r.ok) throw new Error(`${url} -> ${r.status}`)
-  return await r.json()
+async function fetchWithTimeout(url: string, timeoutMs = 25000): Promise<Response> {
+  const ctrl = new AbortController()
+  const t = setTimeout(() => ctrl.abort(), timeoutMs)
+  try {
+    return await fetch(url, { signal: ctrl.signal })
+  } finally {
+    clearTimeout(t)
+  }
+}
+
+async function fetchJson(url: string, opts: { retries?: number; timeoutMs?: number } = {}) {
+  const retries = opts.retries ?? 3
+  const timeoutMs = opts.timeoutMs ?? 25000
+  let lastErr: any
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      const r = await fetchWithTimeout(url, timeoutMs)
+      if (!r.ok) throw new Error(`${url} -> ${r.status}`)
+      return await r.json()
+    } catch (e: any) {
+      lastErr = e
+      if (attempt === retries) break
+      const backoff = Math.min(15000, 1500 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500)
+      console.warn(`fetchJson retry ${attempt + 1}/${retries} for ${url} after ${backoff}ms: ${e.message}`)
+      await new Promise(res => setTimeout(res, backoff))
+    }
+  }
+  throw lastErr
 }
 
 function pickLatestByKey<T extends Record<string, any>>(items: T[], key: string, anoKey = 'ano') {
