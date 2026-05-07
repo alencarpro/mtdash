@@ -1949,8 +1949,105 @@ const PanelLiquidacoes = () => (
    );
  };
 
- const panelsAll = [...panels, PanelLeitosBR];
-  const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "b05", "a05", "a06", "a07", "a08", "a09"];
+ const PanelLeitosMT = () => {
+   const [apiData, setApiData] = useState<any[]>([]);
+
+   useEffect(() => {
+     supabase
+       .from('external_api_data')
+       .select('payload')
+       .eq('endpoint', 'leitos-por-habitante-mt')
+       .maybeSingle()
+       .then(({ data }) => {
+         const payload = data?.payload as any;
+         if (Array.isArray(payload) && payload.length) {
+           const mapped = payload
+             .map((d: any) => ({
+               city: d.municipio || d.city || d.nome || '',
+               value: Number(d.leitos_por_mil_habitantes ?? d.value ?? 0),
+               leitos: Number(d.qtd_leitos ?? d.leitos ?? 0),
+               populacao: Number(d.populacao_total ?? d.populacao ?? 0),
+             }))
+             .filter((d: any) => d.city && d.value > 0);
+           if (mapped.length) setApiData(mapped);
+         }
+       });
+   }, []);
+
+   const currentData = apiData.length > 0 ? apiData : leitosPorHabitanteMT;
+   const sorted = useMemo(() => [...currentData].sort((a: any, b: any) => b.value - a.value), [currentData]);
+   const top10Melhores = sorted.slice(0, 10);
+   const top20Piores = useMemo(() => [...currentData].sort((a: any, b: any) => a.value - b.value).slice(0, 20), [currentData]);
+
+   const pioresColors = useMemo(() => {
+     const start = { r: 252, g: 25, b: 24 };
+     const end = { r: 241, g: 120, b: 116 };
+     return Array.from({ length: 20 }, (_, i) => {
+       const ratio = i / 19;
+       const r = Math.round(start.r + (end.r - start.r) * ratio);
+       const g = Math.round(start.g + (end.g - start.g) * ratio);
+       const b = Math.round(start.b + (end.b - start.b) * ratio);
+       return `rgb(${r}, ${g}, ${b})`;
+     });
+   }, []);
+
+   const media = (currentData.reduce((s: number, d: any) => s + d.value, 0) / currentData.length).toFixed(2);
+   const totalLeitos = currentData.reduce((s: number, d: any) => s + (d.leitos || 0), 0);
+   const cuiaba = currentData.find((d: any) => d.city === 'Cuiabá');
+   const melhor = sorted[0];
+
+   return (
+     <div className="flex flex-col gap-2 h-full overflow-hidden">
+       <div className="grid grid-cols-4 gap-2 flex-shrink-0">
+         <KPI title="Média Estadual" value={media} sub="leitos / 1.000 hab" color={C.teal} delay={0} icon={Hospital} />
+         <KPI title="Melhor Município" value={melhor.value.toFixed(2)} sub={melhor.city} color={C.green} delay={120} icon={Award} />
+         <KPI title="Cuiabá" value={cuiaba ? cuiaba.value.toFixed(2) : '—'} sub="Capital" color={C.blue} delay={240} icon={Building2} />
+         <KPI title="Total de Leitos" value={totalLeitos.toLocaleString('pt-BR')} sub={`${currentData.length} municípios`} color={C.purple} delay={360} icon={Activity} />
+       </div>
+       <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
+         <Chart title="Mapa de Calor — Leitos por 1.000 Habitantes (MT)">
+           <MTMap data={currentData} title="Leitos / 1.000 hab" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={false} />
+         </Chart>
+       </div>
+       <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
+         <Chart title="Top 20 Municípios (Menor Cobertura — Piores)">
+           <ResponsiveContainer width="100%" height="100%">
+             <BarChart data={top20Piores} margin={{ top: 20, right: 10, left: -20, bottom: 60 }}>
+               <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
+               <XAxis dataKey="city" stroke={C.axis} fontSize={9} interval={0} angle={-45} textAnchor="end" height={60} />
+               <YAxis fontSize={9} stroke={C.axis} />
+               <Tooltip content={<CustomTooltip />} />
+               <Bar dataKey="value" name="Leitos / 1.000 hab" radius={[2, 2, 0, 0]}>
+                 {top20Piores.map((_, index) => (
+                   <Cell key={`cell-${index}`} fill={pioresColors[index]} />
+                 ))}
+                 <LabelList dataKey="value" position="top" fontSize={10} fill={C.label} formatter={(v: number) => v.toFixed(2)} />
+               </Bar>
+             </BarChart>
+           </ResponsiveContainer>
+         </Chart>
+         <Chart title="Top 10 Municípios (Maior Cobertura — Melhores)">
+           <ResponsiveContainer width="100%" height="100%">
+             <BarChart data={top10Melhores} layout="vertical" margin={{ top: 5, right: 40, bottom: 0, left: -5 }}>
+               <XAxis type="number" hide />
+               <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
+               <Tooltip content={<CustomTooltip />} />
+               <Bar dataKey="value" name="Leitos / 1.000 hab" radius={[0, 2, 2, 0]}>
+                 {top10Melhores.map((_, index) => (
+                   <Cell key={`cell-${index}`} fill={TOP_COLORS[index % TOP_COLORS.length]} />
+                 ))}
+                 <LabelList dataKey="value" position="right" fontSize={10} fill={C.label} formatter={(v: number) => v.toFixed(2)} />
+               </Bar>
+             </BarChart>
+           </ResponsiveContainer>
+         </Chart>
+       </div>
+     </div>
+   );
+ };
+
+ const panelsAll = [...panels, PanelLeitosBR, PanelLeitosMT];
+  const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "b05", "a05", "a06", "a07", "a08", "a09", "a10"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
    t1: [0, 1, 2, 3, 12, 13, 14, 15], // a01, a02, a03, a04, a05, a06, a07, a08
