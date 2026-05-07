@@ -2319,7 +2319,7 @@ const SingleDashboard = () => {
       {/* Footer with source + clock */}
        <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
-           {formattedDate} — {formattedTime}
+           {showAtualizacao ? `Atualização: ${lastUpdateFormatted}` : `${formattedDate} — ${formattedTime}`}
          </span>
            {active === 8 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
