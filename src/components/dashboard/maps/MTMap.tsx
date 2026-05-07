@@ -32,7 +32,7 @@ const MTMap: React.FC<MTMapProps> = ({
     .range(colorScale as any);
 
   return (
-    <div className="w-full h-full relative flex flex-col">
+    <div className="w-full h-full relative flex flex-col animate-fade-in">
       <div className="flex-1 min-h-0">
         <ComposableMap
           projection="geoMercator"
