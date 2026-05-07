@@ -86,7 +86,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                     />
                     {rankVal > 0 && (
                       <Marker coordinates={centroid}>
-                        <g transform="translate(0, 0)">
+                        <g transform="translate(0, 0)" className="animate-fade-in" style={{ transformOrigin: 'center', transformBox: 'fill-box' }}>
                           <text
                             textAnchor="middle"
                             dominantBaseline="middle"
