@@ -2216,6 +2216,37 @@ const SingleDashboard = () => {
   const formattedDate = now.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "long", year: "numeric", timeZone: "America/Cuiaba" });
   const formattedTime = now.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit", second: "2-digit", timeZone: "America/Cuiaba" });
 
+  // Last update date per dashboard (a05..a10 = indices 12..17)
+  const [lastUpdates, setLastUpdates] = useState<Record<number, string>>({});
+  useEffect(() => {
+    const endpointMap: Record<number, string> = {
+      12: 'mortalidade',
+      13: 'mortalidade',
+      14: 'alfabetizacao',
+      15: 'alfabetizacao',
+      16: 'leitos-por-habitante',
+      17: 'leitos-por-habitante-mt',
+    };
+    const ep = endpointMap[active];
+    if (!ep || lastUpdates[active]) return;
+    supabase
+      .from('external_api_data')
+      .select('updated_at')
+      .eq('endpoint', ep)
+      .maybeSingle()
+      .then(({ data }) => {
+        if (data?.updated_at) {
+          setLastUpdates(prev => ({ ...prev, [active]: data.updated_at as string }));
+        }
+      });
+  }, [active, lastUpdates]);
+
+  const showAtualizacao = active >= 12 && active <= 17;
+  const lastUpdateRaw = lastUpdates[active];
+  const lastUpdateFormatted = lastUpdateRaw
+    ? new Date(lastUpdateRaw).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", timeZone: "America/Cuiaba" })
+    : "—";
+
   return (
     <div
       className={`h-dvh w-full flex flex-col overflow-hidden relative${hoverDisabled ? ' hover-disabled' : ''}`}
@@ -2288,7 +2319,7 @@ const SingleDashboard = () => {
       {/* Footer with source + clock */}
        <footer className="flex-shrink-0 flex flex-col sm:flex-row items-center justify-between px-2 sm:px-3 py-1 sm:py-1.5 gap-0.5 sm:gap-0" style={{ borderTop: '1px solid rgba(148,163,184,0.18)', background: 'rgba(10,17,30,0.78)' }}>
          <span className="text-[16px] sm:text-[18px] font-semibold tabular-nums" style={{ color: '#60a5fa' }}>
-           {formattedDate} — {formattedTime}
+           {showAtualizacao ? `Atualização: ${lastUpdateFormatted}` : `${formattedDate} — ${formattedTime}`}
          </span>
            {active === 8 ? (
              <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
