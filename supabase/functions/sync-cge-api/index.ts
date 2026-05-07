@@ -62,12 +62,14 @@ serve(async (req) => {
 
     // ─── ALFABETIZAÇÃO ──────────────────────────────────────────────
     try {
-      const [ufA, mtA] = await Promise.all([
+      const [brA, ufA, mtA] = await Promise.all([
+        fetchJson(`${BASE}/meta-alfabetizacao-brasil/`).catch(() => null),
         fetchJson(`${BASE}/meta-alfabetizacao-uf/`),
         fetchJson(`${BASE}/meta-alfabetizacao-municipio/MT`),
       ])
       const ufArr = Array.isArray(ufA) ? ufA : []
       const mtArr = Array.isArray(mtA) ? mtA : []
+      const brasilGeral = Array.isArray(brA) ? brA : (brA ? [brA] : [])
       const brasil = pickLatestByKey(ufArr, 'sigla_uf').map((d: any) => ({
         state: d.sigla_uf,
         value: Number(d.taxa_alfabetizacao ?? d.taxa ?? d.valor ?? d.value ?? 0),
@@ -79,11 +81,38 @@ serve(async (req) => {
         ano: d.ano,
       })).filter((d: any) => d.city && d.value > 0)
       await supabase.from('external_api_data').upsert(
-        { endpoint: 'alfabetizacao', payload: { brasil, mt }, updated_at: new Date().toISOString() },
+        { endpoint: 'alfabetizacao', payload: { brasil, mt, brasil_geral: brasilGeral }, updated_at: new Date().toISOString() },
         { onConflict: 'endpoint' }
       )
       results.alfabetizacao = { brasil: brasil.length, mt: mt.length }
     } catch (e: any) { results.alfabetizacao = { error: e.message } }
+
+    // ─── POPULAÇÃO ──────────────────────────────────────────────────
+    try {
+      const [brasilPop, ufPop, mtMun] = await Promise.all([
+        fetchJson(`${BASE}/brasil/`).catch(() => null),
+        fetchJson(`${BASE}/uf/`).catch(() => []),
+        fetchJson(`${BASE}/municipio/MT`).catch(() => []),
+      ])
+      await supabase.from('external_api_data').upsert(
+        { endpoint: 'populacao', payload: { brasil: brasilPop, uf: ufPop, mt: mtMun }, updated_at: new Date().toISOString() },
+        { onConflict: 'endpoint' }
+      )
+      results.populacao = {
+        uf: Array.isArray(ufPop) ? ufPop.length : 0,
+        mt: Array.isArray(mtMun) ? mtMun.length : 0,
+      }
+    } catch (e: any) { results.populacao = { error: e.message } }
+
+    // ─── TOTAL DE SERVIDORES (SEAP) ─────────────────────────────────
+    try {
+      const servidores = await fetchJson(`${BASE}/total-servidores/`)
+      await supabase.from('external_api_data').upsert(
+        { endpoint: 'total-servidores', payload: servidores, updated_at: new Date().toISOString() },
+        { onConflict: 'endpoint' }
+      )
+      results.servidores = Array.isArray(servidores) ? servidores.length : 1
+    } catch (e: any) { results.servidores = { error: e.message } }
 
     return new Response(JSON.stringify({ message: "ok", results }), {
       headers: { ...corsHeaders, "Content-Type": "application/json" },
