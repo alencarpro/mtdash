@@ -376,7 +376,7 @@ import {
           <Chart title="Top 10 Municípios (Maior Alfabetização - Melhores)">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={top10Melhores} layout="vertical" margin={{ top: 5, right: 35, bottom: 0, left: -5 }}>
-                <XAxis type="number" hide />
+                <XAxis type="number" hide domain={[95, (dataMax: number) => dataMax]} />
                 <YAxis type="category" dataKey="city" stroke={C.axis} fontSize={9} tickLine={false} axisLine={false} width={85} tick={WrappedYAxisTick} />
                 <Tooltip content={<CustomTooltip unit="%" />} />
                 <Bar dataKey="value" name="Taxa" radius={[0, 2, 2, 0]}>
