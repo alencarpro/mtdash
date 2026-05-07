@@ -362,7 +362,7 @@ import {
                   textAnchor="end"
                   height={60}
                 />
-                <YAxis fontSize={9} stroke={C.axis} />
+                <YAxis fontSize={9} stroke={C.axis} domain={[80, (dataMax: number) => dataMax]} allowDataOverflow />
                 <Tooltip content={<CustomTooltip unit="%" />} />
                 <Bar dataKey="value" name="Taxa %" radius={[2, 2, 0, 0]}>
                   {top20Piores.map((_, index) => (
