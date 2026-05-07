@@ -9,6 +9,28 @@ const corsHeaders = {
 const LEITOS_MT_URL = "https://mtdash-api.cge.mt.gov.br/api/v1/leitos-por-habitante/MT"
 const UF_MT_URL = "https://mtdash-api.cge.mt.gov.br/api/v1/uf/MT"
 
+async function fetchWithRetry(url: string, retries = 3, timeoutMs = 25000): Promise<Response> {
+  let lastErr: any
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const ctrl = new AbortController()
+    const t = setTimeout(() => ctrl.abort(), timeoutMs)
+    try {
+      const r = await fetch(url, { signal: ctrl.signal })
+      clearTimeout(t)
+      if (!r.ok) throw new Error(`${url} -> ${r.status}`)
+      return r
+    } catch (e: any) {
+      clearTimeout(t)
+      lastErr = e
+      if (attempt === retries) break
+      const backoff = Math.min(15000, 1500 * Math.pow(2, attempt)) + Math.floor(Math.random() * 500)
+      console.warn(`retry ${attempt + 1}/${retries} for ${url} after ${backoff}ms: ${e.message}`)
+      await new Promise(res => setTimeout(res, backoff))
+    }
+  }
+  throw lastErr
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders })
 
@@ -19,9 +41,7 @@ serve(async (req) => {
     )
 
     console.log("Sync leitos-por-habitante MT: fetching APIs...")
-    const [leitosRes, ufRes] = await Promise.all([fetch(LEITOS_MT_URL), fetch(UF_MT_URL)])
-    if (!leitosRes.ok) throw new Error(`Leitos MT API ${leitosRes.status}`)
-    if (!ufRes.ok) throw new Error(`UF MT API ${ufRes.status}`)
+    const [leitosRes, ufRes] = await Promise.all([fetchWithRetry(LEITOS_MT_URL), fetchWithRetry(UF_MT_URL)])
 
     const leitos = await leitosRes.json()
     const ufData = await ufRes.json()
