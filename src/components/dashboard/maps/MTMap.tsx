@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
 import { geoCentroid } from 'd3-geo';
 import { scaleLinear } from 'd3-scale';
@@ -23,6 +23,23 @@ const MTMap: React.FC<MTMapProps> = ({
     x: 0, y: 0, name: '', value: '', rank: '', status: '', visible: false 
   });
 
+  // Responsive scale: match BrazilMap behavior (fits container on widescreen + mobile)
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(3000);
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(entries => {
+      for (const e of entries) {
+        const { width, height } = e.contentRect;
+        const base = Math.min(width, height);
+        // Tuned so MT fills container similarly to Brazil's scale=800 on its bbox
+        setScale(Math.max(1500, Math.min(6000, base * 4.2)));
+      }
+    });
+    ro.observe(containerRef.current);
+    return () => ro.disconnect();
+  }, []);
+
   const values = data.map(d => d.value);
   const min = values.length ? Math.min(...values) : 0;
   const max = values.length ? Math.max(...values) : 100;
@@ -33,10 +50,10 @@ const MTMap: React.FC<MTMapProps> = ({
 
   return (
     <div className="w-full h-full relative flex flex-col animate-fade-in">
-      <div className="flex-1 min-h-0">
+      <div ref={containerRef} className="flex-1 min-h-0">
         <ComposableMap
           projection="geoMercator"
-          projectionConfig={{ scale: 3000, center: [-56, -13] }}
+          projectionConfig={{ scale, center: [-56, -13] }}
           className="w-full h-full"
         >
           <Geographies geography={geoUrl}>
