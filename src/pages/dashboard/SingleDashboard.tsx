@@ -2314,7 +2314,7 @@ const SingleDashboard = () => {
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: SINFRA-MT — Obras Estratégicas
             </span>
-          ) : active === 12 || active === 13 ? (
+           ) : active === 12 || active === 13 || active === 16 || active === 17 ? (
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: DATASUS
             </span>
