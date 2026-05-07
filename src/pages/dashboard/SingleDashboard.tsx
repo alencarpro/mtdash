@@ -2015,7 +2015,7 @@ const PanelLiquidacoes = () => (
              <BarChart data={top20Piores} margin={{ top: 20, right: 10, left: -20, bottom: 60 }}>
                <CartesianGrid strokeDasharray="3 3" stroke={C.grid} vertical={false} />
                <XAxis dataKey="city" stroke={C.axis} fontSize={9} interval={0} angle={-45} textAnchor="end" height={60} />
-               <YAxis fontSize={9} stroke={C.axis} />
+                <YAxis fontSize={9} stroke={C.axis} domain={[0.75, (dataMax: number) => dataMax]} allowDataOverflow />
                <Tooltip content={<CustomTooltip />} />
                <Bar dataKey="value" name="Leitos / 1.000 hab" radius={[2, 2, 0, 0]}>
                  {top20Piores.map((_, index) => (
