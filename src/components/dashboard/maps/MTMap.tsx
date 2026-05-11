@@ -71,7 +71,7 @@ const MTMap: React.FC<MTMapProps> = ({
                 if (cityData) {
                   const sorted = [...data].sort((a, b) => isLowerBetter ? a.value - b.value : b.value - a.value);
                   rankVal = sorted.findIndex(item => item.city.toLowerCase() === cityData.city.toLowerCase()) + 1;
-                  statusVal = isLowerBetter ? (cityData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (cityData.value > 95 ? "Índice Positivo" : "Índice Negativo");
+                  statusVal = isLowerBetter ? (cityData.value < 12 ? "Índice Positivo" : "Índice Negativo") : (cityData.value > 90 ? "Índice Positivo" : "Índice Negativo");
                 }
 
                 const fillColor = cityData ? colorMapper(cityData.value) : '#1e293b';
@@ -87,7 +87,7 @@ const MTMap: React.FC<MTMapProps> = ({
                           y: event.clientY,
                           name: cityName,
                           value: cityData ? `${cityData.value}${unit}` : 'Sem dados',
-                          rank: rankVal > 0 ? `${rankVal}º em MT` : '',
+                          rank: rankVal > 0 ? `${rankVal}º no BR` : '',
                           status: statusVal,
                           visible: true
                         });
