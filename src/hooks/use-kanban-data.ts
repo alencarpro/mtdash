@@ -3,7 +3,7 @@ import { supabase } from '@/lib/supabase/client';
 import { Database } from '@/integrations/supabase/types';
 import { toast } from 'sonner';
 import { useServerFn } from '@tanstack/react-start';
-import { updateDashboardFn, deleteDashboardFn } from '@/lib/admin.functions';
+import { updateDashboardFn, deleteDashboardFn, createDashboardFn } from '@/lib/admin.functions';
 import { useAuthErrorStore } from './use-auth-error-store';
 
 type Dashboard = Database['public']['Tables']['dashboards']['Row'];
@@ -30,7 +30,6 @@ export function useKanbanData() {
       setColumns(columnsRes.data || []);
     } catch (error: any) {
       if (error?.status === 401 || error?.code === 'PGRST301' || (error instanceof Response && error.status === 401)) {
-        // Ignorar erros de não autorizado silenciosamente se estivermos deslogando ou sem sessão
         console.warn('Sessão expirada ou não autorizada ao carregar dados do Kanban');
         setShowLoginModal(true);
       } else {
@@ -44,7 +43,6 @@ export function useKanbanData() {
   useEffect(() => {
     fetchData();
 
-    // Setup realtime subscription
     const dashboardSub = supabase
       .channel('kanban-changes')
       .on('postgres_changes' as any, { event: '*', table: 'dashboards', schema: 'public' }, () => fetchData())
@@ -58,12 +56,11 @@ export function useKanbanData() {
 
   const updateDashboardCall = useServerFn(updateDashboardFn);
   const deleteDashboardCall = useServerFn(deleteDashboardFn);
+  const createDashboardCall = useServerFn(createDashboardFn);
 
   const updateDashboard = async (id: string, updates: Partial<Dashboard>) => {
-    // Optimistic update
     const oldDashboards = [...dashboards];
     setDashboards(prev => prev.map(d => d.id === id ? { ...d, ...updates } : d));
-
     try {
       await updateDashboardCall({ data: { id, updates: updates as any } });
       return true;
@@ -85,12 +82,33 @@ export function useKanbanData() {
     }
   };
 
+  const createDashboard = async (input: {
+    name: string;
+    description?: string | null;
+    category: string;
+    source_url: string;
+    refresh_interval?: number;
+    status?: 'ACTIVE' | 'INACTIVE';
+    column_id?: string | null;
+  }) => {
+    try {
+      await createDashboardCall({ data: { ...input, status: input.status ?? 'ACTIVE' } as any });
+      toast.success('Dashboard criada com sucesso!');
+      await fetchData();
+      return true;
+    } catch (error: any) {
+      toast.error('Erro ao criar dashboard: ' + (error?.message ?? 'desconhecido'));
+      return false;
+    }
+  };
+
   return {
     dashboards,
     columns,
     loading,
     updateDashboard,
     deleteDashboard,
-    refresh: fetchData
+    createDashboard,
+    refresh: fetchData,
   };
 }

@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Meio Ambiente",
+  "description": "Monitoramento ambiental do Estado de Mato Grosso com foco em desmatamento, queimadas, qualidade da água e licenciamento ambiental. Integra dados do INPE, SEMA-MT e sistemas de geomonitoramento para apresentar alertas de desmatamento na Amazônia Legal e no Cerrado mato-grossense, áreas embargadas e indicadores de conformidade ambiental por município.",
+  "category": "ENVIRONMENT",
+  "source_url": "https://sema.mt.gov.br/painel/ambiental",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

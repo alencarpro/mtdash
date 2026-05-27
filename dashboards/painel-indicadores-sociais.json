@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Indicadores Sociais",
+  "description": "Acompanhamento dos principais indicadores sociais do Estado de Mato Grosso nas áreas de saúde, educação, assistência social e habitação. Inclui métricas como taxa de mortalidade infantil, índice de escolarização, cobertura de programas sociais, número de beneficiários do Bolsa Família e IDHM por município, permitindo análise do impacto das políticas públicas sociais.",
+  "category": "SOCIAL",
+  "source_url": "https://sedesc.mt.gov.br/indicadores",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

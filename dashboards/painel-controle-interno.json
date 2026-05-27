@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Controle Interno",
+  "description": "Painel gerencial da CGE-MT para monitoramento das atividades de controle interno, avaliação de riscos e conformidade nos órgãos do Poder Executivo estadual. Apresenta indicadores de maturidade em gestão de riscos, status de recomendações emitidas, planos de ação em andamento e resultados das auditorias internas.",
+  "category": "CUSTOM",
+  "source_url": "https://cge.mt.gov.br/controle/painel",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

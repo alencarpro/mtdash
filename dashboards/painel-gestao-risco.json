@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Gestão de Riscos",
+  "description": "Painel estratégico da CGE-MT para acompanhamento da gestão de riscos institucionais e achados de auditoria nos órgãos do Poder Executivo estadual. Apresenta o mapa de calor de riscos por órgão, status de implementação dos controles, achados críticos pendentes de regularização, prazos de planos de ação e evolução do índice de conformidade ao longo do tempo.",
+  "category": "CUSTOM",
+  "source_url": "https://cge.mt.gov.br/risco/dashboard",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

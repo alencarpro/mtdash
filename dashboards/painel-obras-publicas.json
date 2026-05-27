@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Obras Públicas",
+  "description": "Monitoramento das obras de infraestrutura pública do Estado de Mato Grosso, incluindo rodovias, pontes, escolas, unidades de saúde e demais equipamentos públicos. Apresenta status de execução físico-financeira, cronograma, percentual de conclusão, valor contratado versus executado e eventuais paralisações ou irregularidades identificadas.",
+  "category": "WORKS",
+  "source_url": "https://seinfra.mt.gov.br/obras/painel",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Compras Governamentais",
+  "description": "Monitoramento das licitações, contratos e aquisições diretas realizadas pelos órgãos e entidades do Poder Executivo estadual. Consolida dados de processos licitatórios, pregões eletrônicos, atas de registro de preço e contratos vigentes, permitindo auditoria e controle dos gastos com fornecedores.",
+  "category": "TRANSPARENCY",
+  "source_url": "https://compras.mt.gov.br/painel",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

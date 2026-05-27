@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Execução Orçamentária",
+  "description": "Acompanhamento em tempo real da execução orçamentária do Estado de Mato Grosso, com comparativo entre receita arrecadada e despesa empenhada/liquidada/paga. Dados originados do SEFAZ-MT com atualização diária, apresentando análise por unidade gestora, fonte de recurso e classificação econômica.",
+  "category": "ECONOMY",
+  "source_url": "https://sefaz.mt.gov.br/bi/orcamento",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}

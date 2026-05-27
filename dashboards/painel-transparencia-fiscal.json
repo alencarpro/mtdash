@@ -1,0 +1,9 @@
+{
+  "name": "Painel de Transparência Fiscal",
+  "description": "Painel de acompanhamento dos gastos públicos do Estado de Mato Grosso, com dados consolidados do Portal da Transparência MT. Permite a consulta de despesas por órgão, função, programa e natureza de despesa, promovendo o controle social e o acesso à informação pelos cidadãos.",
+  "category": "TRANSPARENCY",
+  "source_url": "https://transparencia.mt.gov.br/painel/fiscal",
+  "refresh_interval": 60,
+  "status": "ACTIVE",
+  "thumbnail_url": null
+}
