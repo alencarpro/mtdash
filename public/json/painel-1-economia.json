@@ -1,0 +1,77 @@
+{
+  "painel": 1,
+  "titulo": "Economia",
+  "fonte": "SEPLAG-MT, IBGE, SEDEC, MDIC",
+  "kpis": [
+    { "campo": "superavit", "titulo": "Superávit", "valor": "US$ 8.7 bi", "subtitulo": "4T 2025" },
+    { "campo": "exportacaoPrincipal", "titulo": "Export. Principal", "valor": "Soja 31%", "subtitulo": "do total" },
+    { "campo": "emprego", "titulo": "Emprego", "valor": "80.8%", "subtitulo": "Renda R$ 3200" },
+    { "campo": "turismo", "titulo": "Turismo", "valor": "3,2 mi", "subtitulo": "Receita R$ 4,8 bi" }
+  ],
+  "graficos": [
+    {
+      "titulo": "Comércio Exterior (US$ bi)",
+      "tipo": "LineChart",
+      "campos": ["trimestre", "exportacao", "importacao", "superavit"],
+      "dados": [
+        { "trimestre": "1T 2024", "exportacao": 8.2, "importacao": 2.1, "superavit": 6.1 },
+        { "trimestre": "2T 2024", "exportacao": 9.5, "importacao": 2.3, "superavit": 7.2 },
+        { "trimestre": "3T 2024", "exportacao": 10.1, "importacao": 2.5, "superavit": 7.6 },
+        { "trimestre": "4T 2024", "exportacao": 11.0, "importacao": 2.7, "superavit": 8.3 },
+        { "trimestre": "1T 2025", "exportacao": 9.8, "importacao": 2.4, "superavit": 7.4 },
+        { "trimestre": "2T 2025", "exportacao": 10.3, "importacao": 2.6, "superavit": 7.7 },
+        { "trimestre": "3T 2025", "exportacao": 10.8, "importacao": 2.5, "superavit": 8.3 },
+        { "trimestre": "4T 2025", "exportacao": 11.5, "importacao": 2.8, "superavit": 8.7 }
+      ]
+    },
+    {
+      "titulo": "Destinos Exportações",
+      "tipo": "PieChart",
+      "campos": ["pais", "percentual"],
+      "dados": [
+        { "pais": "China", "percentual": 42 },
+        { "pais": "Rússia", "percentual": 12 },
+        { "pais": "Canadá", "percentual": 8 },
+        { "pais": "Emirados Árabes", "percentual": 7 },
+        { "pais": "Índia", "percentual": 6 },
+        { "pais": "Outros", "percentual": 25 }
+      ]
+    },
+    {
+      "titulo": "Produção Agrícola (M ton)",
+      "tipo": "BarChart-horizontal",
+      "campos": ["cultura", "producao", "area"],
+      "dados": [
+        { "cultura": "Milho", "producao": 46.2, "area": 7.3 },
+        { "cultura": "Soja", "producao": 43.8, "area": 12.1 },
+        { "cultura": "Cana", "producao": 18.5, "area": 0.28 },
+        { "cultura": "Algodão", "producao": 5.8, "area": 1.5 },
+        { "cultura": "Arroz", "producao": 0.35, "area": 0.05 }
+      ]
+    },
+    {
+      "titulo": "VAB Setorial (R$ bi)",
+      "tipo": "BarChart-grouped",
+      "campos": ["year", "agropecuaria", "industria", "servicos"],
+      "dados": [
+        { "year": "2019", "agropecuaria": 48.2, "industria": 22.1, "servicos": 62.8 },
+        { "year": "2020", "agropecuaria": 55.3, "industria": 24.5, "servicos": 65.1 },
+        { "year": "2021", "agropecuaria": 68.7, "industria": 28.3, "servicos": 74.2 },
+        { "year": "2022", "agropecuaria": 82.1, "industria": 32.6, "servicos": 85.4 },
+        { "year": "2023", "agropecuaria": 78.5, "industria": 35.2, "servicos": 92.8 }
+      ]
+    },
+    {
+      "titulo": "Produção de Carne (mil ton)",
+      "tipo": "BarChart-grouped",
+      "campos": ["year", "bovino", "suino", "aves"],
+      "dados": [
+        { "year": "2020", "bovino": 1280, "suino": 185, "aves": 420 },
+        { "year": "2021", "bovino": 1350, "suino": 198, "aves": 455 },
+        { "year": "2022", "bovino": 1420, "suino": 212, "aves": 490 },
+        { "year": "2023", "bovino": 1510, "suino": 225, "aves": 528 },
+        { "year": "2024", "bovino": 1580, "suino": 240, "aves": 560 }
+      ]
+    }
+  ]
+}

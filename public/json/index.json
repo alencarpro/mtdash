@@ -1,0 +1,15 @@
+{
+  "descricao": "Índice dos arquivos JSON com os campos e valores aplicados na criação dos gráficos de cada painel do dashboard.",
+  "geradoEm": "2026-04-17",
+  "paineis": [
+    { "id": 1, "arquivo": "painel-1-economia.json", "titulo": "Economia" },
+    { "id": 2, "arquivo": "painel-2-social.json", "titulo": "Social" },
+    { "id": 3, "arquivo": "painel-3-ambiental.json", "titulo": "Ambiental" },
+    { "id": 4, "arquivo": "painel-4-visao-geral.json", "titulo": "Visão Geral" },
+    { "id": 5, "arquivo": "painel-5-controle-eficiencia.json", "titulo": "Controle & Eficiência (CGE)" },
+    { "id": 6, "arquivo": "painel-6-integridade.json", "titulo": "Integridade & Transparência" },
+    { "id": 7, "arquivo": "painel-7-obras-brt-leblon.json", "titulo": "Obras — BRT e Cplx. Leblon" },
+    { "id": 8, "arquivo": "painel-8-obras-hospital-juruena.json", "titulo": "Obras — Hospital J. Muller e Ponte Juruena" },
+    { "id": "PTA", "arquivo": "painel-pta-orcamento.json", "titulo": "PTA 2026 — Orçamento" }
+  ]
+}

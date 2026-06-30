@@ -1,0 +1,71 @@
+{
+  "painel": 6,
+  "titulo": "Integridade & Transparência",
+  "fonte": "CGE-MT — Balanço de Gestão 2025",
+  "kpis": [
+    { "campo": "orgaosPlanos", "titulo": "Órgãos com Planos", "valor": 31 },
+    { "campo": "acompanhamentoCGE", "titulo": "Acomp. CGE", "valor": 25 },
+    { "campo": "acoesMonitoradas", "titulo": "Ações Monitoradas", "valor": 491 },
+    { "campo": "capacitacoes", "titulo": "Capacitações", "valor": 23 },
+    { "campo": "certificados", "titulo": "Certificados", "valor": 1000 }
+  ],
+  "graficos": [
+    {
+      "titulo": "Dosimetria das Penas (% por ano)",
+      "tipo": "BarChart-grouped",
+      "campos": ["opiniao", "y2023", "y2024", "y2025"],
+      "dados": [
+        { "opiniao": "Demissão", "y2023": 47.41, "y2024": 34.44, "y2025": 31.09 },
+        { "opiniao": "Absolvição", "y2023": 20.0, "y2024": 21.19, "y2025": 23.53 },
+        { "opiniao": "Suspensão >30d", "y2023": 2.22, "y2024": 7.95, "y2025": 15.13 },
+        { "opiniao": "Repreensão", "y2023": 2.22, "y2024": 7.95, "y2025": 13.45 },
+        { "opiniao": "Prescrição", "y2023": 7.41, "y2024": 17.22, "y2025": 4.20 },
+        { "opiniao": "Arquivamento", "y2023": 17.78, "y2024": 7.28, "y2025": 4.20 }
+      ]
+    },
+    {
+      "titulo": "Capacitações CGE",
+      "tipo": "BarChart-composto",
+      "campos": ["area", "eventos", "participacoes"],
+      "dados": [
+        { "area": "Integridade", "eventos": 23, "participacoes": 1000 },
+        { "area": "Auditoria e Controle", "eventos": 21, "participacoes": 996 },
+        { "area": "Corregedoria", "eventos": 12, "participacoes": 544 },
+        { "area": "Eventos Externos", "eventos": 8, "participacoes": 520 },
+        { "area": "Ouvidoria e Transp.", "eventos": 5, "participacoes": 235 }
+      ]
+    },
+    {
+      "titulo": "TCACs por Órgão",
+      "tipo": "BarChart-horizontal",
+      "campos": ["orgao", "acordos"],
+      "dados": [
+        { "orgao": "SESP", "acordos": 78 },
+        { "orgao": "SEDUC", "acordos": 56 },
+        { "orgao": "SEPLAG", "acordos": 52 },
+        { "orgao": "Outros", "acordos": 38 }
+      ]
+    },
+    {
+      "titulo": "Planejamento Estratégico — Previsto x Realizado",
+      "tipo": "BarChart-grouped",
+      "campos": ["indicador", "previsto", "realizado", "unidade"],
+      "dados": [
+        { "indicador": "Benef. Financeiro", "previsto": 250, "realizado": 940.7, "unidade": "R$ mi" },
+        { "indicador": "Planos Integridade", "previsto": 25, "realizado": 88, "unidade": "órgãos" },
+        { "indicador": "Satisfação Cidadão", "previsto": 52, "realizado": 47.63, "unidade": "%" },
+        { "indicador": "Transparência", "previsto": 96, "realizado": 95.28, "unidade": "%" }
+      ]
+    },
+    {
+      "titulo": "Custos por Serviço (%)",
+      "tipo": "PieChart",
+      "campos": ["area", "percentual"],
+      "dados": [
+        { "area": "Auditoria e Controle", "percentual": 75 },
+        { "area": "Corregedoria e Integridade", "percentual": 19 },
+        { "area": "Ouvidoria e Transparência", "percentual": 6 }
+      ]
+    }
+  ]
+}
