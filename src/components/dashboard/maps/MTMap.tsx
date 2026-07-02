@@ -140,6 +140,7 @@ const MTMap: React.FC<MTMapProps> = ({
       <div className="mt-4 mx-auto w-1/2 flex flex-col gap-1.5 bg-black/40 p-3 rounded-lg backdrop-blur-md border border-white/10">
         <div className="flex justify-between text-[11px] text-white/90 font-bold mb-0.5 px-0.5">
           <span className="flex items-center gap-1">
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[0] }}></span>
             {isLowerBetter ? max : min}{unit}
           </span>
           <span className="flex items-center gap-1">
