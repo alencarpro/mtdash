@@ -67,7 +67,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Estado">
-            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <BrazilMap data={currentData} title="Mortalidade Inf. BR" colorScale={["#3d0f0f","#7a1a1a","#b83232","#d94a2a","#e88a3a","#edb833","#e8d038"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -160,7 +160,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Mortalidade Inf. por Município (MT)">
-            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={true} />
+            <MTMap data={currentData} title="Mortalidade Inf. MT" colorScale={["#3d0f0f","#7a1a1a","#b83232","#d94a2a","#e88a3a","#edb833","#e8d038"]} unit="" isLowerBetter={true} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -246,7 +246,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
           <Chart title="Mapa de Calor - Alfabetização por Estado">
-            <BrazilMap data={currentData} title="Alfabetização BR" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+            <BrazilMap data={currentData} title="Alfabetização BR" colorScale={["#3d0f0f","#7a1a1a","#b83232","#d94a2a","#e88a3a","#edb833","#e8d038"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -345,7 +345,7 @@ import {
         </div>
         <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
            <Chart title="Mapa de Calor - Alfabetização por Município (MT)">
-            <MTMap data={currentData} title="Alfabetização MT" colorScale={["#f87171", "#86efac"]} unit="%" isLowerBetter={false} />
+            <MTMap data={currentData} title="Alfabetização MT" colorScale={["#3d0f0f","#7a1a1a","#b83232","#d94a2a","#e88a3a","#edb833","#e8d038"]} unit="%" isLowerBetter={false} />
           </Chart>
         </div>
         <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -1911,7 +1911,7 @@ const PanelLiquidacoes = () => (
        </div>
        <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
          <Chart title="Mapa de Calor — Leitos por 1.000 Habitantes (Verde = Positivo / Vermelho = Negativo)">
-           <BrazilMap data={currentData} title="Leitos / 1.000 hab" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={false} />
+           <BrazilMap data={currentData} title="Leitos / 1.000 hab" colorScale={["#3d0f0f","#7a1a1a","#b83232","#d94a2a","#e88a3a","#edb833","#e8d038"]} unit="" isLowerBetter={false} />
          </Chart>
        </div>
        <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
@@ -2006,7 +2006,7 @@ const PanelLiquidacoes = () => (
        </div>
        <div className="flex-1 min-h-0 overflow-hidden animate-in fade-in zoom-in-95 duration-1000 fill-mode-forwards">
          <Chart title="Mapa de Calor — Leitos por 1.000 Habitantes (MT)">
-           <MTMap data={currentData} title="Leitos / 1.000 hab" colorScale={["#f87171", "#86efac"]} unit="" isLowerBetter={false} />
+           <MTMap data={currentData} title="Leitos / 1.000 hab" colorScale={["#3d0f0f","#7a1a1a","#b83232","#d94a2a","#e88a3a","#edb833","#e8d038"]} unit="" isLowerBetter={false} />
          </Chart>
        </div>
        <div className="flex flex-col gap-3 h-[720px] flex-shrink-0 animate-in fade-in slide-in-from-bottom-8 duration-1000 fill-mode-forwards">
