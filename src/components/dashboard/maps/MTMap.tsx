@@ -13,9 +13,11 @@ interface MTMapProps {
   isLowerBetter?: boolean;
 }
 
+const DEFAULT_HEAT_SCALE = ["#3d0f0f", "#7a1a1a", "#b83232", "#d94a2a", "#e88a3a", "#edb833", "#e8d038"];
+
 const MTMap: React.FC<MTMapProps> = ({ 
   data, 
-  colorScale = ["#f87171", "#86efac"], 
+  colorScale = DEFAULT_HEAT_SCALE, 
   unit = "", 
   isLowerBetter = false 
 }) => {
@@ -44,8 +46,10 @@ const MTMap: React.FC<MTMapProps> = ({
   const min = values.length ? Math.min(...values) : 0;
   const max = values.length ? Math.max(...values) : 100;
 
+  const stops = colorScale.length;
+  const domain = Array.from({ length: stops }, (_, i) => min + ((max - min) * i) / (stops - 1));
   const colorMapper = scaleLinear<string>()
-    .domain(isLowerBetter ? [max, min] : [min, max])
+    .domain(isLowerBetter ? [...domain].reverse() : domain)
     .range(colorScale as any);
 
   return (
@@ -141,12 +145,12 @@ const MTMap: React.FC<MTMapProps> = ({
           </span>
           <span className="flex items-center gap-1">
             {isLowerBetter ? min : max}{unit}
-            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[1] }}></span>
+            <span className="w-2 h-2 rounded-full" style={{ backgroundColor: colorScale[colorScale.length - 1] }}></span>
           </span>
         </div>
         <div 
           className="h-2.5 w-full rounded-full shadow-inner" 
-          style={{ background: `linear-gradient(to right, ${colorScale[0]}, ${colorScale[1]})` }}
+          style={{ background: `linear-gradient(to right, ${colorScale.join(", ")})` }}
         />
       </div>
 
