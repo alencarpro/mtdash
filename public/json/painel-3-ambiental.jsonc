@@ -1,0 +1,39 @@
+// ============================================================
+// Painel 3 — Ambiental
+// Fonte: SEMA-MT, INPE, IBGE
+// Este arquivo contém memórias de cálculo (comentários //)
+// para cada KPI e gráfico. JSON estrito não aceita comentários;
+// use um parser JSONC (ex.: jsonc-parser) para consumir.
+// ============================================================
+{
+  "painel": 3,
+  "titulo": "Ambiental",
+  "fonte": "SEMA-MT, INPE, IBGE",
+  "kpis": [
+    // memoriaCalculo: % Vegetação = (Área nativa remanescente / Área total do estado) × 100. Fonte: MapBiomas.
+    {"campo": "vegetacaoPreservada", "titulo": "Vegetação Preservada", "valor": "62%", "subtitulo": "do território"},
+    // memoriaCalculo: Soma das áreas de UCs + Terras Indígenas em km². Fonte: FUNAI/ICMBio/SEMA-MT.
+    {"campo": "areaProtegida", "titulo": "Área Protegida", "valor": "185 mil km²", "subtitulo": "UCs e TIs"},
+    // memoriaCalculo: Área desmatada consolidada no ano de referência (km²). Fonte: INPE/PRODES.
+    {"campo": "desmatamento", "titulo": "Desmatamento", "valor": "1150 km²", "subtitulo": "2023"},
+    // memoriaCalculo: Número de biomas presentes no estado. Fonte: IBGE.
+    {"campo": "biomas", "titulo": "Biomas", "valor": "3", "subtitulo": "Amazônia, Cerrado, Pantanal"}
+  ],
+  "graficos": [
+    // memoriaCalculo: Área desmatada anual (km²) do PRODES (imagens de julho a julho) e nº de alertas DETER. Fonte: INPE.
+    // campos: year, area, alertas
+    {"titulo": "Desmatamento (km²) e Alertas", "tipo": "ComposedChart", "campos": ["year", "area", "alertas"], "dados": [{"year": "2018", "area": 1490, "alertas": 3200}, {"year": "2019", "area": 1685, "alertas": 4100}, {"year": "2020", "area": 1750, "alertas": 4500}, {"year": "2021", "area": 1420, "alertas": 3800}, {"year": "2022", "area": 1280, "alertas": 3400}, {"year": "2023", "area": 1150, "alertas": 3100}]},
+    // memoriaCalculo: Percentual = (Área do bioma no estado / Área total do estado) × 100. Fonte: IBGE/MapBiomas.
+    // campos: name, percentual
+    {"titulo": "Distribuição por Bioma (%)", "tipo": "PieChart", "campos": ["name", "percentual"], "dados": [{"name": "Amazônia", "percentual": 53.6}, {"name": "Cerrado", "percentual": 39.6}, {"name": "Pantanal", "percentual": 6.8}]},
+    // memoriaCalculo: IQA médio mensal. Classificação: 0-50 Boa, 51-100 Moderada, 101-150 Ruim, 151-200 Muito Ruim, >200 Péssima. Fonte: SEMA-MT.
+    // campos: mes, iqa, classificacao
+    {"titulo": "Qualidade do Ar (IQA mensal)", "tipo": "AreaChart", "campos": ["mes", "iqa", "classificacao"], "dados": [{"mes": "Jan", "iqa": 42, "classificacao": "Boa"}, {"mes": "Fev", "iqa": 38, "classificacao": "Boa"}, {"mes": "Mar", "iqa": 45, "classificacao": "Boa"}, {"mes": "Abr", "iqa": 50, "classificacao": "Boa"}, {"mes": "Mai", "iqa": 65, "classificacao": "Moderada"}, {"mes": "Jun", "iqa": 78, "classificacao": "Moderada"}, {"mes": "Jul", "iqa": 95, "classificacao": "Ruim"}, {"mes": "Ago", "iqa": 120, "classificacao": "Muito Ruim"}, {"mes": "Set", "iqa": 145, "classificacao": "Péssima"}, {"mes": "Out", "iqa": 85, "classificacao": "Ruim"}, {"mes": "Nov", "iqa": 55, "classificacao": "Moderada"}, {"mes": "Dez", "iqa": 40, "classificacao": "Boa"}]},
+    // memoriaCalculo: Nº total de focos ativos detectados pelo satélite de referência (AQUA_M-T). Fonte: INPE/BDQueimadas.
+    // campos: mes, focos
+    {"titulo": "Focos de Incêndio (mensal)", "tipo": "BarChart", "campos": ["mes", "focos"], "dados": [{"mes": "Jan", "focos": 180}, {"mes": "Fev", "focos": 145}, {"mes": "Mar", "focos": 120}, {"mes": "Abr", "focos": 95}, {"mes": "Mai", "focos": 250}, {"mes": "Jun", "focos": 580}, {"mes": "Jul", "focos": 1850}, {"mes": "Ago", "focos": 4200}, {"mes": "Set", "focos": 5800}, {"mes": "Out", "focos": 2100}, {"mes": "Nov", "focos": 650}, {"mes": "Dez", "focos": 220}]},
+    // memoriaCalculo: Somatório da área (km²) de cada categoria de proteção. Fonte: SEMA-MT/FUNAI/ICMBio.
+    // campos: tipo, area
+    {"titulo": "Áreas Protegidas (km²)", "tipo": "BarChart-horizontal", "campos": ["tipo", "area"], "dados": [{"tipo": "Terras Indígenas", "area": 78000}, {"tipo": "Unid. Conservação", "area": 52000}, {"tipo": "Reserva Legal", "area": 35000}, {"tipo": "APP", "area": 20000}]}
+  ]
+}
