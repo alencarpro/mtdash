@@ -2050,10 +2050,10 @@ const PanelLiquidacoes = () => (
   const panelLabels = ["a01", "a02", "a03", "a04", "c01", "c02", "b01", "b02", "c03", "b03", "b04", "b05", "a05", "a06", "a07", "a08", "a09", "a10"];
 /* ─── Rotation sequences for /tX routes (0-indexed panel indices) ─── */
 const rotationSequences: Record<string, number[]> = {
-   t1: [0, 1, 2, 3, 12, 13, 14, 15, 16, 17], // a01..a04, a05..a08, a09, a10
-   t2: [12, 13, 14, 15, 16, 17, 0, 1, 2, 3], // a05..a08, a09, a10, a01..a04
-   t3: [6, 7, 9, 10, 11], // b01, b02, b03, b04, b05
-  t4: [4, 5, 8], // c01, c02, c03
+   t1: [0, 1, 2, 3, 12, 13, 14, 15, 16, 17], // 01 (a01..a04), 01 (a05..a08), 01 (a09), 01 (a10)
+   t2: [12, 13, 14, 15, 16, 17, 0, 1, 2, 3], // 01 (a05..a08), 01 (a09), 01 (a10), 01 (a01..a04)
+   t3: [6, 7, 9, 10, 11], // 02 (b01, b02, b03, b04, b05)
+   t4: [4, 5, 8], // 03 (c01, c02, c03)
 };
 
 /* ─── Main ─── */
@@ -2298,7 +2298,10 @@ const SingleDashboard = () => {
               PAUSADO
             </span>
           )}
-          <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>{panelTitles[active]}</span>
+          <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>
+            {active <= 3 || (active >= 12 && active <= 17) ? "01 — " : active === 6 || active === 7 || (active >= 9 && active <= 11) ? "02 — " : active === 4 || active === 5 || active === 8 ? "03 — " : ""}
+            {panelTitles[active]}
+          </span>
         </div>
       </header>
       {/* Reload progress bar */}
