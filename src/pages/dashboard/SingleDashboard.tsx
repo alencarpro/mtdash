@@ -2336,6 +2336,10 @@ const SingleDashboard = () => {
                <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                   Fonte: FIPLAN/SEFAZ
                </span>
+             ) : active === 12 || active === 13 ? (
+               <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
+                 Fonte: DATASUS
+               </span>
              ) : active === 14 || active === 15 ? (
                <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
                  Fonte: IBGE
@@ -2348,7 +2352,7 @@ const SingleDashboard = () => {
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: SINFRA-MT — Obras Estratégicas
             </span>
-           ) : active === 12 || active === 13 || active === 16 || active === 17 ? (
+           ) : active === 16 || active === 17 ? (
             <span className="text-[16px] sm:text-[18px]" style={{ color: '#8df3db' }}>
               Fonte: DATASUS
             </span>
