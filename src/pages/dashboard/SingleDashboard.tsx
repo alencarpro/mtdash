@@ -2302,7 +2302,7 @@ const SingleDashboard = () => {
               PAUSADO
             </span>
           )}
-          <span className="text-[32px] sm:text-[36px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>
+          <span className="text-[22px] sm:text-[25px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>
             {active <= 3 || (active >= 12 && active <= 17) ? "01 — " : active === 6 || active === 7 || (active >= 9 && active <= 11) ? "02 — " : active === 4 || active === 5 || active === 8 ? "03 — " : ""}
             {panelTitles[active]}
           </span>
