@@ -41,7 +41,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ scale: 800, center: [-55, -15] }}
-          className="w-full h-full"
+          className="w-full h-full interactive-map"
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>

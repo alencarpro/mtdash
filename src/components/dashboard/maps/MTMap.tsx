@@ -58,7 +58,7 @@ const MTMap: React.FC<MTMapProps> = ({
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ scale, center: [-56, -13] }}
-          className="w-full h-full"
+          className="w-full h-full interactive-map"
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
