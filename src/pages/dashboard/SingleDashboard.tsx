@@ -556,7 +556,7 @@ const PieTooltip = ({ active, payload }: any) => {
 
 const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { title: string; value: string; sub: string; color?: string; delay?: number; icon?: LucideIcon }) => (
   <div
-    className="rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
+    className="interactive-card rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 ease-out hover:scale-[1.06] hover:-translate-y-1 hover:z-10 cursor-pointer group"
     style={{
       background: 'rgba(10,17,30,0.78)',
       border: '1px solid rgba(148,163,184,0.15)',
@@ -564,14 +564,17 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
     }}
     onMouseEnter={e => {
       const el = e.currentTarget;
-      el.style.boxShadow = `0 0 18px -2px ${color}44, 0 0 6px -1px ${color}33`;
-      el.style.borderColor = `${color}55`;
+      el.style.boxShadow = `0 18px 40px -18px ${color}88, 0 0 26px -2px ${color}66, 0 0 10px -1px ${color}44`;
+      el.style.borderColor = `${color}aa`;
+      el.style.background = 'rgba(14,23,42,0.94)';
     }}
     onMouseLeave={e => {
       const el = e.currentTarget;
       el.style.boxShadow = '';
       el.style.borderColor = 'rgba(148,163,184,0.15)';
+      el.style.background = 'rgba(10,17,30,0.78)';
     }}
+
   >
     <div
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
