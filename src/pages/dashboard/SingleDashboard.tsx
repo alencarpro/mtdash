@@ -1853,7 +1853,7 @@ const PanelLiquidacoes = () => (
             </thead>
             <tbody>
               {topCredores.map((c, i) => (
-                <tr key={i} className="hover:bg-white/5 transition-colors">
+                <tr key={i} className="interactive-row cursor-pointer">
                   <td className="py-1 px-1 border-b border-white/5 truncate max-w-[250px]" title={c.credor}>{c.credor}</td>
                   <td className="py-1 px-1 border-b border-white/5 text-[10px] uppercase">{c.modalidade}</td>
                   <td className="py-1 px-1 border-b border-white/5 text-right font-semibold text-white">{c.valor}</td>
