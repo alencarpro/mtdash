@@ -13,7 +13,7 @@ interface MTMapProps {
   isLowerBetter?: boolean;
 }
 
-const DEFAULT_HEAT_SCALE = ["#3d0f0f", "#7a1a1a", "#b83232", "#d94a2a", "#e88a3a", "#edb833", "#e8d038"];
+const DEFAULT_HEAT_SCALE = ["#7f1d1d", "#c0392b", "#e74c3c", "#f39c12", "#f1c40f", "#7dc35a", "#166534"];
 
 const MTMap: React.FC<MTMapProps> = ({ 
   data, 
