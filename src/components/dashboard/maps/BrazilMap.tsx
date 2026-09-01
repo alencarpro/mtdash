@@ -41,7 +41,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ scale: 800, center: [-55, -15] }}
-          className="w-full h-full"
+          className="w-full h-full interactive-map"
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -84,8 +84,8 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
                       }}
                       style={{
                         default: { fill: fillColor, stroke: "#0f172a", strokeWidth: 0.5, outline: "none" },
-                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 1.5, outline: "none", cursor: "pointer" },
-                        pressed: { fill: fillColor, outline: "none" }
+                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 2.2, outline: "none", cursor: "pointer" },
+                        pressed: { fill: fillColor, stroke: "#8df3db", strokeWidth: 3, outline: "none" }
                       }}
                     />
                     {rankVal > 0 && (

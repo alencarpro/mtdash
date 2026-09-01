@@ -556,7 +556,7 @@ const PieTooltip = ({ active, payload }: any) => {
 
 const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { title: string; value: string; sub: string; color?: string; delay?: number; icon?: LucideIcon }) => (
   <div
-    className="rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 transition-all duration-300 ease-out hover:scale-[1.045] hover:z-10 cursor-default group"
+    className="interactive-card rounded-lg px-4 sm:px-5 py-4 sm:py-5 flex flex-col justify-center relative overflow-hidden opacity-0 ease-out hover:scale-[1.06] hover:-translate-y-1 hover:z-10 cursor-pointer group"
     style={{
       background: 'rgba(10,17,30,0.78)',
       border: '1px solid rgba(148,163,184,0.15)',
@@ -564,14 +564,17 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
     }}
     onMouseEnter={e => {
       const el = e.currentTarget;
-      el.style.boxShadow = `0 0 18px -2px ${color}44, 0 0 6px -1px ${color}33`;
-      el.style.borderColor = `${color}55`;
+      el.style.boxShadow = `0 18px 40px -18px ${color}88, 0 0 26px -2px ${color}66, 0 0 10px -1px ${color}44`;
+      el.style.borderColor = `${color}aa`;
+      el.style.background = 'rgba(14,23,42,0.94)';
     }}
     onMouseLeave={e => {
       const el = e.currentTarget;
       el.style.boxShadow = '';
       el.style.borderColor = 'rgba(148,163,184,0.15)';
+      el.style.background = 'rgba(10,17,30,0.78)';
     }}
+
   >
     <div
       className="absolute left-0 top-0 bottom-0 w-1 rounded-l-lg transition-all duration-300 group-hover:w-[3px]"
@@ -587,18 +590,19 @@ const KPI = ({ title, value, sub, color = C.teal, delay = 0, icon: Icon }: { tit
 /* ─── Chart wrapper ─── */
 const Chart = ({ title, children }: { title: string; children: React.ReactNode }) => (
   <div
-    className="group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 transition-all duration-300 ease-out md:hover:z-10 md:hover:scale-[1.02] cursor-default"
+    className="interactive-card group/chart flex h-full min-w-0 flex-col overflow-hidden rounded-lg p-2 sm:p-3 ease-out md:hover:z-10 md:hover:scale-[1.035] md:hover:-translate-y-1 cursor-pointer"
     style={{ background: 'rgba(10,17,30,0.78)', border: '1px solid rgba(148,163,184,0.15)', animation: 'glowBorder 6s ease-in-out infinite' }}
     onMouseEnter={e => {
-      e.currentTarget.style.boxShadow = '0 0 20px -4px rgba(96,165,250,0.3), 0 0 8px -2px rgba(141,243,219,0.2)';
-      e.currentTarget.style.borderColor = 'rgba(96,165,250,0.4)';
-      e.currentTarget.style.background = 'rgba(10,17,30,0.92)';
+      e.currentTarget.style.boxShadow = '0 20px 44px -20px rgba(96,165,250,0.55), 0 0 28px -4px rgba(96,165,250,0.45), 0 0 12px -2px rgba(141,243,219,0.35)';
+      e.currentTarget.style.borderColor = 'rgba(141,243,219,0.65)';
+      e.currentTarget.style.background = 'rgba(14,23,42,0.96)';
     }}
     onMouseLeave={e => {
       e.currentTarget.style.boxShadow = '';
       e.currentTarget.style.borderColor = 'rgba(148,163,184,0.15)';
       e.currentTarget.style.background = 'rgba(10,17,30,0.78)';
     }}
+
   >
     <p className="text-[12px] sm:text-[14px] md:text-[16px] uppercase tracking-wider font-semibold mb-1 break-words leading-snug transition-colors duration-300 group-hover/chart:text-[rgba(141,243,219,0.95)]" style={{ color: 'rgba(226,232,240,0.72)' }}>{title}</p>
     <div className="flex-1 min-w-0" style={{ minHeight: 0 }}>{children}</div>
@@ -1849,7 +1853,7 @@ const PanelLiquidacoes = () => (
             </thead>
             <tbody>
               {topCredores.map((c, i) => (
-                <tr key={i} className="hover:bg-white/5 transition-colors">
+                <tr key={i} className="interactive-row cursor-pointer">
                   <td className="py-1 px-1 border-b border-white/5 truncate max-w-[250px]" title={c.credor}>{c.credor}</td>
                   <td className="py-1 px-1 border-b border-white/5 text-[10px] uppercase">{c.modalidade}</td>
                   <td className="py-1 px-1 border-b border-white/5 text-right font-semibold text-white">{c.valor}</td>

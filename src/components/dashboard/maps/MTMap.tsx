@@ -58,7 +58,7 @@ const MTMap: React.FC<MTMapProps> = ({
         <ComposableMap
           projection="geoMercator"
           projectionConfig={{ scale, center: [-56, -13] }}
-          className="w-full h-full"
+          className="w-full h-full interactive-map"
         >
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
@@ -104,8 +104,8 @@ const MTMap: React.FC<MTMapProps> = ({
                       }}
                       style={{
                         default: { fill: fillColor, stroke: "#0f172a", strokeWidth: 0.5, outline: "none" },
-                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 1.5, outline: "none", cursor: "pointer" },
-                        pressed: { fill: fillColor, outline: "none" }
+                        hover: { fill: fillColor, stroke: "#fff", strokeWidth: 2.2, outline: "none", cursor: "pointer" },
+                        pressed: { fill: fillColor, stroke: "#8df3db", strokeWidth: 3, outline: "none" }
                       }}
                     />
                     {rankVal > 0 && (
