@@ -2162,7 +2162,7 @@ const SingleDashboard = () => {
 
   const ActivePanel = panelsAll[active];
 
-      const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras — BRT & Leblon", "Obras — Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Despesas Liquidadas 2025", "Mortalidade Inf — BR", "Mortalidade Inf — MT", "Alfabetização — BR", "Alfabetização — MT", "Leitos por Habitante — BR", "Leitos por Habitante — MT"];
+      const panelTitles = ["Economia", "Social", "Ambiental", "Economia", "Controle & Eficiência", "Integridade", "Obras BRT & Leblon", "Obras Hospital & Ponte", "Benefícios de Controle", "Orçamento PTA 2026", "Painel de Liquidações 2025", "Despesas Liquidadas 2025", "Mortalidade Inf. BR", "Mortalidade Inf. MT", "Alfabetização BR", "Alfabetização MT", "Leitos por Habitante BR", "Leitos por Habitante MT"];
      const panelTitleColors = ["#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff", "#ffffff"];
      const panelHeaderBgs = ["#1e2405", "#1e2405", "#1e2405", "#1e2405", "#102041", "#102041", "#1c0903", "#1c0903", "#102041", "#1C0903", "#1C0903", "#1C0903", "#1e2405", "#1e2405", "#1e2405", "#1e2405", "#1E2405", "#1E2405"];
 
@@ -2303,7 +2303,6 @@ const SingleDashboard = () => {
             </span>
           )}
           <span className="text-[22px] sm:text-[25px] font-bold uppercase tracking-wider text-white" style={{ color: panelTitleColors[active] }}>
-            {active <= 3 || (active >= 12 && active <= 17) ? "01 — " : active === 6 || active === 7 || (active >= 9 && active <= 11) ? "02 — " : active === 4 || active === 5 || active === 8 ? "03 — " : ""}
             {panelTitles[active]}
           </span>
         </div>
