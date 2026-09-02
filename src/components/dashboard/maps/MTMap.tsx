@@ -158,28 +158,28 @@ const MTMap: React.FC<MTMapProps> = ({
         <div 
           style={{
             position: 'fixed',
-            left: tooltip.x + 15,
-            top: tooltip.y + 15,
+            left: tooltip.x + 6,
+            top: tooltip.y + 6,
             backgroundColor: 'rgba(10,17,30,0.95)',
-            border: '1px solid rgba(141,243,219,0.3)',
-            borderRadius: '4px',
-            padding: '6px 10px',
+            border: '2px solid rgba(141,243,219,0.3)',
+            borderRadius: '7px',
+            padding: '11px 18px',
             color: '#fff',
-            fontSize: '14px',
+            fontSize: '25px',
             fontWeight: 600,
             pointerEvents: 'none',
             zIndex: 9999,
             backdropFilter: 'blur(8px)',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.5)'
+            boxShadow: '0 7px 21px rgba(0,0,0,0.5)'
           }}
         >
-          <div className="flex flex-col gap-1">
-            <div className="text-slate-400 text-[10px] uppercase tracking-wider font-bold">{tooltip.name}</div>
-            <div className="text-[16px] font-bold text-white">{tooltip.value}</div>
+          <div className="flex flex-col gap-2">
+            <div className="text-slate-400 text-[18px] uppercase tracking-wider font-bold">{tooltip.name}</div>
+            <div className="text-[28px] font-bold text-white">{tooltip.value}</div>
             {tooltip.rank && (
-              <div className="flex items-center gap-2 mt-1 pt-1 border-t border-white/10">
-                <span className="px-1.5 py-0.5 bg-blue-500/20 text-blue-300 rounded text-[10px] font-bold">{tooltip.rank}</span>
-                <span className={`text-[10px] font-bold ${tooltip.status === 'Índice Positivo' ? 'text-green-400' : 'text-red-400'}`}>
+              <div className="flex items-center gap-3 mt-2 pt-2 border-t border-white/10">
+                <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded text-[18px] font-bold">{tooltip.rank}</span>
+                <span className={`text-[18px] font-bold ${tooltip.status === 'Índice Positivo' ? 'text-green-400' : 'text-red-400'}`}>
                   {tooltip.status}
                 </span>
               </div>
