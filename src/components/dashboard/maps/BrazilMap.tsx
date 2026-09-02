@@ -135,12 +135,12 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
         />
       </div>
 
-      {tooltip.visible && (
+      {tooltip.visible && createPortal(
         <div 
           style={{
             position: 'fixed',
-            left: tooltip.x + 6,
-            top: tooltip.y + 6,
+            left: tooltip.x + 2,
+            top: tooltip.y + 2,
             backgroundColor: 'rgba(10,17,30,0.95)',
             border: '2px solid rgba(141,243,219,0.3)',
             borderRadius: '7px',
@@ -149,7 +149,7 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
             fontSize: '25px',
             fontWeight: 600,
             pointerEvents: 'none',
-            zIndex: 9999,
+            zIndex: 2147483647,
             backdropFilter: 'blur(8px)',
             boxShadow: '0 7px 21px rgba(0,0,0,0.5)'
           }}
@@ -166,7 +166,8 @@ const BrazilMap: React.FC<BrazilMapProps> = ({
               </div>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
