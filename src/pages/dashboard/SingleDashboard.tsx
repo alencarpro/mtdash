@@ -515,15 +515,15 @@ const CustomTooltip = ({ active, payload, label, unit }: any) => {
     <div style={{
       background: 'rgba(10,17,30,0.95)',
       border: '1px solid rgba(141,243,219,0.3)',
-      borderRadius: 8,
-      padding: '8px 12px',
+      borderRadius: 14,
+      padding: '14px 21px',
       boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
       backdropFilter: 'blur(8px)',
     }}>
-       {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 18, fontWeight: 600, marginBottom: 4 }}>{label}</p>}
+       {label && <p style={{ color: 'rgba(226,232,240,0.9)', fontSize: 31, fontWeight: 600, marginBottom: 7 }}>{label}</p>}
        {payload.map((entry: any, i: number) => (
-         <div key={i} className="flex items-center gap-2" style={{ fontSize: 18, marginTop: 2 }}>
-           <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: entry.color || entry.fill }} />
+         <div key={i} className="flex items-center gap-3" style={{ fontSize: 31, marginTop: 4 }}>
+           <span className="inline-block rounded-sm" style={{ width: 21, height: 21, backgroundColor: entry.color || entry.fill }} />
            <span style={{ color: 'rgba(226,232,240,0.72)' }}>{entry.name}:</span>
            <span style={{ color: '#f8fafc', fontWeight: 700 }}>
              {typeof entry.value === 'number' ? entry.value.toLocaleString('pt-BR') : entry.value}
@@ -542,12 +542,12 @@ const PieTooltip = ({ active, payload }: any) => {
     <div style={{
       background: 'rgba(10,17,30,0.95)',
       border: '1px solid rgba(141,243,219,0.3)',
-      borderRadius: 8,
-      padding: '8px 12px',
+      borderRadius: 14,
+      padding: '14px 21px',
       boxShadow: '0 4px 20px rgba(0,0,0,0.4)',
     }}>
-       <div className="flex items-center gap-2" style={{ fontSize: 18 }}>
-         <span className="inline-block w-3 h-3 rounded-sm" style={{ backgroundColor: d.payload?.fill }} />
+       <div className="flex items-center gap-3" style={{ fontSize: 31 }}>
+         <span className="inline-block rounded-sm" style={{ width: 21, height: 21, backgroundColor: d.payload?.fill }} />
          <span style={{ color: '#f8fafc', fontWeight: 700 }}>{d.name}: {typeof d.value === 'number' ? d.value.toLocaleString('pt-BR') : d.value}{d.payload?.unit || '%'}</span>
       </div>
     </div>
