@@ -252,9 +252,18 @@
   background-color: rgba(141,243,219,0.18) !important;
 }
 
-/* Mapas: destaque no hover/clique */
+/* Mapas: renderização nítida + destaque no hover/clique */
+.interactive-map {
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}
 .interactive-map path {
   transition: filter 200ms ease-out, opacity 200ms ease-out;
+  shape-rendering: geometricPrecision;
+  vector-effect: non-scaling-stroke;
+}
+.interactive-map text {
+  paint-order: stroke;
 }
 .interactive-map:hover path:not(:hover) {
   opacity: 0.72;
