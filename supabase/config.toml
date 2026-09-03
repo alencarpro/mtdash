@@ -1,1 +1,3 @@
 project_id = "aoutccbgyowaufkdogfn"
+[functions.camera-stream]
+verify_jwt = false
