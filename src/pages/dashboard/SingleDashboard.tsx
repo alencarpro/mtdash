@@ -1,5 +1,4 @@
- import { useState, useEffect, useMemo, useRef } from "react";
-import Hls from "hls.js";
+ import { useState, useEffect, useMemo } from "react";
  import { supabase } from "@/integrations/supabase/client";
 import { useParams, useNavigate } from "react-router-dom";
 import { BarChart3, TrendingUp, Users, Leaf, MapPin, Calendar, DollarSign, Ship, Briefcase, Plane, GraduationCap, Hospital, Home, Car, HeartPulse, Activity, TreePine, Flame, Mountain, ShieldCheck, Search, FileText, MessageSquare, Bell, Target, Shield, Eye, BookOpen, Handshake, Award, Mail, LucideIcon, HardHat, Camera, CircleDollarSign, CheckCircle2, ClipboardList, Layers, Compass } from "lucide-react";
@@ -1378,18 +1377,16 @@ const usePageVisible = () => {
   return visible;
 };
 
-/* Deriva a chave do stream HLS a partir do link da página da câmera */
-const camStreamKey = (link: string) => link.split('/').pop()?.replace(/\.html?$/i, '') ?? '';
-const camStreamUrl = (link: string) =>
-  `${import.meta.env.VITE_SUPABASE_URL}/functions/v1/camera-stream?cam=${encodeURIComponent(camStreamKey(link))}&file=index.m3u8`;
-
-/* Camera frame: player HLS direto do streaming (via proxy seguro) */
+/* Camera frame with dynamic scaling + staggered mount + visibility awareness */
 const CameraFrame = ({ cam, visible, staggerMs = 0 }: { cam: typeof obrasEstrategicasList[0]['cameras'][0]; visible: boolean; staggerMs?: number }) => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [containerEl, setContainerEl] = useState<HTMLDivElement | null>(null);
+  const [scale, setScale] = useState(1);
   const [mounted, setMounted] = useState(staggerMs === 0);
-  const [offline, setOffline] = useState(false);
   const pageVisible = usePageVisible();
+  const INTERNAL_W = 430;
+  const INTERNAL_H = 300;
 
+  // Staggered mount: delay iframe creation to avoid burst of connections
   useEffect(() => {
     const canMount = visible && pageVisible;
 
@@ -1409,60 +1406,46 @@ const CameraFrame = ({ cam, visible, staggerMs = 0 }: { cam: typeof obrasEstrate
   }, [visible, pageVisible, staggerMs]);
 
   const shouldRender = visible && mounted && pageVisible;
-  const src = camStreamUrl(cam.link);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!shouldRender || !video) return;
-
-    setOffline(false);
-    let hls: Hls | null = null;
-
-    if (Hls.isSupported()) {
-      hls = new Hls({ lowLatencyMode: true, liveDurationInfinity: true, maxBufferLength: 6 });
-      hls.loadSource(src);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, () => void video.play().catch(() => {}));
-      hls.on(Hls.Events.ERROR, (_e, data) => {
-        if (data.fatal) setOffline(true);
-      });
-    } else {
-      // Safari / iOS: HLS nativo
-      video.src = src;
-      video.addEventListener('error', () => setOffline(true));
-      void video.play().catch(() => {});
-    }
-
-    return () => {
-      hls?.destroy();
-      video.removeAttribute('src');
-      video.load();
+    if (!containerEl || !shouldRender) return;
+    const measure = () => {
+      const { width, height } = containerEl.getBoundingClientRect();
+      if (width && height) {
+        setScale(Math.min(width / INTERNAL_W, height / INTERNAL_H));
+      }
     };
-  }, [shouldRender, src]);
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(containerEl);
+    return () => ro.disconnect();
+  }, [containerEl, shouldRender]);
 
   return (
     <div className="flex flex-col gap-1">
       <div
+        ref={setContainerEl}
         className="rounded-md overflow-hidden relative w-full"
         style={{ border: '1px solid rgba(141,243,219,0.2)', aspectRatio: '16/9', background: '#0a111e' }}
       >
         {shouldRender ? (
-          <>
-            <video
-              ref={videoRef}
-              autoPlay
-              muted
-              playsInline
-              className="absolute inset-0 w-full h-full"
-              style={{ objectFit: 'cover', background: '#0a111e' }}
-            />
-            {offline && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-1" style={{ color: 'rgba(226,232,240,0.5)', background: 'rgba(10,17,30,0.9)' }}>
-                <Camera className="w-7 h-7" />
-                <span className="text-[11px]">Câmera offline</span>
-              </div>
-            )}
-          </>
+          <iframe
+            src={cam.link}
+            title={cam.tpObra || cam.nome}
+            style={{
+              border: 'none',
+              background: '#0a111e',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              width: `${INTERNAL_W}px`,
+              height: `${INTERNAL_H}px`,
+              transform: `translate(-50%, -50%) scale(${scale})`,
+              transformOrigin: 'center center',
+            }}
+            loading="eager"
+            allow="autoplay; encrypted-media"
+          />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center" style={{ color: 'rgba(226,232,240,0.4)' }}>
             <Camera className="w-8 h-8" />
@@ -1475,7 +1458,6 @@ const CameraFrame = ({ cam, visible, staggerMs = 0 }: { cam: typeof obrasEstrate
     </div>
   );
 };
-
 
 /* Shared obra card with cameras — optimized layout */
 const ObraCard = ({ o, visible = true }: { o: typeof obrasEstrategicasList[0]; visible?: boolean }) => {
