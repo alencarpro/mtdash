@@ -50,12 +50,12 @@ export const obrasEstrategicasList: ObraPainel[] = [
       execucaoConcluida: "586.000 m²",
     },
     cameras: [
-      { nome: "Canteiro próximo ao hospital Femina (AV. CPA)", link: "https://obrasaovivo.sinfra.mt.gov.br/brt_femina.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Femina", obra: "BRT" },
-      { nome: "Av. Ulisses Canteiro em frente ao Shop. Pantanal (Av. CPA)", link: "https://obrasaovivo.sinfra.mt.gov.br/brt_shoppingpantanal.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Shopping Pantanal", obra: "" },
-      { nome: "Av. Historiador Rubens de Mendonça", link: "https://obrasaovivo.sinfra.mt.gov.br/brt_ganhatempo.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Ganha Tempo", obra: "" },
-      { nome: "Av. Historiador Rubens de Mendonça", link: "https://obrasaovivo.sinfra.mt.gov.br/brt_xvnovembro.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Av. XV Novembro", obra: "" },
-      { nome: "Porto", link: "https://obrasaovivo.sinfra.mt.gov.br/brt_porto.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Porto", obra: "" },
-      { nome: "Av. Historiador Rubens de Mendonça", link: "https://obrasaovivo.sinfra.mt.gov.br/brt_morrodaluz.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Morro da Luz", obra: "" },
+      { nome: "Canteiro próximo ao hospital Femina (AV. CPA)", link: "http://obrasaovivo.sinfra.mt.gov.br/brt_femina.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Femina", obra: "BRT" },
+      { nome: "Av. Ulisses Canteiro em frente ao Shop. Pantanal (Av. CPA)", link: "http://obrasaovivo.sinfra.mt.gov.br/brt_shoppingpantanal.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Shopping Pantanal", obra: "" },
+      { nome: "Av. Historiador Rubens de Mendonça", link: "http://obrasaovivo.sinfra.mt.gov.br/brt_ganhatempo.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Ganha Tempo", obra: "" },
+      { nome: "Av. Historiador Rubens de Mendonça", link: "http://obrasaovivo.sinfra.mt.gov.br/brt_xvnovembro.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Av. XV Novembro", obra: "" },
+      { nome: "Porto", link: "http://obrasaovivo.sinfra.mt.gov.br/brt_porto.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Porto", obra: "" },
+      { nome: "Av. Historiador Rubens de Mendonça", link: "http://obrasaovivo.sinfra.mt.gov.br/brt_morrodaluz.html", cidade: "Cuiabá", nuPlaca: "934", tpObra: "Obra BRT - Morro da Luz", obra: "" },
     ],
   },
   {
@@ -76,8 +76,8 @@ export const obrasEstrategicasList: ObraPainel[] = [
       execucaoConcluida: "5.490 m²",
     },
     cameras: [
-      { nome: "Esquina do Posto BR (R. Boa Vista)", link: "https://obrasaovivo.sinfra.mt.gov.br/obraleblon_postobr.html", cidade: "Cuiabá", nuPlaca: "0", tpObra: "Obra LEBLON - Posto BR", obra: "" },
-      { nome: "Miguel Sutil", link: "https://obrasaovivo.sinfra.mt.gov.br/obraleblon_todimo.html", cidade: "Cuiabá/Chapada dos Guimarães", nuPlaca: "1080", tpObra: "Obra LEBLON - Todimo", obra: "" },
+      { nome: "Esquina do Posto BR (R. Boa Vista)", link: "http://obrasaovivo.sinfra.mt.gov.br/obraleblon_postobr.html", cidade: "Cuiabá", nuPlaca: "0", tpObra: "Obra LEBLON - Posto BR", obra: "" },
+      { nome: "Miguel Sutil", link: "http://obrasaovivo.sinfra.mt.gov.br/obraleblon_todimo.html", cidade: "Cuiabá/Chapada dos Guimarães", nuPlaca: "1080", tpObra: "Obra LEBLON - Todimo", obra: "" },
     ],
   },
   {
@@ -98,8 +98,8 @@ export const obrasEstrategicasList: ObraPainel[] = [
       execucaoConcluida: "58.000 m²",
     },
     cameras: [
-      { nome: "Coxipó da Ponte, Cuiabá - MT, Brazil", link: "https://obrasaovivo.sinfra.mt.gov.br/hospital.html", cidade: "Cuiabá", nuPlaca: "454", tpObra: "Hospital Universitário - Cam Fundo", obra: "" },
-      { nome: "Coxipó da Ponte, Cuiabá - MT, Brazil", link: "https://obrasaovivo.sinfra.mt.gov.br/hospital2.html", cidade: "Cuiabá", nuPlaca: "454", tpObra: "Hospital Universitário - Cam Frente", obra: "" },
+      { nome: "Coxipó da Ponte, Cuiabá - MT, Brazil", link: "http://obrasaovivo.sinfra.mt.gov.br/hospital.html", cidade: "Cuiabá", nuPlaca: "454", tpObra: "Hospital Universitário - Cam Fundo", obra: "" },
+      { nome: "Coxipó da Ponte, Cuiabá - MT, Brazil", link: "http://obrasaovivo.sinfra.mt.gov.br/hospital2.html", cidade: "Cuiabá", nuPlaca: "454", tpObra: "Hospital Universitário - Cam Frente", obra: "" },
     ],
   },
   {
@@ -120,8 +120,8 @@ export const obrasEstrategicasList: ObraPainel[] = [
       execucaoConcluida: "1.410 m²",
     },
     cameras: [
-      { nome: "MT-208 (Cotriguaçu x Vila Japuranã)", link: "https://obrasaovivo.sinfra.mt.gov.br/rio_juruena1.html", cidade: "Cotriguaçu", nuPlaca: "976", tpObra: "Ponte Rio Juruena - CAM 01", obra: "" },
-      { nome: "MT-208 (Cotriguaçu x Vila Japuranã)", link: "https://obrasaovivo.sinfra.mt.gov.br/rio_juruena2.html", cidade: "Nova Bandeirantes", nuPlaca: "976", tpObra: "Ponte Rio Juruena - CAM 02", obra: "" },
+      { nome: "MT-208 (Cotriguaçu x Vila Japuranã)", link: "http://obrasaovivo.sinfra.mt.gov.br/rio_juruena1.html", cidade: "Cotriguaçu", nuPlaca: "976", tpObra: "Ponte Rio Juruena - CAM 01", obra: "" },
+      { nome: "MT-208 (Cotriguaçu x Vila Japuranã)", link: "http://obrasaovivo.sinfra.mt.gov.br/rio_juruena2.html", cidade: "Nova Bandeirantes", nuPlaca: "976", tpObra: "Ponte Rio Juruena - CAM 02", obra: "" },
     ],
   },
 ];
