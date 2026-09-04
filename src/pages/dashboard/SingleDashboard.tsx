@@ -2262,7 +2262,7 @@ const SingleDashboard = () => {
       {sequence && (
         <>
           <div
-            className="absolute left-0 top-0 bottom-0 w-16 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+            className="absolute left-0 top-0 bottom-0 w-32 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
             style={{ background: 'linear-gradient(90deg, rgba(141,243,219,0.12), transparent)' }}
             onClick={goPrev}
           >
@@ -2271,7 +2271,7 @@ const SingleDashboard = () => {
             </div>
           </div>
           <div
-            className="absolute right-0 top-0 bottom-0 w-16 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
+            className="absolute right-0 top-0 bottom-0 w-32 z-50 cursor-pointer flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300"
             style={{ background: 'linear-gradient(-90deg, rgba(96,165,250,0.12), transparent)' }}
             onClick={goNext}
           >
